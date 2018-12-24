@@ -9,10 +9,11 @@
   },
   "author": "Maximiliano Carrizo",
   "_moduleAliases": {
-    "@appconfig": "utils/appconfig",
-    "@logger": "utils/loggerconfig",
-    "@ormconfig": "utils/ormconfig",
-    "@migrationconfig": "utils/migrationconfig"
+    "@appconfig": "configs/appconfig",
+    "@logger": "configs/loggerconfig",
+    "@ormconfig": "configs/ormconfig",
+    "@migrationconfig": "configs/migrationconfig",
+    "@serialpromisesutil": "utils/serialpromisesutil"
   },
   "dependencies": {
     "dateformat": "^3.0.3",
