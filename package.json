@@ -1,0 +1,27 @@
+{
+  "name": "papelera_naty_backend",
+  "version": "0.1.0",
+  "description": "Papelera Naty Backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=development node server",
+    "test": "NODE_ENV=test node server"
+  },
+  "author": "Maximiliano Carrizo",
+  "_moduleAliases": {
+    "@appconfig": "utils/appconfig",
+    "@logger": "utils/loggerconfig",
+    "@ormconfig": "utils/ormconfig",
+    "@migrationconfig": "utils/migrationconfig"
+  },
+  "dependencies": {
+    "dateformat": "^3.0.3",
+    "dotenv-flow": "^0.2.0",
+    "express": "^4.16.4",
+    "migrate-orm2": "^4.0.4",
+    "module-alias": "^2.1.0",
+    "orm": "^5.0.2",
+    "pg": "^7.7.1",
+    "winston": "^3.1.0"
+  }
+}
