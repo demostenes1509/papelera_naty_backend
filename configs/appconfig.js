@@ -3,6 +3,7 @@ const dotentflow = require('dotenv-flow').config();
 const logger = require("@logger")(module);
 const ormconfig = require("@ormconfig");
 const migrationconfig = require("@migrationconfig");
+const routesconfig = require("@routesconfig");
 
 module.exports = async (callback) => {
 
@@ -17,11 +18,10 @@ module.exports = async (callback) => {
         logger.info('Running migrations');
         await migrationconfig(db);
 
+        logger.info('Configuring routes');
+        await routesconfig(app);
 
-
-        logger.info('Callback');
-
-        return callback(null,app);
+        return callback(null,app,db);
     }
     catch(error) {
         callback(error);

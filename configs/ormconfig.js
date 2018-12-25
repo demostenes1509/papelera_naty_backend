@@ -1,7 +1,7 @@
 const modulealias = require('module-alias/register');
 const logger = require("@logger")(module);
 const orm = require('orm');
-// const MigrateTask = require('migrate-orm2');
+const transaction = require("orm-transaction");
 
 module.exports = (app) => {
 
@@ -26,13 +26,10 @@ module.exports = (app) => {
         app.use(orm.express(opts, {
             define: function (db, models) {
 
-                // var task = new MigrateTask(db.driver, {dir: 'migrations'});
+				logger.debug("Assigning transaction package to ORM");
+                db.use(transaction);
 
-                // task.up('001-create-table1.js', function (err, result) {
-                //     if(err) reject(err);
-
-                //     resolve(db);
-                // });
+				require('../app/models/categoriesmodel.js')(orm,db,models);
           
                 resolve(db);
                 
