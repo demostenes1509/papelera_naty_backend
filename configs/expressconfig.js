@@ -15,10 +15,10 @@ module.exports = (app) => {
         exposedHeaders: constants.TOKEN_NAME,
         allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Set-Cookie', constants.TOKEN_NAME ]
     }
+    */
 
     logger.debug("Adding cors");
-    app.use(cors(corsOptions));
-    */
+    app.use(cors());
     
     logger.debug("Add finally() implementation to promises");
     pf.shim();
