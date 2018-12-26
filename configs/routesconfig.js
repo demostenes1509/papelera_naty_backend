@@ -25,6 +25,7 @@ const wrap = (db,fn) => {
 
 module.exports = (app,db) => {
 
+    app.get 	( '/categories',                   wrap(db,controllers.categories.list));
     app.post 	( '/categories',                   wrap(db,controllers.categories.create));
 
 };

@@ -13,5 +13,12 @@ module.exports = {
 
 		const category = await modelsutil.create(req.models.categories,req.body);
 		return res.status(200).send(category);
-    }
+	},
+	
+	/* list categories */
+	list: async (req, res, next) => {
+
+		const categories = await modelsutil.find(req.models.categories,{});
+		return res.status(200).send(categories);
+    }	
 }

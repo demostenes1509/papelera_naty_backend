@@ -14,5 +14,22 @@ const self = module.exports = {
 				resolve(newobject);
 			});
 		});
-    }
+	},
+	
+	find : function (model,filter) {
+		// filter.active=null;
+	    return new Promise((resolve,reject) => {
+			model.find(filter,(err,newobject) => {
+				if(err) reject(err);
+				// if(newobject) {
+				// 	for(var i=0;i<newobject.length;i++) {
+				// 		newobject[i].active = undefined;
+				// 	}				
+				// }
+				resolve(newobject);
+			});
+		});
+	},
+
+
 }

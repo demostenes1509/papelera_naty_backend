@@ -23,6 +23,16 @@ const self = module.exports = {
         const errors = JSON.parse(response.text);  
         expect(errors.server_error.length).toBe(1);
         expect(errors.server_error[0].msg).toBe('name is required');
+    },
+    
+    list : async function () {
+        const response = await request("http://localhost:"+process.env.app_http_port)
+            .get('/categories')
+            .expect(200);	
+
+        const categories = JSON.parse(response.text);
+        expect(categories.length).toBe(3);
 	}
+
 
 }
