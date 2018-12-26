@@ -4,9 +4,9 @@
   "description": "Papelera Naty Backend",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=development node server",
-    "test": "NODE_ENV=test nyc --reporter=lcov mocha -u exports -R spec configs/testsconfig",
-    "singletest": "NODE_ENV=test nyc --reporter=html mocha --recursive -R spec $TESTTORUN"
+    "start": "cross-env NODE_ENV=development node server",
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha -u exports -R spec configs/testsconfig",
+    "singletest": "cross-env NODE_ENV=test nyc --reporter=html mocha --recursive -R spec $TESTTORUN"
   },
   "author": "Maximiliano Carrizo",
   "_moduleAliases": {
@@ -15,19 +15,33 @@
     "@ormconfig": "configs/ormconfig",
     "@routesconfig": "configs/routesconfig",
     "@migrationconfig": "configs/migrationconfig",
-    "@modelsutil": "utils/modelsutil"
+    "@expressconfig": "configs/expressconfig",
+    "@errorhandlerconfig": "configs/errorhandlerconfig",
+    "@modelsutil": "utils/modelsutil",
+    "@validationutil": "utils/validationutil"
   },
   "dependencies": {
+    "compression": "^1.7.3",
+    "cors": "^2.8.5",
     "dateformat": "^3.0.3",
     "dotenv-flow": "^0.2.0",
+    "exception-formatter": "^1.0.7",
+    "expect": "^23.6.0",
     "express": "^4.16.4",
+    "express-validator": "^5.3.1",
     "memory-cache": "^0.2.0",
     "migrate-orm2": "^4.0.4",
+    "mocha": "^5.2.0",
     "module-alias": "^2.1.0",
+    "nyc": "^13.1.0",
     "orm": "^5.0.2",
     "orm-transaction": "0.0.2",
     "pg": "^7.7.1",
+    "promise.prototype.finally": "^3.1.0",
     "supertest": "^3.3.0",
     "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0"
   }
 }

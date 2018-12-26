@@ -32,25 +32,14 @@ describe('Test Suite', function() {
 	
 	beforeEach(function(done) {
         logger.info('---------------- Starting test -----------------');
-        db.transaction(function (err, t) {
-            if(err) return done(err);
-            trx = t;
-            done();
-        });
+		done();
 	});	
     
     describe('Categories', function() {
         it('Create new Category', category.create);
+        it('Create without name', category.create_with_name);
     });
 
-    afterEach(function(done) {
-        logger.info('---------------- Finishing test -----------------');
-        trx.rollback(function (err) {
-            if(err) return done(err);
-            return done();
-        });
-	});	    
-		
 	after(function (){
  		
  		logger.info('Stopping server');
