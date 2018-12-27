@@ -7,18 +7,18 @@ module.exports = {
 
 	/* create category */
 	create: async (req, res, next) => {
-
 		logger.info('Creating new category');
 		notEmptyValidation(req,['name']);
 
-		const category = await modelsutil.create(req.models.categories,req.body);
+		const category = await req.models.category.create({name: req.body.name});
 		return res.status(200).send(category);
 	},
 	
 	/* list categories */
 	list: async (req, res, next) => {
-
-		const categories = await modelsutil.find(req.models.categories,{});
+		logger.info('Listing categories');
+		const categories = await req.models.category.findAll();
+		logger.info('PEPE');
 		return res.status(200).send(categories);
     }	
 }

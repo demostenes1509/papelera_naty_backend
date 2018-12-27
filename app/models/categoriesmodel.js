@@ -1,16 +1,19 @@
 'use strict';
 
-const ma		= require('module-alias/register');
-const logger	= require("@logger")(module);
+const modulealias = require('module-alias/register');
+const logger = require("@logger")(module);
+const Sequelize = require('sequelize');
 
-module.exports = function (orm, db, models) {
-
-	logger.debug("Configuring categories");
-	models.categories = db.define("categories", { 
-			id:				{ type: 'serial', key: true}, 
-			name:			{ type: 'text', size: 100, required: true }
+module.exports = function (db) {
+	return db.define('categories', {
+		id: {
+			type: Sequelize.INTEGER,
+			primaryKey: true,
+			autoIncrement: true
 		},
-		{
+		name: {
+			type: Sequelize.STRING(100),
+			allowNull: false
 		}
-	);	
+	}, { timestamps: false });
 };

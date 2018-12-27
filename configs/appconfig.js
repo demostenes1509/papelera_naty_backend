@@ -2,7 +2,7 @@ const express = require('express');
 const dotentflow = require('dotenv-flow').config();
 const logger = require("@logger")(module);
 const ormconfig = require("@ormconfig");
-const migrationconfig = require("@migrationconfig");
+// const migrationconfig = require("@migrationconfig");
 const routesconfig = require("@routesconfig");
 const expressconfig = require("@expressconfig");
 const errorhandlerconfig = require("@errorhandlerconfig");
@@ -20,8 +20,8 @@ module.exports = async (callback) => {
         logger.info('Configuring orm');
         const db = await ormconfig(app);
 
-        logger.info('Running migrations');
-        await migrationconfig(db);
+        // logger.info('Running migrations');
+        // await migrationconfig(db);
 
         logger.info('Configuring routes');
         await routesconfig(app,db);
