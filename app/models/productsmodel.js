@@ -21,11 +21,9 @@ module.exports = function (db) {
 			type: Sequelize.STRING(100),
 			allowNull: false
 		}
-	}, { timestamps: false, underscored: true });
-
-	db.models.products.hasOne(db.models.categories, {
-		as: 'category',
-		foreignKey: 'category_id'
+	}, { 
+		timestamps: false, 
+		underscored: true 
 	});
 
 	return products;

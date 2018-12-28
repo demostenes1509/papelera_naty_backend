@@ -19,14 +19,9 @@ module.exports = function (db) {
 			type: Sequelize.STRING(100),
 			allowNull: false
 		}
-	}, { timestamps: false });
-
-	// categories.associate = function (db) {
-
-		// db.models.categories.hasMany(db.models.products, {
-		// 	as: 'products'
-		// });
-	// };
+	}, { 
+		timestamps: false 
+	});
 
 	return categories;
 };

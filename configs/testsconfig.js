@@ -35,11 +35,11 @@ describe('Test Suite', function() {
 	});	
     
     describe('Categories', function() {
-		// it('List categories', category.list);
+		it('List categories', category.list);
 		it('List categories and products', category.list_categories_and_products);
 
-        // it('Create new Category', category.create);
-        // it('Create without name', category.create_with_name);
+        it('Create new Category', category.create);
+        it('Create without name', category.create_with_name);
     });
 
 	after(function (){

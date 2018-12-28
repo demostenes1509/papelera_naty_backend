@@ -41,8 +41,7 @@ const self = module.exports = {
             .expect(200);	
 
         const categories = JSON.parse(response.text);
-        expect(categories.length).toBe(36);
+        expect(categories.length).toBe(4);
 	}
-
 
 }
