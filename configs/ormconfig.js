@@ -23,10 +23,12 @@ module.exports = (app) => {
 	  
 		sequelize.authenticate()
 		.then(() => {
+
+			require('../app/models/categoriesmodel.js')(sequelize);
+			require('../app/models/productsmodel.js')(sequelize);
+
 			app.use((req,res,next) => {
-				req.models = {
-					category : require('../app/models/categoriesmodel.js')(sequelize)
-				};
+				req.db = sequelize;
 				next();
 			});
 			resolve(sequelize);

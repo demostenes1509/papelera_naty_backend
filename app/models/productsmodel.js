@@ -3,9 +3,11 @@
 const modulealias = require('module-alias/register');
 const logger = require("@logger")(module);
 const Sequelize = require('sequelize');
+const categories = require('./categoriesmodel');
 
 module.exports = function (db) {
-	const categories = db.define('categories', {
+
+	const products = db.define('products', {
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
@@ -19,14 +21,12 @@ module.exports = function (db) {
 			type: Sequelize.STRING(100),
 			allowNull: false
 		}
-	}, { timestamps: false });
+	}, { timestamps: false, underscored: true });
 
-	// categories.associate = function (db) {
+	db.models.products.hasOne(db.models.categories, {
+		as: 'category',
+		foreignKey: 'category_id'
+	});
 
-		// db.models.categories.hasMany(db.models.products, {
-		// 	as: 'products'
-		// });
-	// };
-
-	return categories;
+	return products;
 };

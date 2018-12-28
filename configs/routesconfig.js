@@ -21,44 +21,13 @@ const wrap = (db,fn) => {
             next(err);
         })
 
-
-        /*
-        db.transaction(function (t) {
-            console.log('MEC>1');
-            if(err) return next(err);
-            req.trx = t;
-
-            console.log('MEC>2');
-            fn(req, res, next)
-            .then( () => {
-
-                console.log('MEC>3');
-
-                if(process.env.NODE_ENV==='test') {
-                    t.rollback(function (errx) {
-                        return next(err);
-                    });
-                }
-                else {
-                    t.commit(function (errx) {
-                        return next(err);
-                    });
-                }
-            })
-            .catch(err => {
-                console.log('MEC>4');
-                t.rollback(function (errx) {
-                    return next(err);
-                });
-            });
-        });
-        */
     };
 }
 
 module.exports = (app,db) => {
 
     app.get 	( '/categories',                   wrap(db,controllers.categories.list));
+    app.get 	( '/categoriesproducts',           wrap(db,controllers.categories.list_categories_and_products));
     app.post 	( '/categories',                   wrap(db,controllers.categories.create));
 
 };
