@@ -21,7 +21,7 @@ module.exports = async (callback) => {
         const db = await ormconfig(app);
 
         logger.info('Running migrations');
-        await migrationconfig(db);
+        await migrationconfig('update');
 
         logger.info('Configuring routes');
         await routesconfig(app,db);

@@ -1,40 +1,44 @@
 const modulealias = require('module-alias/register');
 const logger = require("@logger")(module);
-const orm = require('orm');
-const transaction = require("orm-transaction");
+const Sequelize = require('sequelize');
+
 
 module.exports = (app) => {
+	
+	return new Promise((resolve,reject) => {
 
-    return new Promise((resolve,reject) => {
+		const { db_database, db_host, db_port, db_user, db_password } = process.env;
 
-        logger.debug("Setting database connection info");
-		
-		const opts = {
-			database	: process.env.db_database,
-			protocol	: process.env.db_protocol,
-			host		: process.env.db_host,
-			port		: process.env.db_port,
-			user		: process.env.db_user,
-			password	: process.env.db_password,
-			query		:	{
-				pool		: true,
-				debug		: process.env.db_show_sql,
-				strdates	: false
+		const sequelize = new Sequelize(db_database, db_user, db_password, {
+			host: db_host,
+			dialect: 'postgres',
+			operatorsAliases: false,
+			pool: {
+				max: 5,
+				min: 0,
+				acquire: 30000,
+				idle: 10000
 			}
-        };
-        
-        app.use(orm.express(opts, {
-            define: function (db, models) {
+		});
+	  
+		sequelize.authenticate()
+		.then(() => {
 
-				logger.debug("Assigning transaction package to ORM");
-                db.use(transaction);
+			const categories = require('../app/models/categoriesmodel.js')(sequelize);
+			const products = require('../app/models/productsmodel.js')(sequelize);
 
-				require('../app/models/categoriesmodel.js')(orm,db,models);
-          
-                resolve(db);
-                
-            }
-        }));        
+			// Add mappings
+			// products.hasOne(categories, { foreignKey: 'category_id', required: true });
+			categories.hasMany(products,{ foreignKey: 'category_id', required: true });
+
+			app.use((req,res,next) => {
+				req.db = sequelize;
+				next();
+			});
+			resolve(sequelize);
+		})
+		.catch(err => {
+			reject(err);
+		});
     });
-
 };

@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development node server",
-    "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha -u exports -R spec configs/testsconfig",
-    "singletest": "cross-env NODE_ENV=test nyc --reporter=html mocha --recursive -R spec $TESTTORUN"
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha  --exit -u exports -R spec configs/testsconfig",
+    "singletest": "cross-env NODE_ENV=test nyc --reporter=html mocha --exit --recursive -R spec $TESTTORUN"
   },
   "author": "Maximiliano Carrizo",
   "_moduleAliases": {
@@ -14,9 +14,9 @@
     "@logger": "configs/loggerconfig",
     "@ormconfig": "configs/ormconfig",
     "@routesconfig": "configs/routesconfig",
-    "@migrationconfig": "configs/migrationconfig",
     "@expressconfig": "configs/expressconfig",
     "@errorhandlerconfig": "configs/errorhandlerconfig",
+    "@migrationconfig": "configs/migrationconfig",
     "@modelsutil": "utils/modelsutil",
     "@validationutil": "utils/validationutil"
   },
@@ -29,15 +29,15 @@
     "expect": "^23.6.0",
     "express": "^4.16.4",
     "express-validator": "^5.3.1",
+    "liquibase": "0.0.3",
     "memory-cache": "^0.2.0",
-    "migrate-orm2": "^4.0.4",
     "mocha": "^5.2.0",
     "module-alias": "^2.1.0",
     "nyc": "^13.1.0",
-    "orm": "^5.0.2",
-    "orm-transaction": "0.0.2",
     "pg": "^7.7.1",
+    "pg-hstore": "^2.3.2",
     "promise.prototype.finally": "^3.1.0",
+    "sequelize": "^4.42.0",
     "supertest": "^3.3.0",
     "winston": "^3.1.0"
   },

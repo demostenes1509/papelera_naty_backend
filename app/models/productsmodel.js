@@ -3,9 +3,11 @@
 const modulealias = require('module-alias/register');
 const logger = require("@logger")(module);
 const Sequelize = require('sequelize');
+const categories = require('./categoriesmodel');
 
 module.exports = function (db) {
-	const categories = db.define('categories', {
+
+	const products = db.define('products', {
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
@@ -20,8 +22,9 @@ module.exports = function (db) {
 			allowNull: false
 		}
 	}, { 
-		timestamps: false 
+		timestamps: false, 
+		underscored: true 
 	});
 
-	return categories;
+	return products;
 };

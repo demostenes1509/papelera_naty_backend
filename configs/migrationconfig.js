@@ -1,25 +1,21 @@
 const modulealias = require('module-alias/register');
 const logger = require("@logger")(module);
-const MigrateTask = require('migrate-orm2');
+const liquibase = require('liquibase');
 
-const runTask = (task,taskname) => {
-    return new Promise((resolve,reject) => {
-        task.up(taskname, function (err, result) {
-            if(err) reject(err);
-            resolve(result);
-        });
-    });
-}
+module.exports = async (command) => {
 
-module.exports = async (db) => {
+    const {
+        NODE_ENV,
+        db_host,
+        db_port,
+        db_database,
+        db_user,
+        db_password
+    } = process.env;
 
-    var task = new MigrateTask(db.driver, {dir: process.env.migrations_dir});
-    await runTask(task,'001-create-table1.js');
-
-    // task.up('001-create-table1.js', function (err, result) {
-    //     if(err) reject(err);
-
-    //     resolve(db);
-    // });
-          
+    return liquibase({   changeLogFile: `migrations/liquibase_${NODE_ENV}.xml`,
+                        url: `jdbc:postgresql://${db_host}:${db_port}/${db_database}?charSet=UTF-8`,
+                        username: db_user,
+                        password: db_password
+    }).run(command, '');
 };

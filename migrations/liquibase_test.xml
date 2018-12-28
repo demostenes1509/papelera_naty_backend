@@ -1,0 +1,22 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet author="maximiliano.ezequiel.carrizo.barrera" id="000">
+        <sqlFile path="migrations/test/000-create-sequences.sql" />
+    </changeSet>
+
+    <changeSet author="maximiliano.ezequiel.carrizo.barrera" id="001">
+        <sqlFile path="migrations/test/001-create-tables.sql" />
+    </changeSet>
+
+    <changeSet author="maximiliano.ezequiel.carrizo.barrera" id="002">
+        <sqlFile path="migrations/test/002-add-foreign-keys.sql" />
+    </changeSet>
+
+    <changeSet author="maximiliano.ezequiel.carrizo.barrera" id="003">
+        <sqlFile path="migrations/test/003-populate-tables.sql" />
+    </changeSet>
+
+</databaseChangeLog>
