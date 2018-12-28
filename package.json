@@ -16,6 +16,7 @@
     "@routesconfig": "configs/routesconfig",
     "@expressconfig": "configs/expressconfig",
     "@errorhandlerconfig": "configs/errorhandlerconfig",
+    "@migrationconfig": "configs/migrationconfig",
     "@modelsutil": "utils/modelsutil",
     "@validationutil": "utils/validationutil"
   },
@@ -28,6 +29,7 @@
     "expect": "^23.6.0",
     "express": "^4.16.4",
     "express-validator": "^5.3.1",
+    "liquibase": "0.0.3",
     "memory-cache": "^0.2.0",
     "mocha": "^5.2.0",
     "module-alias": "^2.1.0",

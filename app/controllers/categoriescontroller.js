@@ -8,9 +8,9 @@ module.exports = {
 	/* create category */
 	create: async (req, res, next) => {
 		logger.info('Creating new category');
-		notEmptyValidation(req,['name']);
+		notEmptyValidation(req,['name','url']);
 
-		const category = await req.models.category.create({name: req.body.name});
+		const category = await modelsutil.create(req,'category',{name: req.body.name,url:req.body.url});
 		return res.status(200).send(category);
 	},
 	
@@ -18,7 +18,6 @@ module.exports = {
 	list: async (req, res, next) => {
 		logger.info('Listing categories');
 		const categories = await req.models.category.findAll();
-		logger.info('PEPE');
 		return res.status(200).send(categories);
     }	
 }

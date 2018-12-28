@@ -14,6 +14,10 @@ module.exports = function (db) {
 		name: {
 			type: Sequelize.STRING(100),
 			allowNull: false
+		},
+		url: {
+			type: Sequelize.STRING(100),
+			allowNull: false
 		}
 	}, { timestamps: false });
 };

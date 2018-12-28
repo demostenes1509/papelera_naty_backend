@@ -1,0 +1,15 @@
+CREATE SEQUENCE categories_sequence START WITH 1000;
+CREATE SEQUENCE contact_sequence START WITH 1000;
+CREATE SEQUENCE mailing_sequence START WITH 1000;
+CREATE SEQUENCE packaging_sequence START WITH 1000;
+CREATE SEQUENCE posters_sequence START WITH 1000;
+CREATE SEQUENCE products_formats_sequence START WITH 1000;
+CREATE SEQUENCE products_pictures_sequence START WITH 1000;
+CREATE SEQUENCE products_sequence START WITH 1000;
+CREATE SEQUENCE registrations_sequence START WITH 1000;
+CREATE SEQUENCE roles_sequence START WITH 1000;
+CREATE SEQUENCE shopping_cart_sequence START WITH 1000;
+CREATE SEQUENCE transactions_detail_sequence START WITH 1000;
+CREATE SEQUENCE transactions_header_sequence START WITH 1000;
+CREATE SEQUENCE users_sequence START WITH 1000;
+CREATE SEQUENCE users_sessions_sequence START WITH 1000;
