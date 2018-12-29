@@ -25,7 +25,8 @@ const getSearchHome = async (req) => {
 const getOffersHome = async (req) => {
 
 	const filter = {
-		where: { is_offer: true, is_visible: true}
+		where: { is_offer: true, is_visible: true},
+		include: [{model:req.db.models.packaging, as:'packaging', required:true}]
 		// include: [{ 
 		// 	model: req.db.models.products, 
 		// 	required: true }]

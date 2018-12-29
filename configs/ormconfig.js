@@ -26,9 +26,14 @@ module.exports = (app) => {
 
 			const categories = require('../app/models/categoriesmodel.js')(sequelize);
 			const products = require('../app/models/productsmodel.js')(sequelize);
+			const packaging = require('../app/models/packagingmodel.js')(sequelize);
 
 			// Add mappings
 			categories.hasMany(products,{ foreignKey: 'category_id', required: true });
+			products.belongsTo(packaging, { as: "packaging", required: true});
+			// packaging.belongsTo(products);
+			// packaging.hasMany(products,{ foreignKey: 'packaging_id', required: true });
+
 
 			app.use((req,res,next) => {
 				req.db = sequelize;

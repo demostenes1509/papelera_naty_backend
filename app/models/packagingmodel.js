@@ -18,7 +18,8 @@ module.exports = function (db) {
 		}
 	}, { 
 		timestamps: false, 
-		underscored: true 
+		underscored: true,
+		tableName: 'packaging'
 	});
 
 	return packaging;
