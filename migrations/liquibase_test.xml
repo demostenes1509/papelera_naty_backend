@@ -4,19 +4,23 @@
 	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
     <changeSet author="maximiliano.ezequiel.carrizo.barrera" id="000">
-        <sqlFile path="migrations/test/000-create-sequences.sql" />
+        <sqlFile path="migrations/test/000-drop-tables-and-sequences.sql" />
     </changeSet>
 
     <changeSet author="maximiliano.ezequiel.carrizo.barrera" id="001">
-        <sqlFile path="migrations/test/001-create-tables.sql" />
+        <sqlFile path="migrations/test/001-create-sequences.sql" />
     </changeSet>
 
     <changeSet author="maximiliano.ezequiel.carrizo.barrera" id="002">
-        <sqlFile path="migrations/test/002-add-foreign-keys.sql" />
+        <sqlFile path="migrations/test/002-create-tables.sql" />
     </changeSet>
 
     <changeSet author="maximiliano.ezequiel.carrizo.barrera" id="003">
-        <sqlFile path="migrations/test/003-populate-tables.sql" />
+        <sqlFile path="migrations/test/003-add-foreign-keys.sql" />
+    </changeSet>
+
+    <changeSet author="maximiliano.ezequiel.carrizo.barrera" id="004">
+        <sqlFile path="migrations/test/004-populate-tables.sql" />
     </changeSet>
 
 </databaseChangeLog>

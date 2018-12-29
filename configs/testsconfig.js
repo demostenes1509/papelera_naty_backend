@@ -5,7 +5,7 @@ const logger = require('@logger')(module);
 const appconfig = require('@appconfig');
 const request = require('supertest');
 
-var server,db,trx;
+var server;
 
 const category		= require(__dirname+'/../tests/categoriestests');
 const home			= require(__dirname+'/../tests/hometests');
@@ -17,12 +17,10 @@ describe('Test Suite', function() {
 	before(function(done) {
 		
 		logger.info("Initiating app");
-		
-		appconfig((error,app,dbx) => {
+		appconfig((error,app,db) => {
 			if(error) {
 				return done(error);
 			}
-			db = dbx;
 			server	= app.listen(process.env.app_http_port, function() {
 				logger.info('Listening on port:'+server.address().port);
 				return done();
