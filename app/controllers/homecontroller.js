@@ -1,11 +1,12 @@
 const modulealias = require('module-alias/register');
 const logger = require("@logger")(module);
 const modelsutil = require("@modelsutil");
+const modelsqueries = require("@modelsqueries");
 const { notEmptyValidation, ValidationError } = require("@validationutil");
 
 const getSideBarInfo = (req) => {
 	const filter = {
-		include: [{ model: req.db.models.products, required: true }]
+		include: [{ model: req.db.models.products, required: true,attributes: ['id','name','url'] }],
 	};
 	return modelsutil.findAll(req,'categories',filter);
 };
@@ -24,17 +25,11 @@ const getSearchHome = async (req) => {
 
 const getOffersHome = async (req) => {
 
-	const filter = {
-		where: { is_offer: true, is_visible: true},
-		include: [
-			{model:req.db.models.packaging, as:'packaging', required:true},
-			{model:req.db.models.productsformats}
-		]
+	const params = {
+		filters: { is_offer: true, is_visible: true}
 	};
 
-	const offers = await modelsutil.findAll(req,'products',filter);
-
-	return {};
+	return await modelsqueries.get_products(req,params);
 };
 
 module.exports = {

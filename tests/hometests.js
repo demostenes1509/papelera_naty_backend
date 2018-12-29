@@ -11,10 +11,18 @@ const self = module.exports = {
             .expect(200);	
 
         const homeinfo = JSON.parse(response.text);
-        // console.log(JSON.stringify(homeinfo));
-        expect(homeinfo.container).not.toBeNull();
+        // console.log(JSON.stringify(homeinfo.sidebar,null,'  '));
         expect(homeinfo.sidebar).not.toBeNull();
         expect(homeinfo.sidebar).toHaveLength(4);
+        expect(homeinfo.container).not.toBeNull();
+        expect(homeinfo.container).toHaveLength(3);
+        expect(homeinfo.container[0].category).not.toBeNull();
+        expect(homeinfo.container[0].packaging).not.toBeNull();
+        expect(homeinfo.container[0].productsformats).not.toBeNull();
+        expect(homeinfo.container[0].productsformats).toHaveLength(9);
+        expect(homeinfo.container[0].productspictures).not.toBeNull();
+        expect(homeinfo.container[0].productspictures).toHaveLength(0);
+
 	}
 
 }

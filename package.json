@@ -18,7 +18,8 @@
     "@errorhandlerconfig": "configs/errorhandlerconfig",
     "@migrationconfig": "configs/migrationconfig",
     "@modelsutil": "utils/modelsutil",
-    "@validationutil": "utils/validationutil"
+    "@validationutil": "utils/validationutil",
+    "@modelsqueries": "app/models/modelsqueries"
   },
   "dependencies": {
     "compression": "^1.7.3",
