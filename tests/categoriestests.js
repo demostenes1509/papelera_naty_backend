@@ -33,15 +33,6 @@ const self = module.exports = {
 
         const categories = JSON.parse(response.text);
         expect(categories.length).toBe(36);
-	},
-
-    list_categories_and_products : async function () {
-        const response = await request("http://localhost:"+process.env.app_http_port)
-            .get('/categoriesproducts')
-            .expect(200);	
-
-        const categories = JSON.parse(response.text);
-        expect(categories.length).toBe(4);
 	}
 
 }

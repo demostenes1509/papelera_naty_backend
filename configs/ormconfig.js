@@ -28,7 +28,6 @@ module.exports = (app) => {
 			const products = require('../app/models/productsmodel.js')(sequelize);
 
 			// Add mappings
-			// products.hasOne(categories, { foreignKey: 'category_id', required: true });
 			categories.hasMany(products,{ foreignKey: 'category_id', required: true });
 
 			app.use((req,res,next) => {

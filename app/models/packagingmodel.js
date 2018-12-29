@@ -6,7 +6,7 @@ const Sequelize = require('sequelize');
 
 module.exports = function (db) {
 
-	const products = db.define('products', {
+	const packaging = db.define('packaging', {
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
@@ -15,23 +15,11 @@ module.exports = function (db) {
 		name: {
 			type: Sequelize.STRING(100),
 			allowNull: false
-		},
-		url: {
-			type: Sequelize.STRING(100),
-			allowNull: false
-		},
-		is_visible: {
-			type: Sequelize.BOOLEAN,
-			allowNull: false
-		},
-		is_offer: {
-			type: Sequelize.BOOLEAN,
-			allowNull: false
 		}
 	}, { 
 		timestamps: false, 
 		underscored: true 
 	});
 
-	return products;
+	return packaging;
 };

@@ -26,8 +26,12 @@ const wrap = (db,fn) => {
 
 module.exports = (app,db) => {
 
-    app.get 	( '/categories',                   wrap(db,controllers.categories.list));
-    app.get 	( '/categoriesproducts',           wrap(db,controllers.categories.list_categories_and_products));
-    app.post 	( '/categories',                   wrap(db,controllers.categories.create));
+    app.get 	( '/categories',                    wrap(db,controllers.categories.list));
+    app.post 	( '/categories',                    wrap(db,controllers.categories.create));
+
+    app.get 	( '/',                              wrap(db,controllers.home.get_home));
+    app.get 	( '/search/:search',                wrap(db,controllers.home.get_home));
+    app.get 	( '/:category',                     wrap(db,controllers.home.get_home));
+    app.get 	( '/:category/search',              wrap(db,controllers.home.get_home));
 
 };

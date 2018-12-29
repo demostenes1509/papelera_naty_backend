@@ -20,20 +20,6 @@ module.exports = {
 		logger.info('Listing categories');
 		const categories = await modelsutil.findAll(req,'categories',{});
 		return res.status(200).send(categories);
-	},
+	}
 		
-	/* list categories and products */
-	list_categories_and_products: async (req, res, next) => {
-		logger.info('Listing categories and products');
-
-		const filter = {
-			include: [{
-				model: req.db.models.products,
-				required: true
-			}]
-		};
-
-		const categories = await modelsutil.findAll(req,'categories',filter);
-		return res.status(200).send(categories);
-    }	
 }

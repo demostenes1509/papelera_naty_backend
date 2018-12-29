@@ -7,7 +7,8 @@ const request = require('supertest');
 
 var server,db,trx;
 
-const category		= require(__dirname+'/../tests/categories_tests');
+const category		= require(__dirname+'/../tests/categoriestests');
+const home			= require(__dirname+'/../tests/hometests');
 
 describe('Test Suite', function() {
 	
@@ -33,20 +34,23 @@ describe('Test Suite', function() {
         logger.info('---------------- Starting test -----------------');
 		done();
 	});	
-    
+	
     describe('Categories', function() {
 		it('List categories', category.list);
-		it('List categories and products', category.list_categories_and_products);
-
         it('Create new Category', category.create);
         it('Create without name', category.create_with_name);
-    });
+	});
+
+    describe('Home', function() {
+		it('Get Offers', home.get_offers);
+	});
+
 
 	after(function (){
- 		
- 		logger.info('Stopping server');
-		server.close();
-		logger.info('Server stopped');
-
+		if(server) {
+			logger.info('Stopping server');
+			server.close();
+			logger.info('Server stopped');
+		}
 	});
 });

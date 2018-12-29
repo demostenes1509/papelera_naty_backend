@@ -1,5 +1,6 @@
 'use strict';
 
 module.exports = {
-	categories:				require('./categoriescontroller')
+	categories:				require('./categoriescontroller'),
+	home:					require('./homecontroller')
 };
