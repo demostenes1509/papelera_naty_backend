@@ -26,10 +26,10 @@ const getOffersHome = async (req) => {
 
 	const filter = {
 		where: { is_offer: true, is_visible: true},
-		include: [{model:req.db.models.packaging, as:'packaging', required:true}]
-		// include: [{ 
-		// 	model: req.db.models.products, 
-		// 	required: true }]
+		include: [
+			{model:req.db.models.packaging, as:'packaging', required:true},
+			{model:req.db.models.productsformats}
+		]
 	};
 
 	const offers = await modelsutil.findAll(req,'products',filter);
