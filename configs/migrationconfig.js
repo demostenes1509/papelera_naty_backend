@@ -13,7 +13,7 @@ module.exports = async (db,command) => {
         db_password
     } = process.env;
 
-    return liquibase({   changeLogFile: `migrations/liquibase_${NODE_ENV}.xml`,
+    await liquibase({   changeLogFile: `migrations/liquibase_${NODE_ENV}.xml`,
                         url: `jdbc:postgresql://${db_host}:${db_port}/${db_database}?charSet=UTF-8`,
                         username: db_user,
                         password: db_password
