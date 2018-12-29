@@ -1,18 +1,18 @@
+DROP TABLE IF EXISTS shopping_cart;
+DROP TABLE IF EXISTS transactions_detail;
+DROP TABLE IF EXISTS transactions_header;
+DROP TABLE IF EXISTS products_formats;
+DROP TABLE IF EXISTS products_pictures;
+DROP TABLE IF EXISTS posters;
+DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS contact;
 DROP TABLE IF EXISTS mailing;
 DROP TABLE IF EXISTS packaging;
-DROP TABLE IF EXISTS posters;
-DROP TABLE IF EXISTS products_formats;
-DROP TABLE IF EXISTS products_pictures;
-DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS registrations;
-DROP TABLE IF EXISTS roles;
-DROP TABLE IF EXISTS shopping_cart;
-DROP TABLE IF EXISTS transactions_detail;
-DROP TABLE IF EXISTS transactions_header;
-DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS users_sessions;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS roles;
 
 DROP SEQUENCE IF EXISTS categories_sequence;
 DROP SEQUENCE IF EXISTS contact_sequence;

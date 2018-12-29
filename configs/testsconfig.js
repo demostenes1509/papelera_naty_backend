@@ -3,7 +3,9 @@
 const modulealias = require('module-alias/register');
 const logger = require('@logger')(module);
 const appconfig = require('@appconfig');
+const migrationconfig = require("@migrationconfig");
 const request = require('supertest');
+const Sequelize = require('sequelize');
 
 var server;
 
@@ -14,18 +16,33 @@ describe('Test Suite', function() {
 	
 	this.timeout(0);
 
-	before(function(done) {
-		
-		logger.info("Initiating app");
-		appconfig((error,app,db) => {
-			if(error) {
-				return done(error);
-			}
-			server	= app.listen(process.env.app_http_port, function() {
+	before(async () => {
+
+		logger.info('Configuring app');
+		const data = await appconfig(false);
+
+		logger.info('Dropping changelog');
+		await data.db.query('DROP TABLE IF EXISTS databasechangelog', { type: Sequelize.QueryTypes.SELECT });
+
+		logger.info('Running migrations');
+        await migrationconfig(data.db,'update');
+
+		server = data.app.listen(process.env.app_http_port, function() {
+			logger.info('Listening on port:'+server.address().port);
+		});			
+
+
+		/*
+		Promise.resolve(appconfig())
+		.then(data => {
+			server = data.app.listen(process.env.app_http_port, function() {
 				logger.info('Listening on port:'+server.address().port);
-				return done();
+				done();
 			});			
-		});
+		})
+		.catch(error => {
+			done(error);
+		});*/
 	});
 	
 	beforeEach(function(done) {

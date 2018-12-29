@@ -7,33 +7,29 @@ const routesconfig = require("@routesconfig");
 const expressconfig = require("@expressconfig");
 const errorhandlerconfig = require("@errorhandlerconfig");
 
-module.exports = async (callback) => {
+module.exports = async (runmigrations) => {
 
-    try {
+    logger.info('Creating express');
+    const app = express();
 
-        logger.info('Creating express');
-        const app = express();
+    logger.info('Configuring express');
+    expressconfig(app);
 
-        logger.info('Configuring express');
-        expressconfig(app);
+    logger.info('Configuring orm');
+    const db = await ormconfig(app);
 
-        logger.info('Configuring orm');
-        const db = await ormconfig(app);
-
+    if(runmigrations) {
         logger.info('Running migrations');
         await migrationconfig(db,'update');
-
-        logger.info('Configuring routes');
-        await routesconfig(app,db);
-
-        logger.info('Configuring error handler');
-        errorhandlerconfig(app);
-
-        return callback(null,app,db);
     }
-    catch(error) {
-        callback(error);
-    }
+
+    logger.info('Configuring routes');
+    await routesconfig(app,db);
+
+    logger.info('Configuring error handler');
+    errorhandlerconfig(app);
+
+    return {app,db};
 
 
 };
