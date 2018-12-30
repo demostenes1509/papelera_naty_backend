@@ -1,9 +1,4 @@
-'use strict';
-
-const ma = require('module-alias/register');
-const logger = require("configs/loggerconfig")(module);
-
-const self = module.exports = {
+module.exports = {
 	create : (req,model,data) => {
 		return req.db.models[model].create(data,{transaction: req.trx});
 	},

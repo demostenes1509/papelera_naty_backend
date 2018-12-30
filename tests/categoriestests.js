@@ -1,9 +1,7 @@
-const modulealias = require('module-alias/register');
-const logger = require('configs/loggerconfig')(module);
 const request = require('supertest');
 const expect = require('expect');
 
-const self = module.exports = {
+module.exports = {
 
     create : async function () {
         const response = await request("http://localhost:"+process.env.app_http_port)

@@ -1,6 +1,3 @@
-'use strict';
-
-const modulealias = require('module-alias/register');
 const logger = require('configs/loggerconfig')(module);
 const appconfig = require('configs/appconfig');
 const migrationconfig = require("configs/migrationconfig");
