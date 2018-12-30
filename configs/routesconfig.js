@@ -1,6 +1,4 @@
-const modulealias = require('module-alias/register');
-const logger = require("configs/loggerconfig")(module);
-const controllers = require('../app/controllers/controller');
+const controllers = require('app/controllers/controller');
 
 const wrap = (db,fn) => {
 
