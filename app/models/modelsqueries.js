@@ -1,6 +1,4 @@
-const modulealias = require('module-alias/register');
-const logger = require("@logger")(module);
-const modelsutil = require("@modelsutil");
+const modelsutil = require("utils/modelsutil");
 
 module.exports = {
 

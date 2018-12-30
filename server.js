@@ -1,8 +1,6 @@
 
-const modulealias = require('module-alias/register');
-const appconfig = require('@appconfig');
-const logger = require("@logger")(module);
-const http = require('http');
+const appconfig = require('configs/appconfig');
+const logger = require("configs/loggerconfig")(module);
 
 logger.info('Configuring app');
 Promise.resolve(appconfig(true))

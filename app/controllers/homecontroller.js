@@ -1,7 +1,6 @@
-const modulealias = require('module-alias/register');
-const logger = require("@logger")(module);
-const modelsutil = require("@modelsutil");
-const modelsqueries = require("@modelsqueries");
+const logger = require("configs/loggerconfig")(module);
+const modelsutil = require("utils/modelsutil");
+const modelsqueries = require("app/models/modelsqueries");
 
 const getSideBarInfo = (req) => {
 	const filter = {
@@ -10,6 +9,7 @@ const getSideBarInfo = (req) => {
 	return modelsutil.findAll(req,'categories',filter);
 };
 
+/*
 const getProductHome = async (req) => {
 	return {};
 };
@@ -21,6 +21,7 @@ const getCategoryHome = async (req) => {
 const getSearchHome = async (req) => {
 	return {};
 };
+*/
 
 const getOffersHome = async (req) => {
 
@@ -37,15 +38,15 @@ module.exports = {
 		let container;
 		if(req.params.product) {
 			logger.info('Getting products info');
-			container=await getProductHome(req);
+			// container=await getProductHome(req);
 		}
 		else if(req.params.category) {
 			logger.info('Getting categories info');
-			container=await getCategoryHome(req);
+			// container=await getCategoryHome(req);
 		} 
 		else  if(req.params.search) {
 			logger.info('Getting search info');
-			container=await getSearchHome(req);
+			// container=await getSearchHome(req);
 		}
 		else {
 			logger.info('Getting offers info');

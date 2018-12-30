@@ -1,6 +1,4 @@
-const modulealias = require('module-alias/register');
-const logger = require("@logger")(module);
-const controllers = require('../app/controllers/controller');
+const controllers = require('app/controllers/controller');
 
 const wrap = (db,fn) => {
 
@@ -12,7 +10,6 @@ const wrap = (db,fn) => {
             return fn(req,res,next);
         })
         .then(() => {
-            next();
             if(process.env.NODE_ENV==='test') return req.trx.rollback();
             else return req.trx.commit();
         })
