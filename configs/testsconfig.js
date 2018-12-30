@@ -2,9 +2,10 @@ const logger = require('configs/loggerconfig')(module);
 const appconfig = require('configs/appconfig');
 const migrationconfig = require("configs/migrationconfig");
 const Sequelize = require('sequelize');
+const { describe, before, it, after } = require('mocha');
 
-const category = require(__dirname+'/../tests/categoriestests');
-const home = require(__dirname+'/../tests/hometests');
+const category = require('tests/categoriestests');
+const home = require('tests/hometests');
 
 describe('Test Suite', function() {
 	

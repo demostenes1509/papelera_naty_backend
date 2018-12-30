@@ -1,11 +1,11 @@
 const express = require('express');
-const dotentflow = require('dotenv-flow').config();
 const logger = require("configs/loggerconfig")(module);
 const ormconfig = require("configs/ormconfig");
 const migrationconfig = require("configs/migrationconfig");
 const routesconfig = require("configs/routesconfig");
 const expressconfig = require("configs/expressconfig");
 const errorhandlerconfig = require("configs/errorhandlerconfig");
+require('dotenv-flow').config();
 
 module.exports = async (runmigrations) => {
 
