@@ -197,6 +197,7 @@ module.exports = {
         "no-useless-constructor": "error",
         "no-useless-rename": "error",
         "no-useless-return": "error",
+        "no-console": "off",
         "no-var": "off",
         "no-void": "error",
         "no-warning-comments": "error",

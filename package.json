@@ -4,9 +4,9 @@
   "description": "Papelera Naty Backend",
   "main": "server.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development node server",
-    "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha  --exit -u exports -R spec configs/testsconfig",
-    "singletest": "cross-env NODE_ENV=test nyc --reporter=html mocha --exit --recursive -R spec $TESTTORUN"
+    "start": "cross-env NODE_PATH=. NODE_ENV=development node server",
+    "test": "cross-env NODE_PATH=. NODE_ENV=test nyc --reporter=lcov mocha  --exit -u exports -R spec configs/testsconfig",
+    "singletest": "cross-env NODE_PATH=. NODE_ENV=test nyc --reporter=html mocha --exit --recursive -R spec $TESTTORUN"
   },
   "author": "Maximiliano Carrizo",
   "_moduleAliases": {
@@ -39,6 +39,7 @@
     "pg-hstore": "^2.3.2",
     "promise.prototype.finally": "^3.1.0",
     "sequelize": "^4.42.0",
+    "sequelize-log-syntax-colors": "^2.0.0",
     "supertest": "^3.3.0",
     "winston": "^3.1.0"
   },

@@ -2,7 +2,6 @@ const modulealias = require('module-alias/register');
 const logger = require("@logger")(module);
 const modelsutil = require("@modelsutil");
 const modelsqueries = require("@modelsqueries");
-const { notEmptyValidation, ValidationError } = require("@validationutil");
 
 const getSideBarInfo = (req) => {
 	const filter = {
@@ -34,7 +33,7 @@ const getOffersHome = async (req) => {
 
 module.exports = {
 
-	get_home: async (req, res, next) => {
+	get_home: async (req, res) => {
 		let container;
 		if(req.params.product) {
 			logger.info('Getting products info');

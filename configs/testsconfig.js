@@ -30,11 +30,6 @@ describe('Test Suite', function() {
 		});			
 	});
 	
-	beforeEach(function(done) {
-        logger.info('---------------- Starting test -----------------');
-		done();
-	});	
-	
     describe('Categories', function() {
 		it('List categories', category.list);
         it('Create new Category', category.create);
