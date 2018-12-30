@@ -30,8 +30,8 @@ describe('Test Suite', function() {
 	
     describe('Categories', function() {
 		it('List categories', category.list);
-        it('Create new Category', category.create);
-        it('Create without name', category.create_with_name);
+       it('Create new Category', category.create);
+       it('Create without name', category.create_with_name);
 	});
 
     describe('Home', function() {

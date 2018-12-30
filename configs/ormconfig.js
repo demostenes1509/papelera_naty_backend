@@ -39,10 +39,10 @@ module.exports = async (app) => {
 
 	logger.debug('Definig mappings');
 	categories.hasMany(products,{ foreignKey: 'category_id', required: true });
-	products.belongsTo(packaging, { as: "packaging", required: true});
-	products.belongsTo(categories, { as: "category", required: true});
-	products.hasMany(productsformats,{ foreignKey: 'product_id', required: true });
-	products.hasMany(productspictures,{ foreignKey: 'product_id', required: true });
+	products.belongsTo(packaging, { foreignKey: 'packaging_id', as: "packaging", required: true});
+	products.belongsTo(categories, {foreignKey: 'category_id', as: "category", required: true});
+	products.hasMany(productsformats,{ foreignKey: 'product_id', as: "productsformats", required: true });
+	products.hasMany(productspictures,{ foreignKey: 'product_id', as: "productspictures", required: true });
 
 	// Add sequelize on request
 	app.use((req,res,next) => {

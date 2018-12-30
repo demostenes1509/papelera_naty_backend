@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = function(sequelize) {
-  return sequelize.define('packaging', {
+  return sequelize.define('roles', {
     id: {
       type: Sequelize.BIGINT,
       allowNull: false,
@@ -14,7 +14,7 @@ module.exports = function(sequelize) {
       unique: true
     }
   }, {
-    tableName: 'packaging',
+    tableName: 'roles',
     timestamps: false
   });
 };

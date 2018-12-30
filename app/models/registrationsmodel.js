@@ -1,25 +1,33 @@
 const Sequelize = require('sequelize');
 
 module.exports = function(sequelize) {
-  return sequelize.define('categories', {
+  return sequelize.define('registrations', {
     id: {
       type: Sequelize.BIGINT,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    name: {
+    email_address: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    token: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true
     },
-    url: {
-      type: Sequelize.STRING,
+    verified: {
+      type: Sequelize.BOOLEAN,
       allowNull: false,
-      unique: true
+      defaultValue: false
+    },
+    sent: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false
     }
   }, {
-    tableName: 'categories',
+    tableName: 'registrations',
     timestamps: false
   });
 };

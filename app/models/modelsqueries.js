@@ -9,8 +9,8 @@ module.exports = {
             include: [
                 {model:req.db.models.packaging, as:'packaging', required:true},
                 {model:req.db.models.categories, as:'category', required:true},
-                {model:req.db.models.productsformats},
-                {model:req.db.models.productspictures}
+                {model:req.db.models.productsformats, as:'productsformats'},
+                {model:req.db.models.productspictures, as: 'productspictures'}
             ]
         };
 

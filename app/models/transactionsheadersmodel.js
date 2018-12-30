@@ -1,45 +1,47 @@
 const Sequelize = require('sequelize');
 
 module.exports = function(sequelize) {
-  return sequelize.define('productsformats', {
+  return sequelize.define('transactionsheader', {
     id: {
       type: Sequelize.BIGINT,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    product_id: {
+    user_id: {
       type: Sequelize.BIGINT,
       allowNull: false,
       references: {
-        model: 'products',
+        model: 'users',
         key: 'id'
-      },
-      unique: true
+      }
     },
-    format: {
+    purchase_date: {
+      type: Sequelize.DATE,
+      allowNull: false
+    },
+    delivery_type: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    payment_type: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    total_purchase: {
+      type: Sequelize.DOUBLE,
+      allowNull: false
+    },
+    mail_sent: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false
+    },
+    comments: {
       type: Sequelize.STRING,
-      allowNull: false,
-      primaryKey: true
-    },
-    quantity: {
-      type: Sequelize.DOUBLE,
-      allowNull: false
-    },
-    units: {
-      type: Sequelize.DOUBLE,
-      allowNull: false
-    },
-    wholesale: {
-      type: Sequelize.DOUBLE,
-      allowNull: false
-    },
-    retail: {
-      type: Sequelize.DOUBLE,
-      allowNull: false
+      allowNull: true
     }
   }, {
-    tableName: 'products_formats',
+    tableName: 'transactions_header',
     timestamps: false
   });
 };
