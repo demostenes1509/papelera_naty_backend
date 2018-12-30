@@ -9,9 +9,10 @@ module.exports = {
             .expect(200);	
 
         const homeinfo = JSON.parse(response.text);
-        // console.log(JSON.stringify(homeinfo.sidebar,null,'  '));
+        console.log(JSON.stringify(homeinfo,null,'  '));
         expect(homeinfo.sidebar).not.toBeNull();
-        expect(homeinfo.sidebar).toHaveLength(4);
+        expect(homeinfo.sidebar.categories).not.toBeNull();
+        expect(homeinfo.sidebar.categories).toHaveLength(4);
         expect(homeinfo.container).not.toBeNull();
         expect(homeinfo.container).toHaveLength(3);
         expect(homeinfo.container[0].category).not.toBeNull();
