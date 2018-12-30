@@ -1,4 +1,3 @@
-const modulealias = require('module-alias/register');
 const liquibase = require('liquibase');
 
 module.exports = async (db,command) => {

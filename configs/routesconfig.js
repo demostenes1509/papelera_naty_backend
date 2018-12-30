@@ -10,7 +10,6 @@ const wrap = (db,fn) => {
             return fn(req,res,next);
         })
         .then(() => {
-            next();
             if(process.env.NODE_ENV==='test') return req.trx.rollback();
             else return req.trx.commit();
         })

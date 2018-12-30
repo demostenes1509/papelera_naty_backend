@@ -1,6 +1,3 @@
-'use strict';
-
-const modulealias = require('module-alias/register');
 const Sequelize = require('sequelize');
 
 module.exports = function (db) {
