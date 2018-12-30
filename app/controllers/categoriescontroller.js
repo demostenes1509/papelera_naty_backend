@@ -1,7 +1,7 @@
 const modulealias = require('module-alias/register');
 const logger = require("configs/loggerconfig")(module);
-const modelsutil = require("@modelsutil");
-const { notEmptyValidation } = require("@validationutil");
+const modelsutil = require("utils/modelsutil");
+const { notEmptyValidation } = require("utils/validationutil");
 
 module.exports = {
 

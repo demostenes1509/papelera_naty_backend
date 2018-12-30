@@ -1,7 +1,7 @@
 const modulealias = require('module-alias/register');
 const logger = require("configs/loggerconfig")(module);
-const modelsutil = require("@modelsutil");
-const modelsqueries = require("@modelsqueries");
+const modelsutil = require("utils/modelsutil");
+const modelsqueries = require("app/models/modelsqueries");
 
 const getSideBarInfo = (req) => {
 	const filter = {

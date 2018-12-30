@@ -3,7 +3,7 @@
 const modulealias = require('module-alias/register');
 const logger = require('configs/loggerconfig')(module);
 const appconfig = require('configs/appconfig');
-const migrationconfig = require("@migrationconfig");
+const migrationconfig = require("configs/migrationconfig");
 const Sequelize = require('sequelize');
 
 const category = require(__dirname+'/../tests/categoriestests');
