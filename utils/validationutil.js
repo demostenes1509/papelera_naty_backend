@@ -1,6 +1,6 @@
 const ValidationError = require('./exceptions/ValidationError');
 
-const self = module.exports = {
+module.exports = {
 
     notEmptyValidation : (req,fields) => {
         for(const field of fields) {

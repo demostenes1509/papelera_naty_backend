@@ -1,3 +1,4 @@
+require('dotenv-flow').config();
 const logger = require('configs/loggerconfig')(module);
 const appconfig = require('configs/appconfig');
 const migrationconfig = require("configs/migrationconfig");

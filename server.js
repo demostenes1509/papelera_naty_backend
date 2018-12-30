@@ -1,4 +1,4 @@
-
+require('dotenv-flow').config();
 const appconfig = require('configs/appconfig');
 const logger = require("configs/loggerconfig")(module);
 

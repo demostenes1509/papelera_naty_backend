@@ -1,6 +1,6 @@
 const path = require('path');
 const { createLogger, format, transports } = require('winston');
-const { combine, timestamp, label, printf } = format;
+const { timestamp, label, printf } = format;
 
 module.exports = function(callingModule) {
 	

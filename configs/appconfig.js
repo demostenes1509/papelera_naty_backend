@@ -5,7 +5,6 @@ const migrationconfig = require("configs/migrationconfig");
 const routesconfig = require("configs/routesconfig");
 const expressconfig = require("configs/expressconfig");
 const errorhandlerconfig = require("configs/errorhandlerconfig");
-require('dotenv-flow').config();
 
 module.exports = async (runmigrations) => {
 
