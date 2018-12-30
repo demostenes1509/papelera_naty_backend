@@ -1,4 +1,3 @@
-const modulealias = require('module-alias/register');
 const logger = require("configs/loggerconfig")(module);
 const modelsutil = require("utils/modelsutil");
 const modelsqueries = require("app/models/modelsqueries");
