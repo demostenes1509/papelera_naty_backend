@@ -1,7 +1,7 @@
 'use strict';
 
 const ma = require('module-alias/register');
-const logger = require("@logger")(module);
+const logger = require("configs/loggerconfig")(module);
 
 const self = module.exports = {
 	create : (req,model,data) => {

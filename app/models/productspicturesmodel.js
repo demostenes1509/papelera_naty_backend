@@ -1,7 +1,7 @@
 'use strict';
 
 const modulealias = require('module-alias/register');
-const logger = require("@logger")(module);
+const logger = require("configs/loggerconfig")(module);
 const Sequelize = require('sequelize');
 
 module.exports = function (db) {
