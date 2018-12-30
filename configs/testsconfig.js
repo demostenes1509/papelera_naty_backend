@@ -4,16 +4,14 @@ const modulealias = require('module-alias/register');
 const logger = require('@logger')(module);
 const appconfig = require('@appconfig');
 const migrationconfig = require("@migrationconfig");
-const request = require('supertest');
 const Sequelize = require('sequelize');
 
-var server;
-
-const category		= require(__dirname+'/../tests/categoriestests');
-const home			= require(__dirname+'/../tests/hometests');
+const category = require(__dirname+'/../tests/categoriestests');
+const home = require(__dirname+'/../tests/hometests');
 
 describe('Test Suite', function() {
 	
+	var server;
 	this.timeout(0);
 
 	before(async () => {
@@ -30,19 +28,6 @@ describe('Test Suite', function() {
 		server = data.app.listen(process.env.app_http_port, function() {
 			logger.info('Listening on port:'+server.address().port);
 		});			
-
-
-		/*
-		Promise.resolve(appconfig())
-		.then(data => {
-			server = data.app.listen(process.env.app_http_port, function() {
-				logger.info('Listening on port:'+server.address().port);
-				done();
-			});			
-		})
-		.catch(error => {
-			done(error);
-		});*/
 	});
 	
 	beforeEach(function(done) {
@@ -59,7 +44,6 @@ describe('Test Suite', function() {
     describe('Home', function() {
 		it('Get Offers', home.get_offers);
 	});
-
 
 	after(function (){
 		if(server) {

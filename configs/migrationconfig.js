@@ -1,5 +1,4 @@
 const modulealias = require('module-alias/register');
-const logger = require("@logger")(module);
 const liquibase = require('liquibase');
 
 module.exports = async (db,command) => {

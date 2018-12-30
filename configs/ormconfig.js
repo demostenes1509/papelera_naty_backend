@@ -5,9 +5,9 @@ const Sequelize = require('sequelize');
 
 module.exports = async (app) => {
 
-	const { db_database, db_host, db_port, db_user, db_password } = process.env;
+	const { db_database, db_host, db_port, db_user, db_password, db_show_sql } = process.env;
 
-	const sequelize = new Sequelize(db_database, db_user, db_password, {
+	const options = {
 		host: db_host,
 		dialect: 'postgres',
 		operatorsAliases: false,
@@ -17,7 +17,11 @@ module.exports = async (app) => {
 			acquire: 30000,
 			idle: 10000
 		}
-	});
+	};
+
+	if(db_show_sql==='false') options.logging = false;
+
+	const sequelize = new Sequelize(db_database, db_user, db_password, options);
 	
 	sequelize.authenticate();
 

@@ -15,16 +15,17 @@ module.exports = function(callingModule) {
     const myFormat = printf(info => {
         return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`;
     });
-      
+
     const logger = createLogger({
         level: process.env.log_level,
-        format: combine(
-            label({ label: mylabel() }),
-            timestamp(),
-            myFormat,
-            format.colorize()
-          ),
-        transports: [ new transports.Console() ]
+        transports: [ new transports.Console({
+          format: format.combine(
+                    label({ label: mylabel() }),
+                    timestamp(),
+                    format.colorize(),
+                    myFormat
+                  )
+        }) ]
       });
 
 	return logger;
