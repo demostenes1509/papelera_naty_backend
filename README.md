@@ -2,9 +2,9 @@
 
 ## Comandos a correr post cloning
 
-npm install
-npm install -g nyc
-npm install -g mocha
+### npm install
+### npm install -g nyc
+### npm install -g mocha
 
 ## Ademas
 
