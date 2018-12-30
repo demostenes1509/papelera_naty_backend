@@ -1,4 +1,3 @@
-const modulealias = require('module-alias/register');
 const logger = require("configs/loggerconfig")(module);
 
 module.exports = (app) => {

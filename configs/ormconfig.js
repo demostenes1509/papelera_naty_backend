@@ -1,4 +1,3 @@
-const modulealias = require('module-alias/register');
 const logger = require("configs/loggerconfig")(module);
 const Sequelize = require('sequelize');
 const colors = require('sequelize-log-syntax-colors');

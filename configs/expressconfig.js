@@ -1,6 +1,3 @@
-'use strict';
-
-const ma = require('module-alias/register');
 const logger = require("configs/loggerconfig")(module);
 const pf = require('promise.prototype.finally');
 const compression = require('compression');
