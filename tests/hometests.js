@@ -9,10 +9,12 @@ module.exports = {
             .expect(200);	
 
         const homeinfo = JSON.parse(response.text);
-        console.log(JSON.stringify(homeinfo,null,'  '));
+        // console.log(JSON.stringify(homeinfo,null,'  '));
         expect(homeinfo.sidebar).not.toBeNull();
-        expect(homeinfo.sidebar.categories).not.toBeNull();
-        expect(homeinfo.sidebar.categories).toHaveLength(4);
+        expect(homeinfo.sidebar.sidebarCategories).not.toBeNull();
+        expect(homeinfo.sidebar.sidebarCategories).toHaveLength(4);
+        expect(homeinfo.sidebar.sidebarOffers).not.toBeNull();
+        expect(homeinfo.sidebar.sidebarOffers).toHaveLength(2);
         expect(homeinfo.container).not.toBeNull();
         expect(homeinfo.container).toHaveLength(3);
         expect(homeinfo.container[0].category).not.toBeNull();
@@ -21,6 +23,9 @@ module.exports = {
         expect(homeinfo.container[0].productsformats).toHaveLength(9);
         expect(homeinfo.container[0].productspictures).not.toBeNull();
         expect(homeinfo.container[0].productspictures).toHaveLength(0);
+        expect(homeinfo.footer).not.toBeNull();
+        expect(homeinfo.footer.footerCategories).not.toBeNull();
+        expect(homeinfo.footer.footerCategories).toHaveLength(4);
 
 	}
 

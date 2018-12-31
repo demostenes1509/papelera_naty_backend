@@ -14,8 +14,8 @@ module.exports = {
             ]
         };
 
-        // if(params.limit) filter.limit = params.limit;
-    
+        if(params.limit) filter.limit = params.limit;
+
         return modelsutil.findAll(req,'products',filter);        
     }
 
