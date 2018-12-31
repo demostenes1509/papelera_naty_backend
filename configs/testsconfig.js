@@ -4,9 +4,7 @@ const appconfig = require('configs/appconfig');
 const migrationconfig = require("configs/migrationconfig");
 const Sequelize = require('sequelize');
 const { describe, before, it, after } = require('mocha');
-
-const category = require('tests/categoriestests');
-const home = require('tests/hometests');
+const {category,sidebar,footer, home} = require('tests');
 
 describe('Test Suite', function() {
 	
@@ -37,6 +35,14 @@ describe('Test Suite', function() {
 
     describe('Home', function() {
 		it('Get Offers', home.get_offers);
+	});
+
+	describe('Footer', function() {
+		it('Get footer', footer.get);
+	});
+
+	describe('Sidebar', function() {
+		it('Get sidebar', sidebar.get);
 	});
 
 	after(function (){

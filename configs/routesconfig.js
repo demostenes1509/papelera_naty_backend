@@ -1,4 +1,4 @@
-const controllers = require('app/controllers/controller');
+const {categories,sidebar,home,footer} = require('app/controllers');
 
 const wrap = (db,fn) => {
 
@@ -23,12 +23,14 @@ const wrap = (db,fn) => {
 
 module.exports = (app,db) => {
 
-    app.get 	( '/categories',                    wrap(db,controllers.categories.list));
-    app.post 	( '/categories',                    wrap(db,controllers.categories.create));
+    app.get 	( '/categories',                    wrap(db,categories.list));
+    app.post 	( '/categories',                    wrap(db,categories.create));
 
-    app.get 	( '/',                              wrap(db,controllers.home.get_offers));
-    app.get 	( '/search/:search',                wrap(db,controllers.home.get_search));
-    app.get 	( '/:category',                     wrap(db,controllers.home.get_category));
-    app.get 	( '/:category/:product',            wrap(db,controllers.home.get_product));
+    app.get 	( '/sidebar',                       wrap(db,sidebar.get));
+
+    app.get 	( '/footer',                        wrap(db,footer.get));
+
+    app.get 	( '/',                              wrap(db,home.get_offers));
+
 
 };
