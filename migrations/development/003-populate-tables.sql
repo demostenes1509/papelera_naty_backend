@@ -46,14 +46,13 @@ INSERT INTO packaging (id,name) VALUES
 INSERT INTO products (id,category_id,packaging_id,name,description,url,show_format,is_visible,is_offer) VALUES 
 (1,1,2,'Bolsa de banditas elásticas','Bolsa de banditas elásticas','bolsa-bandas-elasticas',false,true,true),
 (2,5,3,'Bolsas de camisetas económicas','Bolsas de camisetas económicas','bolsas-camisetas-economicas',false,true,true),
-(3,5,2,'Bolsas de camisetas reforzadas','Bolsas de camisetas reforzadas','bolsas-camisetas-reforzadas',false,true,false),
-(4,5,5,'Bolsas de consorcio','Bolsas de consorcio','bolsas-consorcio',false,true,false),
-(5,5,2,'Bolsas de residuos','Bolsas de residuos','bolsas-residuos',false,true,false),
-(6,5,2,'Bolsas de papel sulfito','Bolsas de papel sulfito','bolsas-papel-sulfito',false,true,false),
-(7,5,2,'Bolsas de polipropileno','Bolsas de polipropileno','bolsas-polipropileno',false,true,false),
-(8,2,3,'Productos de Aluminio','Productos de Aluminio','productos-aluminio',false,true,false),
+(3,5,2,'Bolsas de camisetas reforzadas','Bolsas de camisetas reforzadas','bolsas-camisetas-reforzadas',false,true,true),
+(4,5,5,'Bolsas de consorcio','Bolsas de consorcio','bolsas-consorcio',false,true,true),
+(5,5,2,'Bolsas de residuos','Bolsas de residuos','bolsas-residuos',false,true,true),
+(6,5,2,'Bolsas de papel sulfito','Bolsas de papel sulfito','bolsas-papel-sulfito',false,true,true),
+(7,5,2,'Bolsas de polipropileno','Bolsas de polipropileno','bolsas-polipropileno',false,true,true),
+(8,2,3,'Productos de Aluminio','Productos de Aluminio','productos-aluminio',false,true,true),
 (9,7,1,'Caja de madera','Caja de madera','caja-madera',false,true,true);
-
 
 
 INSERT INTO products_formats (id,product_id,format,quantity,units,wholesale,retail) VALUES 
