@@ -29,12 +29,13 @@ describe('Test Suite', function() {
 	
     describe('Categories', function() {
 		it('List categories', category.list);
-       it('Create new Category', category.create);
-       it('Create without name', category.create_with_name);
+		it('Create new Category', category.create);
+		it('Create without name', category.create_with_name);
 	});
 
     describe('Home', function() {
 		it('Get Offers', home.get_offers);
+		it('Get Category', home.get_category);
 	});
 
 	describe('Footer', function() {

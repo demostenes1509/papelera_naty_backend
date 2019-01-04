@@ -10,11 +10,25 @@ module.exports = {
 			filters: { is_offer: true, is_visible: true}
 		};
 
-		const offers = await modelsqueries.get_products(req,params);
+		const products = await modelsqueries.get_products(req,params);
 
 		return res.status(200).send({
-			offers
+			products
 		});
-	}
+	},
+
+	get_category: async (req, res) => {
+		logger.info('Getting Category info');
+
+		const params = {
+			filters: { is_offer: true, is_visible: true}
+		};
+
+		const products = await modelsqueries.get_products(req,params);
+
+		return res.status(200).send({
+			products
+		});
+	}	
 
 }
