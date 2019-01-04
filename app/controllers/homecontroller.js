@@ -18,7 +18,7 @@ module.exports = {
 	},
 
 	get_category: async (req, res) => {
-		logger.info('Getting Category info');
+		logger.info('Getting Category info:'+req.params.category);
 
 		const params = {
 			filters: { is_offer: true, is_visible: true}
