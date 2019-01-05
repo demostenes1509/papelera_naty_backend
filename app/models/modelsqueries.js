@@ -2,21 +2,22 @@ const modelsutil = require("utils/modelsutil");
 
 module.exports = {
 
-    get_products : (req,params) => {
+	get_products: (req, params) => {
 
-        const filter = {
-            where: params.filters,
-            include: [
-                {model:req.db.models.packaging, as:'packaging', required:true},
-                {model:req.db.models.categories, as:'category', required:true},
-                {model:req.db.models.productsformats, as:'productsformats'},
-                {model:req.db.models.productspictures, as: 'productspictures'}
-            ]
-        };
+		const filter = {
+			where: params.where,
+			include: []
+		};
 
-        if(params.limit) filter.limit = params.limit;
+		const catwhere = params.category ? { url: params.category } : {};
+		filter.include.push({ model: req.db.models.categories, where: catwhere, as: 'category', required: true });
+		filter.include.push({ model: req.db.models.packaging, as: 'packaging', required: true });
+		filter.include.push({ model: req.db.models.productsformats, as: 'productsformats' });
+		filter.include.push({ model: req.db.models.productspictures, as: 'productspictures' });
 
-        return modelsutil.findAll(req,'products',filter);        
-    }
+		if (params.limit) filter.limit = params.limit;
+
+		return modelsutil.findAll(req, 'products', filter);
+	}
 
 }

@@ -97,7 +97,7 @@ module.exports = {
             "error",
             "bare-block"
         ],
-        "multiline-ternary": "error",
+        "multiline-ternary": "off",
         "new-parens": "error",
         "newline-after-var": "off",
         "newline-before-return": "off",
@@ -181,7 +181,7 @@ module.exports = {
         "no-sync": "error",
         "no-tabs": "off",
         "no-template-curly-in-string": "error",
-        "no-ternary": "error",
+        "no-ternary": "off",
         "no-throw-literal": "error",
         "no-trailing-spaces": "off",
         "no-undef-init": "error",

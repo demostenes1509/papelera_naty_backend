@@ -7,7 +7,7 @@ module.exports = {
 		logger.info('Getting Offers info');
 
 		const params = {
-			filters: { is_offer: true, is_visible: true}
+			where: { is_offer: true, is_visible: true}
 		};
 
 		const products = await modelsqueries.get_products(req,params);
@@ -21,7 +21,8 @@ module.exports = {
 		logger.info('Getting Category info:'+req.params.category);
 
 		const params = {
-			filters: { is_offer: true, is_visible: true}
+			where: { is_visible: true},
+			category: req.params.category
 		};
 
 		const products = await modelsqueries.get_products(req,params);
