@@ -31,6 +31,7 @@ module.exports = (app,db) => {
     app.get 	( '/footer',                        wrap(db,footer.get));
 
     app.get 	( '/',                              wrap(db,home.get_offers));
+    app.get 	( '/search/:search',                wrap(db,home.get_search));
     app.get 	( '/:category',                     wrap(db,home.get_category));
 
 

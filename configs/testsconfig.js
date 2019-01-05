@@ -27,22 +27,23 @@ describe('Test Suite', function () {
 		});
 	});
 
-	describe('Categories', function () {
+	describe('Categories Tests', function () {
 		it('List categories', category.list);
 		it('Create new Category', category.create);
 		it('Create without name', category.create_with_name);
 	});
 
-	describe('Home', function () {
+	describe('Home Tests', function () {
 		it('Get Offers', home.get_offers);
 		it('Get Category', home.get_category);
+		it('Get Search', home.get_search);
 	});
 
-	describe('Footer', function () {
+	describe('Footer Tests', function () {
 		it('Get footer', footer.get);
 	});
 
-	describe('Sidebar', function () {
+	describe('Sidebar Tests', function () {
 		it('Get sidebar', sidebar.get);
 	});
 

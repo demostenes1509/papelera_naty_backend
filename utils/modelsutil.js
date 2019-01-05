@@ -5,6 +5,10 @@ module.exports = {
 	
 	findAll : (req,model,filter) => {
 		return req.db.models[model].findAll(filter,{transaction: req.trx});
+	},
+
+	findOne : (req,model,filter) => {
+		return req.db.models[model].findOne(filter,{transaction: req.trx});
 	}
 
 
