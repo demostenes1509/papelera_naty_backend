@@ -44,8 +44,8 @@ module.exports = {
 		const params = {
 			where: { is_visible:true,
 				[Sequelize.Op.or]: [
-					Sequelize.where(Sequelize.col('products.name'), { [Sequelize.Op.iLike]: search}),
-					Sequelize.where(Sequelize.col('category.name'), { [Sequelize.Op.iLike]: search})
+					Sequelize.where(Sequelize.fn('unaccent', Sequelize.col('products.name')), { [Sequelize.Op.iLike]: Sequelize.fn('unaccent',search)}),
+					Sequelize.where(Sequelize.fn('unaccent', Sequelize.col('category.name')), { [Sequelize.Op.iLike]: Sequelize.fn('unaccent',search)})
 				]				
 			}
 		};
