@@ -4,6 +4,7 @@ const ormconfig = require("configs/ormconfig");
 const migrationconfig = require("configs/migrationconfig");
 const routesconfig = require("configs/routesconfig");
 const expressconfig = require("configs/expressconfig");
+const sessionconfig = require("configs/sessionconfig");
 const errorhandlerconfig = require("configs/errorhandlerconfig");
 
 module.exports = async (runmigrations) => {
@@ -22,8 +23,11 @@ module.exports = async (runmigrations) => {
         await migrationconfig(db,'update');
     }
 
+    logger.info('Configuring sessions');
+    await sessionconfig(app);
+
     logger.info('Configuring routes');
-    await routesconfig(app,db);
+    await routesconfig(app);
 
     logger.info('Configuring error handler');
     errorhandlerconfig(app);

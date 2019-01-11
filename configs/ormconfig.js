@@ -36,6 +36,8 @@ module.exports = async (app) => {
 	const packaging = require('../app/models/packagingmodel.js')(sequelize);
 	const productsformats = require('../app/models/productsformatsmodel.js')(sequelize);
 	const productspictures = require('../app/models/productspicturesmodel.js')(sequelize);
+	const users = require('../app/models/usersmodel.js')(sequelize);
+	const userssessions = require('../app/models/userssessionsmodel.js')(sequelize);
 
 	logger.debug('Definig mappings');
 	categories.hasMany(products,{ foreignKey: 'category_id', required: true });
