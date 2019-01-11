@@ -4,7 +4,7 @@ const appconfig = require('configs/appconfig');
 const migrationconfig = require("configs/migrationconfig");
 const Sequelize = require('sequelize');
 const { describe, before, it, after } = require('mocha');
-const { category, sidebar, footer, home } = require('tests');
+const { category, sidebar, footer, home, session } = require('tests');
 
 describe('Test Suite', function () {
 
@@ -27,25 +27,30 @@ describe('Test Suite', function () {
 		});
 	});
 
-	describe('Categories Tests', function () {
-		it('List categories', category.list);
-		it('Create new Category', category.create);
-		it('Create without name', category.create_with_name);
+	// describe('Categories Tests', function () {
+	// 	it('List categories', category.list);
+	// 	it('Create new Category', category.create);
+	// 	it('Create without name', category.create_with_name);
+	// });
+
+	// describe('Home Tests', function () {
+	// 	it('Get Offers', home.get_offers);
+	// 	it('Get Category', home.get_category);
+	// 	it('Get Search', home.get_search);
+	// });
+
+	// describe('Footer Tests', function () {
+	// 	it('Get footer', footer.get);
+	// });
+
+	// describe('Sidebar Tests', function () {
+	// 	it('Get sidebar', sidebar.get);
+	// });
+
+	describe('Sessions Tests', function () {
+		it('Creates a new session', session.create_session);
 	});
 
-	describe('Home Tests', function () {
-		it('Get Offers', home.get_offers);
-		it('Get Category', home.get_category);
-		it('Get Search', home.get_search);
-	});
-
-	describe('Footer Tests', function () {
-		it('Get footer', footer.get);
-	});
-
-	describe('Sidebar Tests', function () {
-		it('Get sidebar', sidebar.get);
-	});
 
 	after(function () {
 		if (server) {

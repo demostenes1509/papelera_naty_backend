@@ -95,7 +95,7 @@ module.exports = function (sequelize) {
       timestamps: false
     });
 
-  products.afterFind('someCustomName222', (result, options) => {
+  products.afterFind('afterFindProducts', (result) => {
     for (const product of result) {
       for (const productformat of product.productsformats) {
         fillProductFormat(product, productformat, { includeunique: true });
