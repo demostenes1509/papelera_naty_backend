@@ -1,38 +1,52 @@
 const {categories,sidebar,home,footer} = require('app/controllers');
 
-const wrap = (fn) => {
+const testWorkflow = (app,fn,req,res,next) => {
+    req.trx = app.trx;
+    fn(req,res,next)
+    .catch(err=> {
+        next(err);
+    })
+};
 
+const noTestWorkflow = (app,fn,req,res,next) => {
+
+    req.db.transaction()
+    .then(t => {
+        req.trx = t;
+        return fn(req,res,next);
+    })
+    .then(() => {
+        return req.trx.commit();
+    })
+    .catch(err=> {
+        req.trx.rollback();
+        next(err);
+    })
+};
+
+const wrap = (app,fn) => {
     return (req, res, next) => {
-
-        req.db.transaction()
-        .then(t => {
-            req.trx = t;
-            return fn(req,res,next);
-        })
-        .then(() => {
-            if(process.env.NODE_ENV==='test') return req.trx.rollback();
-            else return req.trx.commit();
-        })
-        .catch(err=> {
-            req.trx.rollback();
-            next(err);
-        })
-
+        if(process.env.NODE_ENV==='test') {
+            return testWorkflow(app,fn,req,res,next);
+        }
+        else {
+            return noTestWorkflow(app,fn,req,res,next);
+        }
     };
 }
 
 module.exports = (app) => {
 
-    app.get 	( '/categories',                    wrap(categories.list));
-    app.post 	( '/categories',                    wrap(categories.create));
+    app.get 	( '/categories',                    wrap(app,categories.list));
+    app.post 	( '/categories',                    wrap(app,categories.create));
 
-    app.get 	( '/sidebar',                       wrap(sidebar.get));
+    app.get 	( '/sidebar',                       wrap(app,sidebar.get));
 
-    app.get 	( '/footer',                        wrap(footer.get));
+    app.get 	( '/footer',                        wrap(app,footer.get));
 
-    app.get 	( '/',                              wrap(home.get_offers));
-    app.get 	( '/search/:search',                wrap(home.get_search));
-    app.get 	( '/:category',                     wrap(home.get_category));
+    app.get 	( '/',                              wrap(app,home.get_offers));
+    app.get 	( '/search/:search',                wrap(app,home.get_search));
+    app.get 	( '/:category',                     wrap(app,home.get_category));
 
 
 };

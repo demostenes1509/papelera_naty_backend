@@ -1,7 +1,7 @@
 const request = require('supertest');
 const expect = require('expect');
 const testsutils = require('utils/testsutil');
-const constants = require('configs/constantsconfig');
+// const constants = require('configs/constantsconfig');
 
 module.exports = {
 
@@ -15,11 +15,11 @@ module.exports = {
 
         const response2 = await request("http://localhost:"+process.env.app_http_port)
             .get('/categories')
-            // .set('Authorization',`Bearer ${token1}`)
+            .set('Authorization',`Bearer ${token1}`)
             .expect(200);	
 
         const token2 = testsutils.getToken(response2);
-        expect(token2).toBeNull();
+        expect(token2).toBeUndefined();
 	}
 
 }

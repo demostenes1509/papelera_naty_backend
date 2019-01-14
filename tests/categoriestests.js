@@ -13,7 +13,7 @@ module.exports = {
         expect(category.name).toBe('Maxi Categoria');
 	},
 
-    create_with_name : async function () {
+    create_without_name : async function () {
         const response = await request("http://localhost:"+process.env.app_http_port)
             .post('/categories')
             .expect(500);	

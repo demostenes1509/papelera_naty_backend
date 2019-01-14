@@ -7,10 +7,10 @@ const createSession = async (req,res) => {
 	logger.debug("Session has no token. Creating it");
 	const token = jwt.sign({creation: new Date()}, jwtkey);
 
-	logger.debug("Creating user session");
+	logger.debug("Creating database session");
 	const userSession = await modelsutil.create(req,'userssessions', {token: token, last_access: new Date()});
 	
-	logger.debug("Creating session");
+	logger.debug("Creating request session");
 	req.session			= { userSession: userSession, isLoggedIn: false };
 
 	logger.debug("Adding header to response");
@@ -39,6 +39,8 @@ module.exports = (app) => {
 	// Add sequelize on request
 	app.use(async (req,res,next) => {
 
+		logger.info('--------------------------');
+
 		if(req.token) {
 
 			// If there is an error, we will get an exception here
@@ -56,6 +58,7 @@ module.exports = (app) => {
 			};
 			const userSession = await modelsutil.findOne(req,'userssessions',filter);
 			if(userSession) {
+				logger.debug("Session existing. Updating timestamp");
 				await updateSession(req,res,userSession);
 			}
 			else {
