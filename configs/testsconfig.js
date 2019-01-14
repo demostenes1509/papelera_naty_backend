@@ -6,6 +6,17 @@ const Sequelize = require('sequelize');
 const { describe, before, it, after, beforeEach, afterEach } = require('mocha');
 const { category, sidebar, footer, home, session } = require('tests');
 
+const runTest = (id,label,func) => {
+	if(process.env.TESTTORUN) {
+		if(process.env.TESTTORUN===id) {
+			it(label, func);
+		}
+	} 
+	else {
+		it(label, func);
+	}
+}
+
 describe('Test Suite', function () {
 
 	var server;
@@ -39,29 +50,28 @@ describe('Test Suite', function () {
 	});
 
 	describe('Categories Tests', function () {
-		it('List categories', category.list);
-		it('Create new Category', category.create);
-		it('Create without name', category.create_without_name);
+		runTest('catlist','List categories', category.list);
+		runTest('catcreate','Create new Category', category.create);
+		runTest('catcreatewithoutname','Create without name', category.create_without_name);
 	});
 
 	describe('Home Tests', function () {
-		it('Get Offers', home.get_offers);
-		it('Get Category', home.get_category);
-		it('Get Search', home.get_search);
+		runTest('homeoffersget','Get Offers', home.get_offers);
+		runTest('homecatsget','Get Category', home.get_category);
+		runTest('homesearchget','Get Search', home.get_search);
 	});
 
 	describe('Footer Tests', function () {
-		it('Get footer', footer.get);
+		runTest('footerget','Get footer', footer.get);
 	});
 
 	describe('Sidebar Tests', function () {
-		it('Get sidebar', sidebar.get);
+		runTest('sidebarget','Get sidebar', sidebar.get);
 	});
 
 	describe('Sessions Tests', function () {
-		it('Creates a new session', session.create_session);
+		runTest('sessioncreate','Creates a new session', session.create_session);
 	});
-
 
 	after(function () {
 		if (server) {

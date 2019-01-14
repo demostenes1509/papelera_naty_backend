@@ -31,45 +31,42 @@ const updateSession = async (req,res, userSession) => {
 			last_name: user.last_name};
 			*/
 	}
+}
 
+const handleSession = async (req, res) => {
+	if(req.token) {
+		jwt.verify(req.token, jwtkey);
+
+		const filter = {
+			where: {token: req.token}, 
+			include: [ { model: req.db.models.users, as: 'user',
+				include: [ {model: req.db.models.roles, as: 'role'} ] } ] 
+		};
+		const userSession = await modelsutil.findOne(req,'userssessions',filter);
+		if(userSession) {
+			logger.debug("Session existing. Updating timestamp");
+			await updateSession(req,res,userSession);
+		}
+		else {
+			logger.debug("Session missing. Recreating it");
+			await createSession(req,res);
+		}
+	}
+	else {
+		await createSession(req,res);
+	}
 }
 
 module.exports = (app) => {
 
-	// Add sequelize on request
 	app.use(async (req,res,next) => {
-
-		logger.info('--------------------------');
-
-		if(req.token) {
-
-			// If there is an error, we will get an exception here
-			try {
-				jwt.verify(req.token, jwtkey);
-			}
-			catch(error) {
-				return next(error);
-			}
-
-			const filter = {
-				where: {token: req.token}, 
-				include: [ { model: req.db.models.users, as: 'user',
-					include: [ {model: req.db.models.roles, as: 'role'} ] } ] 
-			};
-			const userSession = await modelsutil.findOne(req,'userssessions',filter);
-			if(userSession) {
-				logger.debug("Session existing. Updating timestamp");
-				await updateSession(req,res,userSession);
-			}
-			else {
-				logger.debug("Session missing. Recreating it");
-				await createSession(req,res);
-			}
+		try {
+			logger.info('--------------------------');		
+			await handleSession(req,res);
+			next();
 		}
-		else {
-			await createSession(req,res);
+		catch(err) {
+			next(err);
 		}
-		return next();
 	});
-
 };
