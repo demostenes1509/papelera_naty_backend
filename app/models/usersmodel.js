@@ -59,8 +59,15 @@ module.exports = function(sequelize) {
   });
 
   users.afterFind('afterUserFind', (result) => {
-    for (const user of result) {
-      user.fullName = `${user.first_name} ${user.last_name}`;
+    if(result) {
+      if(Array.isArray(result)) {
+        for (const user of result) {
+          user.fullName = `${user.first_name} ${user.last_name}`;
+        }
+      }
+      else {
+        result.fullName = `${result.first_name} ${result.last_name}`;
+      }
     }
   });
 

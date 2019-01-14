@@ -1,4 +1,4 @@
-const {categories,sidebar,home,footer} = require('app/controllers');
+const {categories,sidebar,home,footer,auth} = require('app/controllers');
 
 const testWorkflow = (app,fn,req,res,next) => {
     req.trx = app.trx;
@@ -36,6 +36,8 @@ const wrap = (app,fn) => {
 }
 
 module.exports = (app) => {
+
+    app.post 	( '/login',                         wrap(app,auth.login));
 
     app.get 	( '/categories',                    wrap(app,categories.list));
     app.post 	( '/categories',                    wrap(app,categories.create));

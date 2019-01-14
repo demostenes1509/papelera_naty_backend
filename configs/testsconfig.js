@@ -4,7 +4,7 @@ const appconfig = require('configs/appconfig');
 const migrationconfig = require("configs/migrationconfig");
 const Sequelize = require('sequelize');
 const { describe, before, it, after, beforeEach, afterEach } = require('mocha');
-const { category, sidebar, footer, home, session } = require('tests');
+const { category, sidebar, footer, home, session, auth } = require('tests');
 
 const runTest = (id,label,func) => {
 	if(process.env.TESTTORUN) {
@@ -71,6 +71,12 @@ describe('Test Suite', function () {
 
 	describe('Sessions Tests', function () {
 		runTest('sessioncreate','Creates a new session', session.create_session);
+	});
+
+	describe('Auth Tests', function () {
+		runTest('login','Login', auth.login);
+		runTest('logininvaliduser','Login with invalid username', auth.login_invalid_email);
+		runTest('logininvalidpassword','Login with invalid password', auth.login_invalid_password);
 	});
 
 	after(function () {

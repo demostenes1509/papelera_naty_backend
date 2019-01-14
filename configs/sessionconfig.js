@@ -10,7 +10,8 @@ const updateTimestamp = async (req, userSession) => {
 	await modelsutil.save(req,userSession);
  
 	logger.debug("Creating request session");
-	req.session			= { userSession: userSession.id, isLoggedIn: false };
+	req.userSession	= userSession;
+	req.session			= { isLoggedIn: false };
 };
 
 const createSession = async (req,res) => {
@@ -21,7 +22,8 @@ const createSession = async (req,res) => {
 	const userSession = await modelsutil.create(req,'userssessions', {token: token, last_access: new Date()});
 	
 	logger.debug("Creating request session");
-	req.session			= { userSession: userSession.id, isLoggedIn: false };
+	req.session			= { isLoggedIn: false };
+	req.userSession = userSession;
 
 	logger.debug("Adding header to response");
 	res.header(req.constants.TOKEN_NAME,token);

@@ -1,7 +1,8 @@
 module.exports = {
 	category:				require('./categoriestests'),
-	home:					require('./hometests'),
+	home:						require('./hometests'),
 	footer:					require('./footertests'),
 	sidebar:				require('./sidebartests'),
-	session:				require('./sessionstests')
+	session:				require('./sessionstests'),
+	auth:						require('./authtests')
 };
