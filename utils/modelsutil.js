@@ -9,7 +9,9 @@ module.exports = {
 
 	findOne : (req,model,filter) => {
 		return req.db.models[model].findOne(filter,{transaction: req.trx});
+	},
+
+	save : (req,obj) => {
+		return obj.save({transaction: req.trx});
 	}
-
-
 }

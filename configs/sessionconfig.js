@@ -3,6 +3,16 @@ const jwt = require('jsonwebtoken');
 const jwtkey = '28b001fe-4fae-470e-9d35-fe2a7ad12425';
 const modelsutil = require("utils/modelsutil");
 
+const updateTimestamp = async (req, userSession) => {
+	logger.debug('Changing last access');
+	
+	userSession.last_access = new Date();
+	await modelsutil.save(req,userSession);
+ 
+	logger.debug("Creating request session");
+	req.session			= { userSession: userSession.id, isLoggedIn: false };
+};
+
 const createSession = async (req,res) => {
 	logger.debug("Session has no token. Creating it");
 	const token = jwt.sign({creation: new Date()}, jwtkey);
@@ -11,16 +21,14 @@ const createSession = async (req,res) => {
 	const userSession = await modelsutil.create(req,'userssessions', {token: token, last_access: new Date()});
 	
 	logger.debug("Creating request session");
-	req.session			= { userSession: userSession, isLoggedIn: false };
+	req.session			= { userSession: userSession.id, isLoggedIn: false };
 
 	logger.debug("Adding header to response");
 	res.header(req.constants.TOKEN_NAME,token);
 }
 
 const updateSession = async (req,res, userSession) => {
-	if(userSession.user_id) {
-
-
+	if(userSession.isLoggedIn) {
 		/*
 		req.session = {isLoggedIn:true, 
 			user_id: user.id,
@@ -30,6 +38,9 @@ const updateSession = async (req,res, userSession) => {
 			first_name: user.first_name, 
 			last_name: user.last_name};
 			*/
+	}
+	else {
+		await updateTimestamp(req,userSession);
 	}
 }
 
@@ -44,15 +55,16 @@ const handleSession = async (req, res) => {
 		};
 		const userSession = await modelsutil.findOne(req,'userssessions',filter);
 		if(userSession) {
-			logger.debug("Session existing. Updating timestamp");
+			logger.info("Session existing. Updating timestamp");
 			await updateSession(req,res,userSession);
 		}
 		else {
-			logger.debug("Session missing. Recreating it");
+			logger.info("Session missing. Recreating it");
 			await createSession(req,res);
 		}
 	}
 	else {
+		logger.info("Creating session");
 		await createSession(req,res);
 	}
 }
