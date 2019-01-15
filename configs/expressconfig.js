@@ -5,18 +5,17 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const cors = require('cors');
 const bearerToken = require('express-bearer-token');
+const { TOKEN_NAME, AUTHORIZATION } = require('configs/constantsconfig');
 
 module.exports = (app) => {
 
-    /*
-    var corsOptions = {
-        exposedHeaders: constants.TOKEN_NAME,
-        allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Set-Cookie', constants.TOKEN_NAME ]
-    }
-    */
+    const opts = {
+        // exposedHeaders: [ TOKEN_NAME, AUTHORIZATION ],
+        allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Set-Cookie', TOKEN_NAME,AUTHORIZATION ]
+    };
 
     logger.debug("Adding cors");
-    app.use(cors());
+    app.use(cors(opts));
     
     logger.debug("Adding Bearer");
     app.use(bearerToken());

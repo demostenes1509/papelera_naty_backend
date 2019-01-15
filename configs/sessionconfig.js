@@ -5,8 +5,15 @@ const modelsutil = require('utils/modelsutil');
 const { TOKEN_NAME } = require('configs/constantsconfig');
 
 const updateTimestamp = async (req, userSession) => {
-	logger.debug('Changing last access');
-	await modelsutil.save(req,userSession,{last_access: new Date()});
+
+	const now = new Date();
+	const diff = userSession.last_access.valueOf() - now.valueOf();
+	const diffInHours = Math.round(diff/1000/60/60); 
+
+	if(diffInHours>23) {
+		logger.debug('Changing last access');
+		await modelsutil.save(req,userSession,{last_access: new Date()});
+	}
 }
 
 const createSession = async (req,res) => {
@@ -52,7 +59,7 @@ const handleSession = async (req, res) => {
 		};
 		const userSession = await modelsutil.findOne(req,'userssessions',filter);
 		if(userSession) {
-			logger.info("Session existing. Updating timestamp");
+			logger.info("Session existing.");
 			await updateSession(req,res,userSession);
 		}
 		else {
