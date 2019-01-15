@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const cors = require('cors');
 const bearerToken = require('express-bearer-token');
-const constants = require('./constantsconfig');
 
 module.exports = (app) => {
 
@@ -30,12 +29,6 @@ module.exports = (app) => {
         threshold: 512
     })); 
 
-    logger.debug("Adding constants to request");
-    app.use((req, res, next) => {
-        req.constants = constants;
-        next();
-    });
-    
     const bodyMaxSize = 1024 * 1024 * 8 * 100;
     logger.debug("Setting parse urlencoded request bodies into req.body.");
     app.use(bodyParser.urlencoded({ extended: true, limit: bodyMaxSize }));

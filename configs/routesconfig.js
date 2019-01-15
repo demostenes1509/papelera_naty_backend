@@ -1,7 +1,7 @@
+const logger = require('configs/loggerconfig')(module);
 const {categories,sidebar,home,footer,auth} = require('app/controllers');
 
 const testWorkflow = (app,fn,req,res,next) => {
-    req.trx = app.trx;
     fn(req,res,next)
     .catch(err=> {
         next(err);
@@ -35,12 +35,29 @@ const wrap = (app,fn) => {
     };
 }
 
+const restrict = (req,res,next) => {
+    logger.info('Checking permissions');
+    if(req.path.indexOf('/admin')===0) {
+        if(req.session.isLoggedIn && req.session.isAdmin) {
+            next();
+        }
+        else {
+            next('You have no permissions to access this page');
+        }
+    }
+    else {
+        next();
+    }
+}
+
 module.exports = (app) => {
+
+    app.use(restrict);
 
     app.post 	( '/login',                         wrap(app,auth.login));
 
     app.get 	( '/categories',                    wrap(app,categories.list));
-    app.post 	( '/categories',                    wrap(app,categories.create));
+    app.post 	( '/admin/categories',              wrap(app,categories.create));
 
     app.get 	( '/sidebar',                       wrap(app,sidebar.get));
 

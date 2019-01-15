@@ -22,8 +22,8 @@ module.exports = {
 
 		logger.info('Assigning user to session');
 		const { userSession } = req;
-		userSession.user_id = user.id;
-		await modelsutil.save(req,userSession);
+		// userSession.user_id = user.id;
+		await modelsutil.save(req,userSession,{user_id: user.id});
 
 		logger.info('Responding to user');
 		const { first_name, last_name} = user;

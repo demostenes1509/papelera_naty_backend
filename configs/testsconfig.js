@@ -71,6 +71,7 @@ describe('Test Suite', function () {
 
 	describe('Sessions Tests', function () {
 		runTest('sessioncreate','Creates a new session', session.create_session);
+		runTest('permissionerror','Verifies permissions', session.permission_error);
 	});
 
 	describe('Auth Tests', function () {

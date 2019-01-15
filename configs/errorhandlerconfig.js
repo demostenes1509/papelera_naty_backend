@@ -4,8 +4,11 @@ module.exports = (app) => {
 
     // No sacar ese next !!
     app.use((error, req, res, next) => {
-        logger.error(JSON.stringify(error.message));
-        return res.status(500).send({'server_error':error.message});
+        let errortext=error;
+        if(error.message) errortext=error.message;
+
+        logger.error(JSON.stringify(errortext));
+        return res.status(500).send({'server_error':errortext});
     });
 
 };
