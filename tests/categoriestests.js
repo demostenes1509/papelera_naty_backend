@@ -1,11 +1,18 @@
 const request = require('supertest');
 const expect = require('expect');
+const { login_as_admin } = require('./authtests');
+const { getBearerToken } = require('utils/testsutil');
+const { AUTHORIZATION } = require('configs/constantsconfig');
 
 module.exports = {
 
     create : async function () {
+
+        const login = await login_as_admin();
+
         const response = await request("http://localhost:"+process.env.app_http_port)
-            .post('/categories')
+            .post('/admin/categories')
+            .set(AUTHORIZATION,getBearerToken(login))
             .send({name:'Maxi Categoria',url:'maxi-categoria'})
             .expect(200);	
 
@@ -13,9 +20,13 @@ module.exports = {
         expect(category.name).toBe('Maxi Categoria');
 	},
 
-    create_with_name : async function () {
+    create_without_name : async function () {
+
+        const login = await login_as_admin();
+
         const response = await request("http://localhost:"+process.env.app_http_port)
-            .post('/categories')
+            .post('/admin/categories')
+            .set(AUTHORIZATION,getBearerToken(login))
             .expect(500);	
 
         const errors = JSON.parse(response.text);  
@@ -25,6 +36,7 @@ module.exports = {
     },
     
     list : async function () {
+
         const response = await request("http://localhost:"+process.env.app_http_port)
             .get('/categories')
             .expect(200);	

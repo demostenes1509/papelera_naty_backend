@@ -4,12 +4,16 @@ module.exports = {
 	},
 	
 	findAll : (req,model,filter) => {
-		return req.db.models[model].findAll(filter,{transaction: req.trx});
+		filter.transaction = req.trx;
+		return req.db.models[model].findAll(filter);
 	},
 
 	findOne : (req,model,filter) => {
-		return req.db.models[model].findOne(filter,{transaction: req.trx});
+		filter.transaction = req.trx;
+		return req.db.models[model].findOne(filter);
+	},
+
+	save : (req,obj,data) => {
+		return obj.update(data,{transaction: req.trx});
 	}
-
-
 }

@@ -5,13 +5,13 @@
   "main": "server.js",
   "scripts": {
     "start": "cross-env NODE_PATH=. NODE_ENV=development nodemon --watch . server",
-    "test": "cross-env NODE_PATH=. NODE_ENV=test nyc --reporter=lcov mocha  --exit -u exports -R spec configs/testsconfig",
-    "singletest": "cross-env NODE_PATH=. NODE_ENV=test nyc --reporter=html mocha --exit --recursive -R spec $TESTTORUN"
+    "test": "cross-env NODE_PATH=. NODE_ENV=test nyc --reporter=lcov mocha  --exit -u exports -R spec configs/testsconfig"
   },
   "author": "Maximiliano Carrizo",
   "dependencies": {
     "compression": "^1.7.3",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dateformat": "^3.0.3",
     "dotenv-flow": "^0.2.0",
     "exception-formatter": "^1.0.7",

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = function(sequelize) {
-  return sequelize.define('userssessions', {
+  const userssessions = sequelize.define('userssessions', {
     id: {
       type: Sequelize.BIGINT,
       allowNull: false,
@@ -29,4 +29,20 @@ module.exports = function(sequelize) {
     tableName: 'users_sessions',
     timestamps: false
   });
+
+  userssessions.afterFind('afterUserSessionsFind', (result) => {
+    if(result) {
+      if(Array.isArray(result)) {
+        for (const usersession of result) {
+          usersession.isLoggedIn = usersession.user_id!==null;
+        }
+      }
+      else {
+        result.isLoggedIn = result.user_id!==null;
+      }
+    }
+  });
+
+  return userssessions;
+
 };

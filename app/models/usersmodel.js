@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = function(sequelize) {
-  return sequelize.define('users', {
+  const users = sequelize.define('users', {
     id: {
       type: Sequelize.BIGINT,
       allowNull: false,
@@ -57,4 +57,19 @@ module.exports = function(sequelize) {
     tableName: 'users',
     timestamps: false
   });
+
+  users.afterFind('afterUserFind', (result) => {
+    if(result) {
+      if(Array.isArray(result)) {
+        for (const user of result) {
+          user.fullName = `${user.first_name} ${user.last_name}`;
+        }
+      }
+      else {
+        result.fullName = `${result.first_name} ${result.last_name}`;
+      }
+    }
+  });
+
+  return users;
 };

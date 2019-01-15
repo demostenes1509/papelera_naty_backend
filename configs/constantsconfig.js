@@ -7,3 +7,5 @@ const define = (name, value) => {
 }
 
 define("TOKEN_NAME", 'token');
+
+define("AUTHORIZATION", 'Authorization');
