@@ -13,6 +13,10 @@ module.exports = {
 		return req.db.models[model].findOne(filter);
 	},
 
+	findById : (req,model,id) => {
+		return req.db.models[model].findByPk(id,{transaction: req.trx});
+	},
+
 	save : (req,obj,data) => {
 		return obj.update(data,{transaction: req.trx});
 	}

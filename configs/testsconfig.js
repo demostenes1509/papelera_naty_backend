@@ -4,7 +4,7 @@ const appconfig = require('configs/appconfig');
 const migrationconfig = require("configs/migrationconfig");
 const Sequelize = require('sequelize');
 const { describe, before, it, after, beforeEach, afterEach } = require('mocha');
-const { category, sidebar, footer, home, session, auth } = require('tests');
+const { category, sidebar, footer, home, session, auth, productpicture } = require('tests');
 
 const runTest = (id,label,func) => {
 	if(process.env.TESTTORUN) {
@@ -53,6 +53,11 @@ describe('Test Suite', function () {
 		runTest('catlist','List categories', category.list);
 		runTest('catcreate','Create new Category', category.create);
 		runTest('catcreatewithoutname','Create without name', category.create_without_name);
+	});
+
+	describe('Products Pictures Tests', function () {
+		runTest('ppget','Get picture', productpicture.get);
+		runTest('ppgetnotfound','Get picture not found', productpicture.get_not_found);
 	});
 
 	describe('Home Tests', function () {

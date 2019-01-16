@@ -1,5 +1,5 @@
 const logger = require('configs/loggerconfig')(module);
-const {categories,sidebar,home,footer,auth} = require('app/controllers');
+const {categories,sidebar,home,footer,auth, productspictures} = require('app/controllers');
 
 const testWorkflow = (app,fn,req,res,next) => {
     fn(req,res,next)
@@ -58,6 +58,8 @@ module.exports = (app) => {
 
     app.get 	( '/categories',                    wrap(app,categories.list));
     app.post 	( '/admin/categories',              wrap(app,categories.create));
+
+    app.get 	( '/productspictures/:picture_id',  wrap(app,productspictures.get));
 
     app.get 	( '/sidebar',                       wrap(app,sidebar.get));
 
