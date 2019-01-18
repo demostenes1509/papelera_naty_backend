@@ -32,7 +32,7 @@ describe('Test Suite', function () {
 		await data.db.query('DROP TABLE IF EXISTS databasechangelog', { type: Sequelize.QueryTypes.SELECT });
 
 		logger.info('Running migrations');
-		await migrationconfig(data.db, 'update');
+		await migrationconfig('update');
 
 		server = data.app.listen(process.env.app_http_port, function () {
 			logger.info('Listening on port:' + server.address().port);

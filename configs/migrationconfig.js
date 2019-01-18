@@ -1,6 +1,6 @@
 const liquibase = require('liquibase');
 
-module.exports = async (db,command) => {
+module.exports = async (command) => {
 
     const {
         NODE_ENV,

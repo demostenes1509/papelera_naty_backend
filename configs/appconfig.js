@@ -20,7 +20,7 @@ module.exports = async (runmigrations) => {
 
     if(runmigrations) {
         logger.info('Running migrations');
-        await migrationconfig(db,'update');
+        await migrationconfig('update');
     }
 
     logger.info('Configuring sessions');
