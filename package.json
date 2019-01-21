@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "cross-env NODE_PATH=. NODE_ENV=development nodemon --watch . server",
+    "debug": "cross-env NODE_PATH=. NODE_ENV=development node --inspect server",
     "test": "cross-env NODE_PATH=. NODE_ENV=test nyc --reporter=lcov mocha  --exit -u exports -R spec configs/testsconfig",
     "releaselocks": "cross-env NODE_PATH=. NODE_ENV=development node tasks/releaselocks"    
   },
