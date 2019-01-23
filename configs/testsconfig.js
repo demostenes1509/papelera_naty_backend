@@ -3,8 +3,19 @@ const logger = require('configs/loggerconfig')(module);
 const appconfig = require('configs/appconfig');
 const migrationconfig = require("configs/migrationconfig");
 const Sequelize = require('sequelize');
-const { describe, before, it, after, beforeEach, afterEach } = require('mocha');
-const { category, sidebar, footer, home, session, auth, productpicture } = require('tests');
+const { describe, 
+	before, 
+	it,
+	after, 
+	beforeEach, 
+	afterEach } = require('mocha');
+const { category, 
+				sidebar, 
+				footer, 
+				home, 
+				auth, 
+				token, 
+				productpicture } = require('tests');
 
 const runTest = (id,label,func) => {
 	if(process.env.TESTTORUN) {
@@ -74,15 +85,15 @@ describe('Test Suite', function () {
 		runTest('sidebarget','Get sidebar', sidebar.get);
 	});
 
-	describe('Sessions Tests', function () {
-		runTest('sessioncreate','Creates a new session', session.create_session);
-		runTest('permissionerror','Verifies permissions', session.permission_error);
+	describe('Token Tests', function () {
+		runTest('tokencreate','Creates a new token', token.get_token);
 	});
 
 	describe('Auth Tests', function () {
 		runTest('login','Login', auth.login);
 		runTest('logininvaliduser','Login with invalid username', auth.login_invalid_email);
 		runTest('logininvalidpassword','Login with invalid password', auth.login_invalid_password);
+		runTest('permissionerror','Permission Error', auth.permission_error);
 	});
 
 	after(function () {

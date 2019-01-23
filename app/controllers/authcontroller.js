@@ -2,6 +2,7 @@ const logger = require("configs/loggerconfig")(module);
 const modelsutil = require("utils/modelsutil");
 const cypherutil = require("utils/cypherutil");
 const { notEmptyValidation } = require("utils/validationutil");
+const { TOKEN_NAME } = require('configs/constantsconfig');
 
 module.exports = {
 
@@ -12,7 +13,8 @@ module.exports = {
 
 		const {email,password} = req.body;
 
-		const user = await modelsutil.findOne(req,'users',{where: {email_address: email}});
+		const params = {where: {email_address: email}, include: [ {model: req.db.models.roles, as: 'role'} ]};
+		const user = await modelsutil.findOne(req,'users',params);
 		if(!user) throw new Error('Invalid username/password');
 
 		logger.info('Validating password');
@@ -27,7 +29,8 @@ module.exports = {
 
 		logger.info('Responding to user');
 		const { first_name, last_name} = user;
-		return res.status(200).send({first_name, last_name});
+		const isAdmin = user.role.name==='admin';
+		return res.status(200).send({[TOKEN_NAME]: req.token, isLoggedIn: true, isAdmin, firstName: first_name, lastName: last_name});
 	}
 		
 }

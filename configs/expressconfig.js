@@ -10,8 +10,8 @@ const { TOKEN_NAME, AUTHORIZATION } = require('configs/constantsconfig');
 module.exports = (app) => {
 
     const opts = {
-        exposedHeaders: [ TOKEN_NAME, AUTHORIZATION ],
-        allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Set-Cookie', TOKEN_NAME,AUTHORIZATION ]
+        // exposedHeaders: [ TOKEN_NAME ],
+        allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Set-Cookie', AUTHORIZATION ]
     };
 
     logger.debug("Adding cors");
