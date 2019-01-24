@@ -1,11 +1,16 @@
 const request = require('supertest');
 const expect = require('expect');
+const { getToken } = require('./tokentests');
+const { getBearerToken } = require('utils/testsutil');
+const { AUTHORIZATION } = require('configs/constantsconfig');
 
 module.exports = {
 
     get_offers : async function () {
+        const token = await getToken();
         const response = await request("http://localhost:"+process.env.app_http_port)
             .get('/')
+            .set(AUTHORIZATION,getBearerToken(token))
             .expect(200);	
 
         const homeinfo = JSON.parse(response.text);
@@ -22,8 +27,10 @@ module.exports = {
     },
     
     get_category : async function () {
+        const token = await getToken();
         const response = await request("http://localhost:"+process.env.app_http_port)
             .get('/aluminio')
+            .set(AUTHORIZATION,getBearerToken(token))
             .expect(200);	
 
         const homeinfo = JSON.parse(response.text);
@@ -41,8 +48,10 @@ module.exports = {
     },
     
     get_search : async function () {
+        const token = await getToken();
         const response = await request("http://localhost:"+process.env.app_http_port)
             .get('/search/bols')
+            .set(AUTHORIZATION,getBearerToken(token))
             .expect(200);	
 
         const homeinfo = JSON.parse(response.text);

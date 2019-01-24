@@ -1,16 +1,16 @@
 const { TOKEN_NAME } = require('configs/constantsconfig');
 
-const getToken = (res) => {
-	const token = res.headers[TOKEN_NAME];
+const getResponseToken = (res) => {
+	const token = JSON.parse(res.text)[TOKEN_NAME];
 	return token;
 }
 
 const getBearerToken = (res) => {
-	const token = getToken(res);
+	const token = getResponseToken(res);
 	return `Bearer ${token}`;
 }
 
 module.exports = {
-	getToken,
+	getResponseToken,
 	getBearerToken
 }
