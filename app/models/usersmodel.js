@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-module.exports = function(sequelize) {
+module.exports = (sequelize) => {
   const users = sequelize.define('users', {
     id: {
       type: Sequelize.BIGINT,

@@ -6,7 +6,7 @@ const { AUTHORIZATION } = require('configs/constantsconfig');
 
 module.exports = {
 
-    get_offers : async function () {
+    get_offers : async () => {
         const token = await getToken();
         const response = await request("http://localhost:"+process.env.app_http_port)
             .get('/')
@@ -26,7 +26,7 @@ module.exports = {
         expect(homeinfo.title).toBe('Ofertas de la semana');
     },
     
-    get_category : async function () {
+    get_category : async () => {
         const token = await getToken();
         const response = await request("http://localhost:"+process.env.app_http_port)
             .get('/aluminio')
@@ -47,7 +47,7 @@ module.exports = {
 
     },
     
-    get_search : async function () {
+    get_search : async () => {
         const token = await getToken();
         const response = await request("http://localhost:"+process.env.app_http_port)
             .get('/search/bols')

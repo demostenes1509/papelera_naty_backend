@@ -24,13 +24,25 @@ module.exports = {
 
 		logger.info('Assigning user to session');
 		const { userSession } = req;
-		// userSession.user_id = user.id;
 		await modelsutil.save(req,userSession,{user_id: user.id});
 
 		logger.info('Responding to user');
 		const { first_name, last_name} = user;
 		const isAdmin = user.role.name==='admin';
 		return res.status(200).send({[TOKEN_NAME]: req.token, isLoggedIn: true, isAdmin, firstName: first_name, lastName: last_name});
+	},
+	
+	logout: async (req,res) => {
+
+		logger.info('Logout');
+		const { userSession } = req;
+		
+		logger.debug('Removing user from session');
+		await modelsutil.save(req,userSession,{user_id: null});
+
+		logger.info('Responding to user');
+		return res.status(200).send({[TOKEN_NAME]: req.token, isLoggedIn: false});
+
 	}
 		
 }

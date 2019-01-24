@@ -6,7 +6,7 @@ const { AUTHORIZATION } = require('configs/constantsconfig');
 
 module.exports = {
 
-    get_token : async function () {
+    get_token : async () => {
 
         logger.info('--- Create token condition ---');
         const response1 = await request("http://localhost:"+process.env.app_http_port)

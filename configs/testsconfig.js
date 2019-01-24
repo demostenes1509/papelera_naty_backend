@@ -45,7 +45,7 @@ describe('Test Suite', function () {
 		logger.info('Running migrations');
 		await migrationconfig('update');
 
-		server = data.app.listen(process.env.app_http_port, function () {
+		server = data.app.listen(process.env.app_http_port, () => {
 			logger.info('Listening on port:' + server.address().port);
 		});
 	});
@@ -60,43 +60,44 @@ describe('Test Suite', function () {
 		await data.app.trx.rollback();
 	});
 
-	describe('Categories Tests', function () {
+	describe('Categories Tests', () => {
 		runTest('catlist','List categories', category.list);
 		runTest('catcreate','Create new Category', category.create);
 		runTest('catcreatewithoutname','Create without name', category.create_without_name);
 	});
 
-	describe('Products Pictures Tests', function () {
+	describe('Products Pictures Tests', () => {
 		runTest('ppget','Get picture', productpicture.get);
 		runTest('ppgetnotfound','Get picture not found', productpicture.get_not_found);
 	});
 
-	describe('Home Tests', function () {
+	describe('Home Tests',  ()  => {
 		runTest('homeoffersget','Get Offers', home.get_offers);
 		runTest('homecatsget','Get Category', home.get_category);
 		runTest('homesearchget','Get Search', home.get_search);
 	});
 
-	describe('Footer Tests', function () {
+	describe('Footer Tests', () => {
 		runTest('footerget','Get footer', footer.get);
 	});
 
-	describe('Sidebar Tests', function () {
+	describe('Sidebar Tests', () => {
 		runTest('sidebarget','Get sidebar', sidebar.get);
 	});
 
-	describe('Token Tests', function () {
+	describe('Token Tests', () => {
 		runTest('tokencreate','Creates a new token', token.get_token);
 	});
 
-	describe('Auth Tests', function () {
+	describe('Auth Tests', () => {
 		runTest('login','Login', auth.login);
 		runTest('logininvaliduser','Login with invalid username', auth.login_invalid_email);
 		runTest('logininvalidpassword','Login with invalid password', auth.login_invalid_password);
 		runTest('permissionerror','Permission Error', auth.permission_error);
+		runTest('logout','Logout', auth.logout);
 	});
 
-	after(function () {
+	after( () => {
 		if (server) {
 			logger.info('Stopping server');
 			server.close();

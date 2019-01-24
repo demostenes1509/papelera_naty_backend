@@ -2,9 +2,9 @@ const path = require('path');
 const { createLogger, format, transports } = require('winston');
 const { timestamp, label, printf } = format;
 
-module.exports = function(callingModule) {
+module.exports = (callingModule) => {
 	
-	const mylabel = function() {
+	const mylabel = () => {
 		const parts = callingModule.filename.split(path.sep);
 		return parts[parts.length - 2] + '/' + parts.pop();
     };

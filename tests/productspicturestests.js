@@ -6,7 +6,7 @@ const { AUTHORIZATION } = require('configs/constantsconfig');
 
 module.exports = {
 
-    get : async function () {
+    get : async () => {
         const token = await getToken();
         const response = await request("http://localhost:"+process.env.app_http_port)
             .get('/productspictures/1')
@@ -15,7 +15,7 @@ module.exports = {
 
     },
 
-    get_not_found : async function () {
+    get_not_found : async () => {
         const token = await getToken();
         const response = await request("http://localhost:"+process.env.app_http_port)
             .get('/productspictures/2')

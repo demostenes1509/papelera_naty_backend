@@ -7,7 +7,7 @@ const { AUTHORIZATION } = require('configs/constantsconfig');
 
 module.exports = {
 
-    create : async function () {
+    create : async () => {
 
         const token = await getToken();
         const login = await login_as_admin(token);
@@ -22,7 +22,7 @@ module.exports = {
         expect(category.name).toBe('Maxi Categoria');
 	},
 
-    create_without_name : async function () {
+    create_without_name : async () => {
 
         const token = await getToken();
         const login = await login_as_admin(token);
@@ -38,7 +38,7 @@ module.exports = {
         expect(errors.server_error[1].msg).toBe('url is required');
     },
     
-    list : async function () {
+    list : async () => {
 
         const token = await getToken();
         const response = await request("http://localhost:"+process.env.app_http_port)

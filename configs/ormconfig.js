@@ -20,7 +20,7 @@ module.exports = async (app) => {
 
 	if(db_show_sql==='false') options.logging = false;
 	else {
-		options.logging = function(text) { 
+		options.logging = (text) => { 
 			console.log(colors(text)); 
 		};
 	}

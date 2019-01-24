@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-module.exports = function(sequelize) {
+module.exports = (sequelize) => {
   return sequelize.define('shoppingcart', {
     id: {
       type: Sequelize.BIGINT,

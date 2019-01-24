@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-module.exports = function(sequelize) {
+module.exports = (sequelize) => {
   return sequelize.define('productsformats', {
     id: {
       type: Sequelize.BIGINT,

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-module.exports = function(sequelize) {
+module.exports = (sequelize) => {
   return sequelize.define('registrations', {
     id: {
       type: Sequelize.BIGINT,

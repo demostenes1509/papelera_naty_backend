@@ -37,7 +37,7 @@ const fillProductFormat = (product, productformat, filters) => {
   productformat.dataValues.wholesale = productformat.wholesale.toFixed(2);
 }
 
-module.exports = function (sequelize) {
+module.exports =  (sequelize) => {
   const products = sequelize.define('products', {
     id: {
       type: Sequelize.BIGINT,
