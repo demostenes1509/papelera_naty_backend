@@ -5,12 +5,12 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const cors = require('cors');
 const bearerToken = require('express-bearer-token');
-const { TOKEN_NAME, AUTHORIZATION } = require('configs/constantsconfig');
+const { AUTHORIZATION } = require('configs/constantsconfig');
+const express = require('express');
 
 module.exports = (app) => {
 
     const opts = {
-        // exposedHeaders: [ TOKEN_NAME ],
         allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Set-Cookie', AUTHORIZATION ]
     };
 
@@ -34,6 +34,10 @@ module.exports = (app) => {
     app.use(bodyParser.json({limit: bodyMaxSize}));
 
     logger.debug("Setting express validator");
-    app.use(expressValidator());
+		app.use(expressValidator());
+		
+		logger.debug("Setting 'Public' folder with maxAge: 1 Day.");
+		const oneYear = 31557600000;
+		app.use('/static',express.static('static', { maxAge: oneYear }));
 
 };

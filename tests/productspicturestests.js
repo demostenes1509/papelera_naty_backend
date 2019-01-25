@@ -9,8 +9,7 @@ module.exports = {
     get : async () => {
         const token = await getToken();
         const response = await request("http://localhost:"+process.env.app_http_port)
-            .get('/productspictures/1')
-            .set(AUTHORIZATION,getBearerToken(token))
+            .get('/static/productspictures/1.jpg')
             .expect(200);	
 
     },

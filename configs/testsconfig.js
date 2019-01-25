@@ -14,8 +14,7 @@ const { category,
 				footer, 
 				home, 
 				auth, 
-				token, 
-				productpicture } = require('tests');
+				token } = require('tests');
 
 const runTest = (id,label,func) => {
 	if(process.env.TESTTORUN) {
@@ -66,10 +65,10 @@ describe('Test Suite', function () {
 		runTest('catcreatewithoutname','Create without name', category.create_without_name);
 	});
 
-	describe('Products Pictures Tests', () => {
-		runTest('ppget','Get picture', productpicture.get);
-		runTest('ppgetnotfound','Get picture not found', productpicture.get_not_found);
-	});
+	// describe('Products Pictures Tests', () => {
+	// 	runTest('ppget','Get picture', productpicture.get);
+	// 	runTest('ppgetnotfound','Get picture not found', productpicture.get_not_found);
+	// });
 
 	describe('Home Tests',  ()  => {
 		runTest('homeoffersget','Get Offers', home.get_offers);
