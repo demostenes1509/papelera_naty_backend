@@ -61,7 +61,7 @@ module.exports = (app) => {
     app.use(restrict);
 
     app.get 	( '/token',                         wrap(app,token.get));
-    app.post 	( '/login',                         wrap(app,auth.login));
+    // app.post 	( '/login',                         wrap(app,auth.login));
     app.post 	( '/logout',                        wrap(app,auth.logout));
 
     app.get 	( '/categories',                    wrap(app,categories.list));

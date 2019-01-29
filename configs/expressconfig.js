@@ -40,4 +40,7 @@ module.exports = (app) => {
 		const oneYear = 31557600000;
 		app.use('/static',express.static('static', { maxAge: oneYear }));
 
+		logger.debug('Setting Session');
+		app.use(require('express-session')({ secret: 'Pilarcita1', resave: true, saveUninitialized: true }))
+
 };

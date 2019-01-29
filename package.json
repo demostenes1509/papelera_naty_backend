@@ -7,7 +7,7 @@
     "start": "cross-env NODE_PATH=. NODE_ENV=development nodemon --watch . server",
     "debug": "cross-env NODE_PATH=. NODE_ENV=development node --inspect server",
     "test": "cross-env NODE_PATH=. NODE_ENV=test nyc --reporter=lcov mocha  --exit -u exports -R spec configs/testsconfig",
-    "releaselocks": "cross-env NODE_PATH=. NODE_ENV=development node tasks/releaselocks"    
+    "releaselocks": "cross-env NODE_PATH=. NODE_ENV=development node tasks/releaselocks"
   },
   "author": "Maximiliano Carrizo",
   "dependencies": {
@@ -20,12 +20,15 @@
     "expect": "^23.6.0",
     "express": "^4.16.4",
     "express-bearer-token": "^2.2.0",
+    "express-session": "^1.15.6",
     "express-validator": "^5.3.1",
     "jsonwebtoken": "^8.4.0",
     "liquibase": "0.0.3",
     "memory-cache": "^0.2.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "pg": "^7.7.1",
     "pg-hstore": "^2.3.2",
     "promise.prototype.finally": "^3.1.0",
