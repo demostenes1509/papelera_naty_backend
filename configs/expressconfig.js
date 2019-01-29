@@ -7,6 +7,7 @@ const cors = require('cors');
 const bearerToken = require('express-bearer-token');
 const { AUTHORIZATION } = require('configs/constantsconfig');
 const express = require('express');
+const passport = require('passport');
 
 module.exports = (app) => {
 
@@ -42,5 +43,9 @@ module.exports = (app) => {
 
 		logger.debug('Setting Session');
 		app.use(require('express-session')({ secret: 'Pilarcita1', resave: true, saveUninitialized: true }))
+
+		logger.debug('Setting Passport');
+		app.use(passport.initialize());
+		app.use(passport.session());
 
 };

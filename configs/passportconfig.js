@@ -49,18 +49,10 @@ module.exports = (app, db) => {
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	// app.post('/login', function (req, res, next) {
-	// 		console.log(req);
-	// 	}
-	// );
-
-	app.post(
-		'/login',
-		passport.authenticate('local', { session: false }),
-		(req, res) => {
+	app.post('/login',passport.authenticate('local', { session: false }), (req, res, next) => {
 
 			if (!req.user) {
-				throw new Error('Invalid username/password');
+				return next('Invalid username/password');
 			}
 
 			logger.info('Responding to user');
@@ -69,9 +61,5 @@ module.exports = (app, db) => {
 			
 			return res.status(200).send({isAdmin, firstName: first_name, lastName: last_name});
 
-		},generateToken, sendToken
-	);
-
-
-
+		},generateToken, sendToken);
 }

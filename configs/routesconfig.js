@@ -6,6 +6,9 @@ const { categories,
         auth, 
         token,
         productspictures} = require('app/controllers');
+const passportLinkedIn = require('./auth/linkedin');
+// const passportGithub = require('./auth/github');
+// const passportTwitter = require('./auth/twitter');
 
 const testWorkflow = (app,fn,req,res,next) => {
     fn(req,res,next)
@@ -60,9 +63,18 @@ module.exports = (app) => {
 
     app.use(restrict);
 
+		app.get('/auth/linkedin', passportLinkedIn.authenticate('linkedin'));
+		app.get(
+			'/auth/linkedin/callback', passportLinkedIn.authenticate('linkedin', { failureRedirect: '/login' }),
+			(req, res) => {
+				// Successful authentication
+				res.json(req.user);
+			}
+		);
+
     app.get 	( '/token',                         wrap(app,token.get));
     // app.post 	( '/login',                         wrap(app,auth.login));
-    app.post 	( '/logout',                        wrap(app,auth.logout));
+		app.post 	( '/logout',                        wrap(app,auth.logout));
 
     app.get 	( '/categories',                    wrap(app,categories.list));
     app.post 	( '/admin/categories',              wrap(app,categories.create));

@@ -24,8 +24,8 @@ module.exports = async (runmigrations) => {
         await migrationconfig('update');
 		}
 		
-		logger.info('Configuring passport');
-		passportconfig(app,db);
+		// logger.info('Configuring passport');
+		// passportconfig(app,db);
 
     // logger.info('Configuring sessions');
     // await sessionconfig(app);
