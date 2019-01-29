@@ -26,8 +26,8 @@ module.exports = (app) => {
     logger.debug("Enabling GZip compression.");
     app.use(compression({
         threshold: 512
-    })); 
-
+		})); 
+		
     const bodyMaxSize = 1024 * 1024 * 8 * 100;
     logger.debug("Setting parse urlencoded request bodies into req.body.");
     app.use(bodyParser.urlencoded({ extended: true, limit: bodyMaxSize }));

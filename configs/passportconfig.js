@@ -6,9 +6,6 @@ const { generateToken, sendToken } = require('utils/tokensutil');
 
 module.exports = (app, db) => {
 
-	app.use(passport.initialize());
-	app.use(passport.session());
-	
 	passport.use(new LocalStrategy(async (email, password, done) => {
 		let user;
 		try {
@@ -31,10 +28,12 @@ module.exports = (app, db) => {
 	}));
 
 	passport.serializeUser(function(user, cb) {
+		logger.info('serializeUser');
 		cb(null, user.id);
 	});
 
 	passport.deserializeUser(async (id, done) => {
+		logger.info('deserializeUser');
 		try {
 			const user = await db.models.users.findById(id);
 			if (!user) {
@@ -47,14 +46,32 @@ module.exports = (app, db) => {
 		}
 	});
 
+	app.use(passport.initialize());
+	app.use(passport.session());
+
+	// app.post('/login', function (req, res, next) {
+	// 		console.log(req);
+	// 	}
+	// );
+
 	app.post(
 		'/login',
-		passport.authenticate('local', { failureRedirect: '/login' }),
-		function (req, res) {
-			console.log('===>'+req.user);
-			res.redirect('/');
+		passport.authenticate('local', { session: false }),
+		(req, res) => {
+
+			if (!req.user) {
+				throw new Error('Invalid username/password');
+			}
+
+			logger.info('Responding to user');
+			const { first_name, last_name } = req.user;
+			const isAdmin = req.user.role.name === 'admin';
+			
+			return res.status(200).send({isAdmin, firstName: first_name, lastName: last_name});
+
 		},generateToken, sendToken
 	);
+
 
 
 }

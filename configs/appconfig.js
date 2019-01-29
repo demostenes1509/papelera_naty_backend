@@ -14,7 +14,7 @@ module.exports = async (runmigrations) => {
     const app = express();
 
     logger.info('Configuring express');
-    expressconfig(app);
+		expressconfig(app);
 
     logger.info('Configuring orm');
     const db = await ormconfig(app);
@@ -31,8 +31,8 @@ module.exports = async (runmigrations) => {
     // await sessionconfig(app);
 
     logger.info('Configuring routes');
-    await routesconfig(app);
-
+		await routesconfig(app);
+		
     logger.info('Configuring error handler');
     errorhandlerconfig(app);
 
