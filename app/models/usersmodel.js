@@ -52,7 +52,19 @@ module.exports = (sequelize) => {
     state: {
       type: Sequelize.DOUBLE,
       allowNull: true
-    }
+		},
+		provider: {
+			type: Sequelize.STRING,
+			allowNull: true
+		},
+		facebook_id: {
+			type: Sequelize.STRING,
+			allowNull: true
+		},
+		facebook_token: {
+			type: Sequelize.STRING,
+			allowNull: true
+		}
   }, {
     tableName: 'users',
     timestamps: false

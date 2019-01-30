@@ -6,9 +6,7 @@ const { categories,
         auth, 
         token,
         productspictures} = require('app/controllers');
-const passportLinkedIn = require('./auth/linkedin');
-// const passportGithub = require('./auth/github');
-// const passportTwitter = require('./auth/twitter');
+const passportFacebook = require('./auth/facebook');
 
 const testWorkflow = (app,fn,req,res,next) => {
     fn(req,res,next)
@@ -59,13 +57,13 @@ const restrict = (req,res,next) => {
     }
 }
 
-module.exports = (app) => {
+module.exports = (app,db) => {
 
     app.use(restrict);
 
-		app.get('/auth/linkedin', passportLinkedIn.authenticate('linkedin'));
+		app.get('/auth/facebook', passportFacebook(db).authenticate('facebook'));
 		app.get(
-			'/auth/linkedin/callback', passportLinkedIn.authenticate('linkedin', { failureRedirect: '/login' }),
+			'/auth/facebook/callback', passportFacebook(db).authenticate('facebook', { failureRedirect: '/login' }),
 			(req, res) => {
 				// Successful authentication
 				res.json(req.user);
@@ -88,6 +86,5 @@ module.exports = (app) => {
     app.get 	( '/',                              wrap(app,home.get_offers));
     app.get 	( '/search/:search',                wrap(app,home.get_search));
     app.get 	( '/:category',                     wrap(app,home.get_category));
-
 
 };

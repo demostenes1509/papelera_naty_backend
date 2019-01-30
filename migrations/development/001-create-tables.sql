@@ -116,7 +116,10 @@ CREATE TABLE users (
     city varchar(255),
     telephone varchar(255),
     zipcode numeric(4,0),
-    state numeric(2,0)
+    state numeric(2,0),
+		provider varchar(255),
+		facebook_id varchar(255),
+		facebook_token varchar(255)
 );
 
 CREATE TABLE users_sessions (

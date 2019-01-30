@@ -31,7 +31,7 @@ module.exports = async (runmigrations) => {
     // await sessionconfig(app);
 
     logger.info('Configuring routes');
-		await routesconfig(app);
+		await routesconfig(app,db);
 		
     logger.info('Configuring error handler');
     errorhandlerconfig(app);
