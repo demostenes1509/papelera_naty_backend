@@ -7,6 +7,8 @@ const cors = require('cors');
 const bearerToken = require('express-bearer-token');
 const { AUTHORIZATION } = require('configs/constantsconfig');
 const express = require('express');
+const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
 const passport = require('passport');
 
 module.exports = (app) => {
@@ -42,7 +44,16 @@ module.exports = (app) => {
 		app.use('/static',express.static('static', { maxAge: oneYear }));
 
 		logger.debug('Setting Session');
-		app.use(require('express-session')({ secret: 'Pilarcita1', resave: true, saveUninitialized: true }))
+		const { db_database, db_host, db_user, db_password } = process.env;
+		app.use(session({
+			store: new pgSession({
+				tableName : 'users_sessions',
+				conString: `postgresql://${db_user}:${db_password}@${db_host}/${db_database}`
+			}),
+			secret: 'Pilarcita1',
+			resave: false,
+			cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
+		}));
 
 		logger.debug('Setting Passport');
 		app.use(passport.initialize());

@@ -34,14 +34,17 @@ module.exports = {
 	
 	logout: async (req,res) => {
 
-		logger.info('Logout');
-		const { userSession } = req;
-		
-		logger.debug('Removing user from session');
-		await modelsutil.save(req,userSession,{user_id: null});
+		req.logout();
+		res.redirect('/');
 
-		logger.info('Responding to user');
-		return res.status(200).send({[TOKEN_NAME]: req.token, isLoggedIn: false});
+		// logger.info('Logout');
+		// const { userSession } = req;
+		
+		// logger.debug('Removing user from session');
+		// await modelsutil.save(req,userSession,{user_id: null});
+
+		// logger.info('Responding to user');
+		// return res.status(200).send({[TOKEN_NAME]: req.token, isLoggedIn: false});
 
 	}
 		

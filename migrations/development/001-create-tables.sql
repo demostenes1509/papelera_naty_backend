@@ -108,9 +108,10 @@ CREATE TABLE transactions_detail (
 CREATE TABLE users (
     id bigint DEFAULT nextval('users_sequence') NOT NULL,
     email_address varchar(256) NOT NULL,
-    password varchar(255) NOT NULL,
-    first_name varchar(256) NOT NULL,
-    last_name varchar(256) NOT NULL,
+    password varchar(255),
+    first_name varchar(256),
+    last_name varchar(256),
+		full_name varchar(256),
     role_id bigint NOT NULL,
     address varchar(255),
     city varchar(255),
@@ -123,9 +124,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE users_sessions (
-    id bigint DEFAULT nextval('users_sessions_sequence') NOT NULL,
-    last_access timestamp without time zone NOT NULL,
-    token varchar(255) NOT NULL,
-    user_id bigint
+  sid varchar NOT NULL COLLATE "default",
+	sess json NOT NULL,
+	expire timestamp(6) NOT NULL
 );
-

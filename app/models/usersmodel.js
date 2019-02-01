@@ -15,15 +15,19 @@ module.exports = (sequelize) => {
     },
     password: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     first_name: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     last_name: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
+    },
+    full_name: {
+      type: Sequelize.STRING,
+      allowNull: true
     },
     role_id: {
       type: Sequelize.BIGINT,
@@ -74,11 +78,17 @@ module.exports = (sequelize) => {
     if(result) {
       if(Array.isArray(result)) {
         for (const user of result) {
-          user.fullName = `${user.first_name} ${user.last_name}`;
+					if(user.first_name && user.last_name) user.fullName = `${user.first_name} ${user.last_name}`;
+					else user.fullName = `${user.full_name}`;
         }
       }
       else {
-        result.fullName = `${result.first_name} ${result.last_name}`;
+				if(result.first_name && result.last_name) {
+					result.fullName = `${result.first_name} ${result.last_name}`;
+				}
+				else {
+					result.fullName = `${result.full_name}`;
+				}
       }
     }
   });

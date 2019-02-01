@@ -8,7 +8,8 @@ module.exports = (db) => {
 
   passport.deserializeUser(async (id, done) => {
 		try {
-			const user = await db.models.users.findById(id);
+			const params = {where: {id}, include: [ {model: db.models.roles, as: 'role'} ]};
+			const user = await db.models.users.findOne(params);
 			done(null,user)
 		}
 		catch(err) {

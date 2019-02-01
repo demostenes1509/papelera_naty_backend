@@ -15,9 +15,9 @@ module.exports = (db) => {
 		},
 		async (accessToken, refreshToken, profile, done) => {
 	
-			logger.info('accessToken:'+accessToken);
-			logger.info('refreshToken:'+refreshToken);
-			logger.info('profile:'+JSON.stringify(profile,null,'   '));
+			logger.debug('accessToken:'+accessToken);
+			logger.debug('refreshToken:'+refreshToken);
+			logger.debug('profile:'+JSON.stringify(profile,null,'   '));
 
 			try {
 				let user = await db.models.users.findOne({where: { facebook_id: profile.id } });
@@ -27,10 +27,14 @@ module.exports = (db) => {
 					});
 				}
 				else {
+					const role = await db.models.roles.findOne({where: { name: 'client' }});
 					const values = {
-							first_name: profile.displayName, 
+							full_name: profile.displayName, 
 							provider: profile.provider, 
-							facebook_token: accessToken
+							facebook_token: accessToken,
+							facebook_id: profile.id,
+							email_address: profile.emails[0].value,
+							role_id: role.id
 					};
 
 					user = await db.models.users.create(values);
