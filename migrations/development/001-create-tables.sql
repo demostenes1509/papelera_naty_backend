@@ -124,7 +124,8 @@ CREATE TABLE users (
 );
 
 CREATE TABLE users_sessions (
-  sid varchar NOT NULL COLLATE "default",
-	sess json NOT NULL,
-	expire timestamp(6) NOT NULL
+    id bigint DEFAULT nextval('users_sessions_sequence') NOT NULL,
+    last_access timestamp without time zone NOT NULL,
+    token varchar(255) NOT NULL,
+    user_id bigint
 );

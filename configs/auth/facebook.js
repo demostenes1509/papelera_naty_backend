@@ -1,54 +1,22 @@
 const logger = require("configs/loggerconfig")(module);
 var passport = require('passport');
-var FacebookStrategy = require('passport-facebook').Strategy;
+var FacebookSignedRequestStrategy = require('passport-facebook-signedrequest');
 var config = require('./authconfig');
-var init = require('./init');
+// var init = require('./init');
 
-module.exports = (db) => {
 
-	passport.use(new FacebookStrategy(
-		{
-			clientID: config.facebook.clientId,
-			clientSecret: config.facebook.clientSecret,
-			callbackURL: config.facebook.callbackURL,
-			profileFields: ['id', 'displayName', 'photos', 'email']
-		},
-		async (accessToken, refreshToken, profile, done) => {
-	
-			logger.debug('accessToken:'+accessToken);
-			logger.debug('refreshToken:'+refreshToken);
-			logger.debug('profile:'+JSON.stringify(profile,null,'   '));
+passport.use(new FacebookSignedRequestStrategy({
+	appId: 'config.facebook.clientId',
+	appSecret: config.facebook.clientSecret,
+	userFields: ['first_name','last_name','name','id','email','picture']
+},
+	function (user, done) {
+		if (user)
+			return done(null, user);
+		else
+			return done(new Error('Token not valid'));
+	}
+));
 
-			try {
-				let user = await db.models.users.findOne({where: { facebook_id: profile.id } });
-				if(user) {
-					await user.update({
-						token: accessToken
-					});
-				}
-				else {
-					const role = await db.models.roles.findOne({where: { name: 'client' }});
-					const values = {
-							full_name: profile.displayName, 
-							provider: profile.provider, 
-							facebook_token: accessToken,
-							facebook_id: profile.id,
-							email_address: profile.emails[0].value,
-							role_id: role.id
-					};
 
-					user = await db.models.users.create(values);
-				}
-				done(null,user);
-			}
-			catch(err) {
-				done(err);
-			}
-		}
-	));
-	
-	init(db);
-
-	return passport;
-
-};
+module.exports = passport;

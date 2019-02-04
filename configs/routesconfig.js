@@ -6,7 +6,7 @@ const { categories,
         auth, 
         token,
         productspictures} = require('app/controllers');
-const passportFacebook = require('./auth/facebook');
+const passport = require('passport');
 
 const testWorkflow = (app,fn,req,res,next) => {
     fn(req,res,next)
@@ -59,23 +59,42 @@ const restrict = (req,res,next) => {
 
 module.exports = (app,db) => {
 
-    app.use(restrict);
+    // app.use(restrict);
 
-		app.get('/auth/facebook', passportFacebook(db).authenticate('facebook'));
-		app.get(
-			'/auth/facebook/callback', passportFacebook(db).authenticate('facebook', { failureRedirect: '/login' }),
-			(req, res) => {
-				// Successful authentication
-				res.json(req.user);
+		// app.post('/auth/facebook'/*,passportFacebook.authenticate('facebook-token', {session: false}), */,(req, res) => {
+		app.post('/goma',(req, res, next) => {
+			logger.info('EN ROUTE:'+req.user);
+			if (!req.user) {
+					return res.send(401, 'User Not Authenticated');
 			}
-		);
+			req.auth = {
+					id: req.user.id
+			};
+
+			return res.json(req.user);
+		});
 
     app.get 	( '/token',                         wrap(app,token.get));
     // app.post 	( '/login',                         wrap(app,auth.login));
 		app.get 	( '/logout',                        wrap(app,auth.logout));
 
     app.get 	( '/categories',                    wrap(app,categories.list));
-    app.post 	( '/admin/categories',              wrap(app,categories.create));
+		app.post 	( '/admin/categories',              wrap(app,categories.create));
+		app.post('/login-fb', async (req, res, next) => {
+			console.log('MEC>1');
+			passport.req = req;
+			passport.authenticate('facebookSignedRequest', function (err, user) {
+
+				console.log(err);
+				console.log(user);
+
+				if (err)
+					res.status(400).json(err.message);
+				else
+					res.status(200).json(user);
+			})(req, res, next);
+		});
+		
 
     app.get 	( '/productspictures/:picture_id',  wrap(app,productspictures.get));
 
