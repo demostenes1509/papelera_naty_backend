@@ -10,6 +10,8 @@ const express = require('express');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const passport = require('passport');
+const winston = require('winston');
+const expressWinston = require('express-winston');
 
 module.exports = (app) => {
 
@@ -43,20 +45,30 @@ module.exports = (app) => {
 		const oneYear = 31557600000;
 		app.use('/static',express.static('static', { maxAge: oneYear }));
 
-		logger.debug('Setting Session');
-		const { db_database, db_host, db_user, db_password } = process.env;
-		app.use(session({
-			store: new pgSession({
-				tableName : 'users_sessions',
-				conString: `postgresql://${db_user}:${db_password}@${db_host}/${db_database}`
-			}),
-			secret: 'Pilarcita1',
-			resave: false,
-			cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
-		}));
+		// logger.debug('Setting Session');
+		// const { db_database, db_host, db_user, db_password } = process.env;
+		// app.use(session({
+		// 	store: new pgSession({
+		// 		tableName : 'users_sessions',
+		// 		conString: `postgresql://${db_user}:${db_password}@${db_host}/${db_database}`
+		// 	}),
+		// 	secret: 'Pilarcita1',
+		// 	resave: false,
+		// 	cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
+		// }));
+
+		app.use(expressWinston.logger({
+      transports: [
+        new winston.transports.Console()
+      ],
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.json()
+      )
+    }));
 
 		logger.debug('Setting Passport');
 		app.use(passport.initialize());
-		app.use(passport.session());
+		// app.use(passport.session());
 
 };

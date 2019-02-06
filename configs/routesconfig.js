@@ -57,18 +57,18 @@ const restrict = (req,res,next) => {
     }
 }
 
-module.exports = (app,db) => {
+module.exports = (app) => {
 
     app.use(restrict);
 
-		app.get('/auth/facebook', passportFacebook(db).authenticate('facebook'));
-		app.get(
-			'/auth/facebook/callback', passportFacebook(db).authenticate('facebook', { failureRedirect: '/login' }),
-			(req, res) => {
-				// Successful authentication
-				res.json(req.user);
-			}
-		);
+		// app.get('/auth/facebook', passportFacebook(db).authenticate('facebook'));
+		// app.get(
+		// 	'/auth/facebook/callback', passportFacebook(db).authenticate('facebook', { failureRedirect: '/login' }),
+		// 	(req, res) => {
+		// 		// Successful authentication
+		// 		res.json(req.user);
+		// 	}
+		// );
 
     app.get 	( '/token',                         wrap(app,token.get));
     // app.post 	( '/login',                         wrap(app,auth.login));
