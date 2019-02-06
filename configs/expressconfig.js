@@ -57,15 +57,15 @@ module.exports = (app) => {
 		// 	cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
 		// }));
 
-		app.use(expressWinston.logger({
-      transports: [
-        new winston.transports.Console()
-      ],
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.json()
-      )
-    }));
+		// app.use(expressWinston.logger({
+    //   transports: [
+    //     new winston.transports.Console()
+    //   ],
+    //   format: winston.format.combine(
+    //     winston.format.colorize(),
+    //     winston.format.json()
+    //   )
+    // }));
 
 		logger.debug('Setting Passport');
 		app.use(passport.initialize());
