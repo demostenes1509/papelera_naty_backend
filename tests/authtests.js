@@ -35,7 +35,7 @@ const self = module.exports = {
 			.post('/login')
 			.set(AUTHORIZATION, getBearerToken(token))
 			.send({ username: 'no@exists', password: 'maxi' })
-			.expect(500);
+			.expect(401);
 	},
 
 	login_invalid_password: async () => {
@@ -44,7 +44,7 @@ const self = module.exports = {
 			.post('/login')
 			.set(AUTHORIZATION, getBearerToken(token))
 			.send({ username: 'mcarrizo@papeleranaty.com', password: 'maxito' })
-			.expect(500);
+			.expect(401);
 	},
 
 	permission_error: async () => {

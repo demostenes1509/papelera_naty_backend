@@ -72,7 +72,7 @@ module.exports = (app) => {
 
     app.get 	( '/token',                         wrap(app,token.get));
     // app.post 	( '/login',                         wrap(app,auth.login));
-		app.get 	( '/logout',                        wrap(app,auth.logout));
+		app.post 	( '/logout',                        wrap(app,auth.logout));
 
     app.get 	( '/categories',                    wrap(app,categories.list));
     app.post 	( '/admin/categories',              wrap(app,categories.create));
