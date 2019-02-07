@@ -6,15 +6,16 @@ const { categories,
         auth, 
         token,
         productspictures} = require('app/controllers');
+const passport = require('passport');
 
-const testWorkflow = (app,fn,req,res,next) => {
+const testWorkflow = (fn,req,res,next) => {
     fn(req,res,next)
     .catch(err=> {
         next(err);
     })
 };
 
-const noTestWorkflow = (app,fn,req,res,next) => {
+const noTestWorkflow = (fn,req,res,next) => {
 
     req.db.transaction()
     .then(t => {
@@ -30,13 +31,13 @@ const noTestWorkflow = (app,fn,req,res,next) => {
     })
 };
 
-const wrap = (app,fn) => {
+const wrap = (fn) => {
     return (req, res, next) => {
         if(process.env.NODE_ENV==='test') {
-            return testWorkflow(app,fn,req,res,next);
+            return testWorkflow(fn,req,res,next);
         }
         else {
-            return noTestWorkflow(app,fn,req,res,next);
+            return noTestWorkflow(fn,req,res,next);
         }
     };
 }
@@ -60,22 +61,22 @@ module.exports = (app) => {
 
     app.use(restrict);
 
-    app.get 	( '/token',                         wrap(app,token.get));
-    app.post 	( '/login',                         wrap(app,auth.login));
-    app.post 	( '/logout',                        wrap(app,auth.logout));
+    app.get 	( '/token',                         wrap(token.get));
+		app.post	('/login', 													passport.authenticate('login-local', { session: false }), wrap(auth.login));
+		app.post	('/login-facebook', 								passport.authenticate('login-facebook', { session: false }), wrap(auth.login));
+		app.post 	( '/logout',                        wrap(auth.logout));
 
-    app.get 	( '/categories',                    wrap(app,categories.list));
-    app.post 	( '/admin/categories',              wrap(app,categories.create));
+    app.get 	( '/categories',                    wrap(categories.list));
+    app.post 	( '/admin/categories',              wrap(categories.create));
 
-    app.get 	( '/productspictures/:picture_id',  wrap(app,productspictures.get));
+    app.get 	( '/productspictures/:picture_id',  wrap(productspictures.get));
 
-    app.get 	( '/sidebar',                       wrap(app,sidebar.get));
+    app.get 	( '/sidebar',                       wrap(sidebar.get));
 
-    app.get 	( '/footer',                        wrap(app,footer.get));
+    app.get 	( '/footer',                        wrap(footer.get));
 
-    app.get 	( '/',                              wrap(app,home.get_offers));
-    app.get 	( '/search/:search',                wrap(app,home.get_search));
-    app.get 	( '/:category',                     wrap(app,home.get_category));
-
+    app.get 	( '/',                              wrap(home.get_offers));
+    app.get 	( '/search/:search',                wrap(home.get_search));
+    app.get 	( '/:category',                     wrap(home.get_category));
 
 };

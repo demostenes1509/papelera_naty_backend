@@ -5,6 +5,7 @@ const migrationconfig = require("configs/migrationconfig");
 const routesconfig = require("configs/routesconfig");
 const expressconfig = require("configs/expressconfig");
 const sessionconfig = require("configs/sessionconfig");
+const passportconfig = require("configs/passportconfig");
 const errorhandlerconfig = require("configs/errorhandlerconfig");
 
 module.exports = async (runmigrations) => {
@@ -13,7 +14,7 @@ module.exports = async (runmigrations) => {
     const app = express();
 
     logger.info('Configuring express');
-    expressconfig(app);
+		expressconfig(app);
 
     logger.info('Configuring orm');
     const db = await ormconfig(app);
@@ -21,14 +22,17 @@ module.exports = async (runmigrations) => {
     if(runmigrations) {
         logger.info('Running migrations');
         await migrationconfig('update');
-    }
-
+		}
+		
     logger.info('Configuring sessions');
     await sessionconfig(app);
 
-    logger.info('Configuring routes');
-    await routesconfig(app);
+		logger.info('Configuring passport');
+		passportconfig(app,db);
 
+    logger.info('Configuring routes');
+		await routesconfig(app);
+		
     logger.info('Configuring error handler');
     errorhandlerconfig(app);
 

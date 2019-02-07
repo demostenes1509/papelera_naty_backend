@@ -108,15 +108,19 @@ CREATE TABLE transactions_detail (
 CREATE TABLE users (
     id bigint DEFAULT nextval('users_sequence') NOT NULL,
     email_address varchar(256) NOT NULL,
-    password varchar(255) NOT NULL,
-    first_name varchar(256) NOT NULL,
-    last_name varchar(256) NOT NULL,
+    password varchar(255),
+    first_name varchar(256),
+    last_name varchar(256),
+		full_name varchar(256),
     role_id bigint NOT NULL,
     address varchar(255),
     city varchar(255),
     telephone varchar(255),
     zipcode numeric(4,0),
-    state numeric(2,0)
+    state numeric(2,0),
+		provider varchar(255),
+		facebook_id varchar(255),
+		facebook_token varchar(255)
 );
 
 CREATE TABLE users_sessions (
@@ -125,4 +129,3 @@ CREATE TABLE users_sessions (
     token varchar(255) NOT NULL,
     user_id bigint
 );
-
