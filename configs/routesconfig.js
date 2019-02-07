@@ -7,6 +7,9 @@ const { categories,
         token,
         productspictures} = require('app/controllers');
 const passportFacebook = require('./auth/facebook');
+const passport = require('passport');
+const modelsutil = require("utils/modelsutil");
+const { TOKEN_NAME } = require('configs/constantsconfig');
 
 const testWorkflow = (app,fn,req,res,next) => {
     fn(req,res,next)
@@ -71,7 +74,7 @@ module.exports = (app) => {
 		// );
 
     app.get 	( '/token',                         wrap(app,token.get));
-    // app.post 	( '/login',                         wrap(app,auth.login));
+		app.post	('/login', passport.authenticate('local', { session: false }), auth.login);
 		app.post 	( '/logout',                        wrap(app,auth.logout));
 
     app.get 	( '/categories',                    wrap(app,categories.list));
