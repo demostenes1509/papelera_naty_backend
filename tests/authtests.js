@@ -8,7 +8,7 @@ const login_as_user = (email,token) => {
 	return request("http://localhost:" + process.env.app_http_port)
 		.post('/login')
 		.set(AUTHORIZATION, getBearerToken(token))
-		.send({ username: email, password: 'maxi' })
+		.send({ email: email, password: 'maxi' })
 		.expect(200);
 };
 
@@ -34,7 +34,7 @@ const self = module.exports = {
 		return request("http://localhost:" + process.env.app_http_port)
 			.post('/login')
 			.set(AUTHORIZATION, getBearerToken(token))
-			.send({ username: 'no@exists', password: 'maxi' })
+			.send({ email: 'no@exists', password: 'maxi' })
 			.expect(401);
 	},
 
@@ -43,7 +43,7 @@ const self = module.exports = {
 		return request("http://localhost:" + process.env.app_http_port)
 			.post('/login')
 			.set(AUTHORIZATION, getBearerToken(token))
-			.send({ username: 'mcarrizo@papeleranaty.com', password: 'maxito' })
+			.send({ email: 'mcarrizo@papeleranaty.com', password: 'maxito' })
 			.expect(401);
 	},
 

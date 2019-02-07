@@ -73,6 +73,12 @@ ALTER TABLE users
 ALTER TABLE users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
+ALTER TABLE users_sessions
+    ADD CONSTRAINT users_sessions_token_key UNIQUE (token);
+
+ALTER TABLE users_sessions
+    ADD CONSTRAINT zintro_user_sessions_pkey PRIMARY KEY (id);
+
 CREATE UNIQUE INDEX mailing_email ON mailing USING btree (email_address);
 
 CREATE UNIQUE INDEX registrations_email ON registrations USING btree (email_address);
@@ -98,8 +104,8 @@ ALTER TABLE products_pictures
 ALTER TABLE shopping_cart
     ADD CONSTRAINT shopping_cart_product_format_id_fkey FOREIGN KEY (product_format_id) REFERENCES products_formats(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
--- ALTER TABLE shopping_cart
---    ADD CONSTRAINT shopping_cart_user_session_id_fkey FOREIGN KEY (user_session_id) REFERENCES users_sessions(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE shopping_cart
+    ADD CONSTRAINT shopping_cart_user_session_id_fkey FOREIGN KEY (user_session_id) REFERENCES users_sessions(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 ALTER TABLE transactions_detail
     ADD CONSTRAINT transactions_detail_product_format_id_fkey FOREIGN KEY (product_format_id) REFERENCES products_formats(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
@@ -113,6 +119,5 @@ ALTER TABLE transactions_header
 ALTER TABLE users
     ADD CONSTRAINT users_role_id_fkey FOREIGN KEY (role_id) REFERENCES roles(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
-ALTER TABLE users_sessions 
-		ADD CONSTRAINT session_pkey PRIMARY KEY (sid) NOT DEFERRABLE INITIALLY IMMEDIATE;
-
+ALTER TABLE users_sessions
+    ADD CONSTRAINT users_sessions_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
