@@ -1,7 +1,7 @@
 const logger = require("configs/loggerconfig")(module);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const FacebookSignedRequestStrategy = require('utils/passport-facebook-signedrequest');
+const FacebookStrategy = require('passport-facebook').Strategy;
 const cypherutil = require("utils/cypherutil");
 const modelsutil = require("utils/modelsutil");
 
@@ -28,18 +28,18 @@ module.exports = (app) => {
 		return done(null, user);
 	}));
 
-	passport.use('login-facebook', new FacebookSignedRequestStrategy({
-		appId: process.env.auth_facebook_client_id,
-		appSecret: process.env.auth_facebook_client_secret,
-		userFields: ['first_name', 'last_name', 'name', 'id', 'email', 'picture'],
+	passport.use('login-facebook', new FacebookStrategy(
+		{
+		clientID: process.env.auth_facebook_client_id,
+		clientSecret: process.env.auth_facebook_client_secret,
+		callbackURL: '/auth/facebook/callback',
 		passReqToCallback: true,
-		session: false
+		session: false,
+		profileFields: ['id', 'email', 'first_name', 'last_name']
 	},
-		async (profile, done) => {
+		async (req, accessToken, refreshToken, profile, done) => {
 			try {
-				const { req } = profile;
 				console.log('--------------');
-				console.log(profile.id);
 				console.log(profile.name);
 				console.log('--------------');
 				const params = { where: { facebook_id: profile.id }, include: [{ model: req.db.models.roles, as: 'role' }] };
@@ -47,11 +47,11 @@ module.exports = (app) => {
 				if(!user) {
 					const role = await modelsutil.findOne(req,'roles',{where: { name: 'client' }});
 					const values = {
-							first_name: profile.first_name, 
-							last_name: profile.last_name, 
+							first_name: profile.name.givenName, 
+							last_name: profile.name.familyName, 
 							provider: 'facebook', 
 							facebook_id: profile.id,
-							email_address: profile.email,
+							email_address: profile.emails[0].value,
 							role_id: role.id
 					};
 					user = await modelsutil.create(req,'users',values);
@@ -64,7 +64,5 @@ module.exports = (app) => {
 		}
 	));
 
-
 	app.use(passport.initialize());
-
 }

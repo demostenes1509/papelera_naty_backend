@@ -75,6 +75,14 @@ module.exports = (app) => {
 
     app.get 	( '/',                              wrap(home.get_offers));
     app.get 	( '/search/:search',                wrap(home.get_search));
-    app.get 	( '/:category',                     wrap(home.get_category));
+		app.get 	( '/:category',                     wrap(home.get_category));
+		
+
+		app.get( '/auth/facebook', passport.authenticate('login-facebook',{ session: false }), function(req, res){});
+		app.get( '/auth/facebook/callback', passport.authenticate('login-facebook', { failureRedirect: '/', session: false }),
+		function(req, res) {
+			res.redirect('/account');
+		});
+	
 
 };
