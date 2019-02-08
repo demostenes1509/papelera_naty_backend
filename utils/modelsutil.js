@@ -19,5 +19,11 @@ module.exports = {
 
 	save : (req,obj,data) => {
 		return obj.update(data,{transaction: req.trx});
-	}
+	},
+
+	destroy : (req,model,filter) => {
+		filter.transaction = req.trx;
+		return req.db.models[model].destroy(filter);
+	}	
+
 }

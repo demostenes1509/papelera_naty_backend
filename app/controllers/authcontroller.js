@@ -30,12 +30,11 @@ module.exports = {
 		logger.info('Logout');
 		const { userSession } = req;
 		
-		logger.debug('Removing user from session');
-		await modelsutil.save(req,userSession,{user_id: null});
+		logger.debug('Removing session');
+		await modelsutil.destroy(req,'userssessions',{where: {id: userSession.id} });
 
 		logger.info('Responding to user');
-		return res.status(200).send({[TOKEN_NAME]: req.token, isLoggedIn: false});
-
+		return res.status(200).send({isLoggedIn: false});
 	}
 		
 }
