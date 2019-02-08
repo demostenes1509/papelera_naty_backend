@@ -16,23 +16,17 @@ const updateTimestamp = async (req, userSession) => {
 	}
 }
 
-const updateSession = async (req,res, userSession) => {
+const updateSession = async (req, userSession) => {
 	req.userSession	= userSession;
 
-	if(userSession.isLoggedIn) {
-		logger.debug('User is logged in');
-		const isAdmin = userSession.user.role.name==='admin';
-		req.session = { isLoggedIn:true, isAdmin};
-	}
-	else {
-		logger.debug('User is NOT logged in');
-		req.session			= { isLoggedIn: false };
-	}
+	logger.debug('User is logged in');
+	const isAdmin = userSession.user.role.name==='admin';
+	req.session = { isLoggedIn:true, isAdmin};
 
 	await updateTimestamp(req,userSession);
 }
 
-const handleSession = async (req, res) => {
+const handleSession = async (req) => {
 
 	if(req.token) {
 		logger.debug('Token:'+req.token);
@@ -46,14 +40,14 @@ const handleSession = async (req, res) => {
 		const userSession = await modelsutil.findOne(req,'userssessions',filter);
 		if(userSession) {
 			logger.info("Session existing.");
-			await updateSession(req,res,userSession);
+			await updateSession(req, userSession);
 		}
 		else {
 			throw new TokenNotPresentError('Token not existing in database');
 		}
 	}
 	else {
-		throw new TokenNotPresentError('Token not present in request');
+		req.session = { isLoggedIn:false };
 	}
 }
 
@@ -64,12 +58,7 @@ module.exports = (app) => {
 			// Assign transaction to request
 			req.trx = app.trx;
 			logger.info('-----------'+req.path+'---------------');		
-			if(req.path === '/token') {
-				logger.info('Getting token');
-			}
-			else {
-				await handleSession(req,res);
-			}
+			await handleSession(req);
 			next();
 		}
 		catch(err) {

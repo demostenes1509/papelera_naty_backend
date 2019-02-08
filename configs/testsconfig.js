@@ -13,8 +13,7 @@ const { category,
 				sidebar, 
 				footer, 
 				home, 
-				auth, 
-				token } = require('tests');
+				auth } = require('tests');
 
 const runTest = (id,label,func) => {
 	if(process.env.TESTTORUN) {
@@ -82,10 +81,6 @@ describe('Test Suite', function () {
 
 	describe('Sidebar Tests', () => {
 		runTest('sidebarget','Get sidebar', sidebar.get);
-	});
-
-	describe('Token Tests', () => {
-		runTest('tokencreate','Creates a new token', token.get_token);
 	});
 
 	describe('Auth Tests', () => {

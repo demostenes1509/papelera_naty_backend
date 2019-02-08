@@ -1,26 +1,23 @@
 const request = require('supertest');
 const expect = require('expect');
-const { getToken } = require('./tokentests');
 const { getBearerToken } = require('utils/testsutil');
 const { AUTHORIZATION } = require('configs/constantsconfig');
 
-const login_as_user = (email,token) => {
+const login_as_user = (email) => {
 	return request("http://localhost:" + process.env.app_http_port)
 		.post('/login')
-		.set(AUTHORIZATION, getBearerToken(token))
 		.send({ email: email, password: 'maxi' })
 		.expect(200);
 };
 
 const self = module.exports = {
 
-	login_as_admin: (token) => {
-		return login_as_user('mcarrizo@papeleranaty.com',token);
+	login_as_admin: () => {
+		return login_as_user('mcarrizo@papeleranaty.com');
 	},
 
 	login: async () => {
-		const token = await getToken();
-		const response = await self.login_as_admin(token);
+		const response = await self.login_as_admin();
 		
 		const session = JSON.parse(response.text);
 		expect(session.isLoggedIn).toBe(true);
@@ -30,28 +27,22 @@ const self = module.exports = {
 	},
 
 	login_invalid_email: async () => {
-		const token = await getToken();
 		return request("http://localhost:" + process.env.app_http_port)
 			.post('/login')
-			.set(AUTHORIZATION, getBearerToken(token))
 			.send({ email: 'no@exists', password: 'maxi' })
 			.expect(401);
 	},
 
 	login_invalid_password: async () => {
-		const token = await getToken();
 		return request("http://localhost:" + process.env.app_http_port)
 			.post('/login')
-			.set(AUTHORIZATION, getBearerToken(token))
 			.send({ email: 'mcarrizo@papeleranaty.com', password: 'maxito' })
 			.expect(401);
 	},
 
 	permission_error: async () => {
-		const token = await getToken();
 		const response = await request("http://localhost:" + process.env.app_http_port)
 			.post('/admin/categories')
-			.set(AUTHORIZATION, getBearerToken(token))
 			.send({ username: 'Maxi Categoria', url: 'maxi-categoria' })
 			.expect(500);
 
@@ -60,12 +51,11 @@ const self = module.exports = {
 	},
 
 	logout: async () => {
-		const token = await getToken();
-		await self.login_as_admin(token);
+		const login = await self.login_as_admin();
 
 		const response = await request("http://localhost:" + process.env.app_http_port)
 			.post('/logout')
-			.set(AUTHORIZATION, getBearerToken(token))
+			.set(AUTHORIZATION, getBearerToken(login))
 			.expect(200);
 
 		const session = JSON.parse(response.text);
@@ -73,3 +63,4 @@ const self = module.exports = {
 
 	}
 }
+

@@ -1,7 +1,6 @@
 const request = require('supertest');
 const expect = require('expect');
 const { login_as_admin } = require('./authtests');
-const { getToken } = require('./tokentests');
 const { getBearerToken } = require('utils/testsutil');
 const { AUTHORIZATION } = require('configs/constantsconfig');
 
@@ -9,9 +8,7 @@ module.exports = {
 
     create : async () => {
 
-        const token = await getToken();
-        const login = await login_as_admin(token);
-
+        const login = await login_as_admin();
         const response = await request("http://localhost:"+process.env.app_http_port)
             .post('/admin/categories')
             .set(AUTHORIZATION,getBearerToken(login))
@@ -24,9 +21,7 @@ module.exports = {
 
     create_without_name : async () => {
 
-        const token = await getToken();
-        const login = await login_as_admin(token);
-
+        const login = await login_as_admin();
         const response = await request("http://localhost:"+process.env.app_http_port)
             .post('/admin/categories')
             .set(AUTHORIZATION,getBearerToken(login))
@@ -40,12 +35,9 @@ module.exports = {
     
     list : async () => {
 
-        const token = await getToken();
         const response = await request("http://localhost:"+process.env.app_http_port)
             .get('/categories')
-            .set(AUTHORIZATION,getBearerToken(token))
             .expect(200);
-
         const categories = JSON.parse(response.text);
         expect(categories.length).toBe(36);
 	}

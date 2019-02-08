@@ -4,7 +4,6 @@ const { categories,
         home,
         footer,
         auth, 
-        token,
         productspictures} = require('app/controllers');
 const passport = require('passport');
 
@@ -61,7 +60,6 @@ module.exports = (app) => {
 
     app.use(restrict);
 
-    app.get 	( '/token',                         wrap(token.get));
 		app.post	('/login', 													passport.authenticate('login-local', { session: false }), wrap(auth.login));
 		app.post	('/login-facebook', 								passport.authenticate('login-facebook', { session: false }), wrap(auth.login));
 		app.post 	( '/logout',                        wrap(auth.logout));

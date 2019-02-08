@@ -6,6 +6,5 @@ module.exports = {
 	home:									require('./homecontroller'),
 	sidebar:							require('./sidebarcontroller'),
 	footer:								require('./footercontroller'),
-	auth:									require('./authcontroller'),
-	token:								require('./tokencontroller')
+	auth:									require('./authcontroller')
 };
