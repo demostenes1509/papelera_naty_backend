@@ -65,7 +65,7 @@ module.exports = (sequelize) => {
 			type: Sequelize.STRING,
 			allowNull: true
 		},
-		facebook_token: {
+		google_id: {
 			type: Sequelize.STRING,
 			allowNull: true
 		}

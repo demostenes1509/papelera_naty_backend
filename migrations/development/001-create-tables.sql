@@ -120,7 +120,7 @@ CREATE TABLE users (
     state numeric(2,0),
 		provider varchar(255),
 		facebook_id varchar(255),
-		facebook_token varchar(255)
+		google_id varchar(255)
 );
 
 CREATE TABLE users_sessions (

@@ -60,8 +60,8 @@ module.exports = (app) => {
 
     app.use(restrict);
 
-		app.post	('/login', 													passport.authenticate('login-local', { session: false }), wrap(auth.login));
-		app.post	('/login-facebook', 								passport.authenticate('login-facebook', { session: false }), wrap(auth.login));
+		app.post	( '/login', 												passport.authenticate('login-local', { session: false }), wrap(auth.login));
+		// app.post	( '/login-facebook', 								passport.authenticate('login-facebook', { session: false }), wrap(auth.login));
 		app.post 	( '/logout',                        wrap(auth.logout));
 
     app.get 	( '/categories',                    wrap(categories.list));
@@ -78,11 +78,11 @@ module.exports = (app) => {
 		app.get 	( '/:category',                     wrap(home.get_category));
 		
 
-		app.get( '/auth/facebook', passport.authenticate('login-facebook',{ session: false }), function(req, res){});
-		app.get( '/auth/facebook/callback', passport.authenticate('login-facebook', { failureRedirect: '/', session: false }),
-		function(req, res) {
-			res.redirect('/account');
-		});
-	
-
+		app.get( '/auth/facebook', passport.authenticate('login-facebook',{ session: false }));
+		app.get( '/auth/facebook/callback', passport.authenticate('login-facebook', { failureRedirect: '/', session: false }),wrap(auth.login));
+		app.get( '/auth/google', passport.authenticate('login-google',{ session: false, scope: [
+			'https://www.googleapis.com/auth/plus.login',
+			'https://www.googleapis.com/auth/plus.profile.emails.read'
+		] }));
+		app.get( '/auth/google/callback', passport.authenticate('login-google', { failureRedirect: '/', session: false }),wrap(auth.login));
 };
