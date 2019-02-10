@@ -19,21 +19,28 @@ const updateTimestamp = async (req, userSession) => {
 const updateSession = async (req, userSession) => {
 	req.userSession	= userSession;
 
-	logger.debug('User is logged in');
-	const isAdmin = (userSession.user && userSession.user.role.name)?userSession.user.role.name==='admin':false;
-	req.session = { isLoggedIn:true, isAdmin, socketId: userSession.socket_id };
+	if(userSession.isLoggedIn) {
+		logger.debug('User is logged in');
+		const isAdmin = userSession.user.role.name==='admin';
+		req.session = { isLoggedIn:true, isAdmin};
+	}
+	else {
+		logger.debug('User is NOT logged in');
+		req.session			= { isLoggedIn: false };
+	}
 
 	await updateTimestamp(req,userSession);
 }
 
 const handleSession = async (req) => {
 
-	if(req.token) {
-		logger.debug('Token:'+req.token);
-		jwt.verify(req.token, jwtkey);
+	const token = req.token || req.query.state;
+	if(token) {
+		logger.debug('Token:'+token);
+		jwt.verify(token, jwtkey);
 
 		const filter = {
-			where: {token: req.token}, 
+			where: {token}, 
 			include: [ { model: req.db.models.users, as: 'user',
 			include: [ {model: req.db.models.roles, as: 'role'} ] } ] 
 		};
@@ -57,7 +64,9 @@ module.exports = (app) => {
 		try {
 			// Assign transaction to request
 			req.trx = app.trx;
-			logger.info('-----------'+req.path+'---------------');		
+			logger.info('-----------'+req.path+'---------------');
+			logger.info('-----------'+JSON.stringify(req.query)+'---------------');
+			logger.info('-----------'+JSON.stringify(req.params)+'---------------');
 			if(req.path.startsWith('/token/')) {
 				logger.info('Getting token');
 			}
