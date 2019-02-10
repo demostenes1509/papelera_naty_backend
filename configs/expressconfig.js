@@ -7,7 +7,6 @@ const cors = require('cors');
 const bearerToken = require('express-bearer-token');
 const { AUTHORIZATION } = require('configs/constantsconfig');
 const express = require('express');
-const passport = require('passport');
 const favicon = require('serve-favicon');
 
 module.exports = (app) => {
@@ -44,8 +43,5 @@ module.exports = (app) => {
 
 		logger.debug("Setting favicon.ico");
 		app.use(favicon('static/naty.ico'));
-
-		logger.debug('Setting Passport');
-		app.use(passport.initialize());
 
 };

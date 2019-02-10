@@ -17,6 +17,11 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true
     },
+    socket_id: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true
+    },
     user_id: {
       type: Sequelize.BIGINT,
       allowNull: true,

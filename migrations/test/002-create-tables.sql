@@ -127,6 +127,7 @@ CREATE TABLE users_sessions (
     id bigint DEFAULT nextval('users_sessions_sequence') NOT NULL,
     last_access timestamp without time zone NOT NULL,
     token varchar(255) NOT NULL,
+    socket_id varchar(255) NOT NULL,
     user_id bigint
 );
 

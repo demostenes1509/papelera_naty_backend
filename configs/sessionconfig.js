@@ -20,8 +20,8 @@ const updateSession = async (req, userSession) => {
 	req.userSession	= userSession;
 
 	logger.debug('User is logged in');
-	const isAdmin = userSession.user.role.name==='admin';
-	req.session = { isLoggedIn:true, isAdmin};
+	const isAdmin = (userSession.user && userSession.user.role.name)?userSession.user.role.name==='admin':false;
+	req.session = { isLoggedIn:true, isAdmin, socketId: userSession.socket_id };
 
 	await updateTimestamp(req,userSession);
 }
@@ -46,9 +46,9 @@ const handleSession = async (req) => {
 			throw new TokenNotPresentError('Token not existing in database');
 		}
 	}
-	else {
-		req.session = { isLoggedIn:false };
-	}
+	// else {
+		// req.session = { isLoggedIn: false };
+	// }
 }
 
 module.exports = (app) => {
@@ -58,7 +58,12 @@ module.exports = (app) => {
 			// Assign transaction to request
 			req.trx = app.trx;
 			logger.info('-----------'+req.path+'---------------');		
-			await handleSession(req);
+			if(req.path.startsWith('/token/')) {
+				logger.info('Getting token');
+			}
+			else {
+				await handleSession(req);
+			}
 			next();
 		}
 		catch(err) {

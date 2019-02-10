@@ -28,7 +28,7 @@ module.exports = async (runmigrations) => {
     await sessionconfig(app);
 
 		logger.info('Configuring passport');
-		passportconfig(app);
+		passportconfig(app,db);
 
     logger.info('Configuring routes');
 		await routesconfig(app);
