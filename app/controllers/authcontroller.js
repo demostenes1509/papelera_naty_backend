@@ -6,6 +6,31 @@ const jwtkey = '28b001fe-4fae-470e-9d35-fe2a7ad12425';
 
 module.exports = {
 
+	social: async (req, res) => {
+
+		logger.info('Authentication finished. Checking results');
+		if (!req.user) {
+			throw new Error('Invalid username/password');
+		}
+
+		const token = jwt.sign({creation: new Date()}, jwtkey);
+
+		logger.debug("Creating database session");
+		await modelsutil.create(req,'userssessions', {token: token, last_access: new Date(), user_id: req.user.id });
+
+		logger.info(JSON.stringify(req.user));
+
+		logger.info('Responding to user');
+		const { first_name, last_name, provider } = req.user;
+		const isAdmin = req.user.role.name === 'admin';
+
+		logger.info('SOCKET:'+req.socketId);
+
+		const io = req.app.get('io')
+		io.in(req.socketId).emit(provider, { [TOKEN_NAME]: token, isLoggedIn: true, isAdmin, firstName: first_name, lastName: last_name })
+		res.end()
+	},
+
 	login: async (req, res) => {
 
 		logger.info('Authentication finished. Checking results');
@@ -17,6 +42,10 @@ module.exports = {
 
 		logger.debug("Creating database session");
 		await modelsutil.create(req,'userssessions', {token: token, last_access: new Date(), user_id: req.user.id });
+
+		console.log('----------------user -----------------------');
+		console.log(JSON.stringify(req.user,null,'   '));
+		console.log('----------------user -----------------------');
 
 		logger.info('Responding to user');
 		const { first_name, last_name } = req.user;

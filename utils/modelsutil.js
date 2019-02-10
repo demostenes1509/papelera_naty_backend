@@ -2,7 +2,12 @@ module.exports = {
 	create : (req,model,data) => {
 		return req.db.models[model].create(data,{transaction: req.trx});
 	},
-	
+
+	findOrCreate : (req,model,data) => {
+		data.transaction = req.trx;
+		return req.db.models[model].findOrCreate(data);
+	},
+
 	findAll : (req,model,filter) => {
 		filter.transaction = req.trx;
 		return req.db.models[model].findAll(filter);

@@ -5,7 +5,7 @@ const { AUTHORIZATION } = require('configs/constantsconfig');
 
 const login_as_user = (email) => {
 	return request("http://localhost:" + process.env.app_http_port)
-		.post('/login')
+		.post('/auth/local')
 		.send({ email: email, password: 'maxi' })
 		.expect(200);
 };
@@ -28,14 +28,14 @@ const self = module.exports = {
 
 	login_invalid_email: async () => {
 		return request("http://localhost:" + process.env.app_http_port)
-			.post('/login')
+			.post('/auth/local')
 			.send({ email: 'no@exists', password: 'maxi' })
 			.expect(401);
 	},
 
 	login_invalid_password: async () => {
 		return request("http://localhost:" + process.env.app_http_port)
-			.post('/login')
+			.post('/auth/local')
 			.send({ email: 'mcarrizo@papeleranaty.com', password: 'maxito' })
 			.expect(401);
 	},
