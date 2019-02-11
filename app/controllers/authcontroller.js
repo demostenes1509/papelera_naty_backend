@@ -14,15 +14,17 @@ const updateSession = async(req) => {
 
 	logger.debug(JSON.stringify(req.user,null,'   '));
 
-	logger.info('Assigning user to session');
-	const { userSession } = req;
-	await modelsutil.save(req,userSession,{user_id: req.user.id});
+	const response = {
+		first_name: req.user.first_name,
+		last_name: req.user.last_name,
+		socket_id: req.user.
+		isAdmin: req.user.role.name === 'admin'
+	};
 
 	logger.info('Responding to user');
-	const { first_name, last_name } = req.user;
-	const isAdmin = req.user.role.name === 'admin';
-
-	return { isLoggedIn: true, isAdmin, firstName: first_name, lastName: last_name };
+	const token = jwt.sign(response, process.env.auth_jwt_secret);
+	
+	return token;
 }
 
 module.exports = {
