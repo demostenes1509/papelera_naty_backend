@@ -90,12 +90,12 @@ module.exports = (app) => {
 	app.post('/auth/local', localAuth, wrap(auth.login));
 
 	app.get(`/auth/google`, (req, res, next) => {
-		const authenticator = passport.authenticate('login-google', { session: false, scope: ['profile', 'email'], state: req.token });
+		const authenticator = passport.authenticate('login-google', { session: false, scope: ['profile', 'email'], state: req.query.socketId });
 		authenticator(req, res, next);
 	});
 
 	app.get(`/auth/facebook`, (req, res, next) => {
-		const authenticator = passport.authenticate('login-facebook', { session: false, state: req.token });
+		const authenticator = passport.authenticate('login-facebook', { session: false, state: req.query.socketId });
 		authenticator(req, res, next);
 	});
 

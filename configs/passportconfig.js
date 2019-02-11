@@ -24,6 +24,7 @@ const createOrFindUser = async (req, profile, provider, filter, done) => {
 
 		const user = await modelsutil.findOrCreate(req, 'users', data);
 		user[0].role = role;
+		user[0].socket_id = req.query.state;
 
 		done(null, user[0]);
 	}
