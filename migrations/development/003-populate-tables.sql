@@ -176,6 +176,6 @@ INSERT INTO roles (id,name) VALUES
 (1,'admin'),
 (2,'client');
 
-INSERT INTO users (id,email_address,password,first_name,last_name,role_id,address,city,telephone,zipcode,state) VALUES 
-(1,'mcarrizo@papeleranaty.com','dfce0b65360bbc54d7867f60e08b6586b21feebdc00499475845b6a415735b43','Maxi','Admin',1,null,null,null,null,null),
-(2,'mcarrizo@hotmail.com','dfce0b65360bbc54d7867f60e08b6586b21feebdc00499475845b6a415735b43','Maxi','Client',2,null,null,null,null,null);
+INSERT INTO users (id,email_address,password,first_name,last_name,role_id,address,city,telephone,zipcode,state,provider) VALUES 
+(1,'mcarrizo@papeleranaty.com','dfce0b65360bbc54d7867f60e08b6586b21feebdc00499475845b6a415735b43','Maxi','Admin',1,null,null,null,null,null,'local'),
+(2,'mcarrizo@hotmail.com','dfce0b65360bbc54d7867f60e08b6586b21feebdc00499475845b6a415735b43','Maxi','Client',2,null,null,null,null,null,'local');

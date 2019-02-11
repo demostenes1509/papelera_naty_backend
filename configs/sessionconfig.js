@@ -53,9 +53,6 @@ const handleSession = async (req) => {
 			throw new TokenNotPresentError('Token not existing in database');
 		}
 	}
-	// else {
-		// req.session = { isLoggedIn: false };
-	// }
 }
 
 module.exports = (app) => {
@@ -65,8 +62,6 @@ module.exports = (app) => {
 			// Assign transaction to request
 			req.trx = app.trx;
 			logger.info('-----------'+req.path+'---------------');
-			logger.info('-----------'+JSON.stringify(req.query)+'---------------');
-			logger.info('-----------'+JSON.stringify(req.params)+'---------------');
 			if(req.path.startsWith('/token/')) {
 				logger.info('Getting token');
 			}

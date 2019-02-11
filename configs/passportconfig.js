@@ -32,13 +32,13 @@ const createOrFindUser = async (req, profile, provider, filter, done) => {
 	}
 };
 
-module.exports = (app,db) => {
+module.exports = (app) => {
 
 	passport.use('login-local', new LocalStrategy({ passReqToCallback: true, usernameField: 'email' }, async (req, email, password, done) => {
 		let user;
 		try {
 			logger.info('Looking for user');
-			const params = { where: { email_address: email }, include: [{ model: req.db.models.roles, as: 'role' }] };
+			const params = { where: { email_address: email, provider: 'local' }, include: [{ model: req.db.models.roles, as: 'role' }] };
 			user = await modelsutil.findOne(req, 'users', params);
 			if (!user) {
 				return done(null, false, { message: 'No user by that email' });

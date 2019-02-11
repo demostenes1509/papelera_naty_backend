@@ -10,8 +10,7 @@ module.exports = (sequelize) => {
     },
     email_address: {
       type: Sequelize.STRING,
-      allowNull: false,
-      unique: true
+      allowNull: false
     },
     password: {
       type: Sequelize.STRING,
@@ -59,7 +58,7 @@ module.exports = (sequelize) => {
 		},
 		provider: {
 			type: Sequelize.STRING,
-			allowNull: true
+			allowNull: false
 		},
 		facebook_id: {
 			type: Sequelize.STRING,

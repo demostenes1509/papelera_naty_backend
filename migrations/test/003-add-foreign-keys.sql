@@ -68,7 +68,7 @@ ALTER TABLE transactions_header
     ADD CONSTRAINT transactions_header_pkey PRIMARY KEY (id);
 
 ALTER TABLE users
-    ADD CONSTRAINT users_email_address_key UNIQUE (email_address);
+    ADD CONSTRAINT users_email_address_key UNIQUE (email_address,provider);
 
 ALTER TABLE users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);

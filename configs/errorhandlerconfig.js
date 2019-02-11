@@ -7,7 +7,7 @@ module.exports = (app) => {
         let errortext=error;
         if(error.message) errortext=error.message;
 
-        logger.error(JSON.stringify(errortext));
+        logger.error(JSON.stringify(error));
         return res.status(500).send({'server_error':errortext});
     });
 

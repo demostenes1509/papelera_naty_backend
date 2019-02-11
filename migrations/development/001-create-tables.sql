@@ -118,7 +118,7 @@ CREATE TABLE users (
     telephone varchar(255),
     zipcode numeric(4,0),
     state numeric(2,0),
-		provider varchar(255),
+		provider varchar(255) NOT NULL,
 		facebook_id varchar(255),
 		google_id varchar(255)
 );
