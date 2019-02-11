@@ -1,7 +1,7 @@
 const logger = require("configs/loggerconfig")(module);
 const modelsutil = require("utils/modelsutil");
-const { TOKEN_NAME } = require('configs/constantsconfig');
 const jwt = require('jsonwebtoken');
+const { TOKEN_NAME } = require('configs/constantsconfig');
 
 const getResponse = async(req) => {
 
@@ -12,15 +12,16 @@ const getResponse = async(req) => {
 
 	logger.debug(JSON.stringify(req.user,null,'   '));
 	const response = {
-		first_name: req.user.first_name,
-		last_name: req.user.last_name,
+		id: req.user.id,
+		firstName: req.user.first_name,
+		lastName: req.user.last_name,
 		isAdmin: req.user.role.name === 'admin'
 	};
 
 	logger.info('Responding to user');
 	const token = jwt.sign(response, process.env.auth_jwt_secret);
 	
-	return { [TOKEN_NAME]: token };
+	return { [TOKEN_NAME]: `Bearer ${token}` };
 }
 
 module.exports = {

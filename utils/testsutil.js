@@ -7,7 +7,7 @@ const getResponseToken = (res) => {
 
 const getBearerToken = (res) => {
 	const token = getResponseToken(res);
-	return `Bearer ${token}`;
+	return token;
 }
 
 module.exports = {

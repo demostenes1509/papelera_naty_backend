@@ -1,4 +1,4 @@
 module.exports = {
-	TOKEN_NAME: 'naty-token',
+	TOKEN_NAME: 'token',
 	AUTHORIZATION: 'Authorization'
 }

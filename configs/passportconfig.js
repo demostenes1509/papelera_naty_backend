@@ -3,6 +3,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const JWTStrategy = require('passport-jwt').Strategy;
+const ExtractJWT = require('passport-jwt').ExtractJwt;
 const cypherutil = require("utils/cypherutil");
 const modelsutil = require("utils/modelsutil");
 
@@ -24,7 +26,6 @@ const createOrFindUser = async (req, profile, provider, filter, done) => {
 
 		const user = await modelsutil.findOrCreate(req, 'users', data);
 		user[0].role = role;
-		user[0].socket_id = req.query.state;
 
 		done(null, user[0]);
 	}
@@ -81,6 +82,23 @@ module.exports = (app) => {
 		}
 	));
 
+	passport.use(new JWTStrategy({
+		jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+		secretOrKey: process.env.auth_jwt_secret,
+		passReqToCallback: true
+	}, async (req, jwt_payload, done) => {
+
+		logger.debug(JSON.stringify(jwt_payload, null, '    '));
+		const user = await modelsutil.findById(req, 'users', jwt_payload.id);
+		if (user) {
+			if(req.path.startsWith('/admin')) {
+				if(jwt_payload.isAdmin) return done(null, user);
+				else return done('You have no permissions to access this page');
+			}
+			return done(null, user);
+		}
+		else return done('Invalid jwt token');
+	}));
 
 	app.use(passport.initialize());
 }
