@@ -40,8 +40,9 @@ module.exports = (app) => {
 		let user;
 		try {
 			logger.info('Looking for user');
-			const params = { where: { email_address: email, provider: 'local' }, include: [{ model: req.db.models.roles, as: 'role' }] };
-			user = await modelsutil.findOne(req, 'users', params);
+			const filter = { where: { email_address: email, provider: 'local' }, include: [{ model: req.db.models.roles, as: 'role' }] };
+			// user = await modelsutil.findOne(req, 'users', params);
+			user = await req.db.models.users.findOne(filter);
 			if (!user) {
 				return done(null, false, { message: 'No user by that email' });
 			}

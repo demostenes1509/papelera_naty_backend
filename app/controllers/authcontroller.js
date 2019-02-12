@@ -21,7 +21,7 @@ const getResponse = async(req) => {
 	logger.info('Responding to user');
 	const token = jwt.sign(response, process.env.auth_jwt_secret);
 	
-	return { [TOKEN_NAME]: `Bearer ${token}` };
+	return { [TOKEN_NAME]: token };
 }
 
 module.exports = {

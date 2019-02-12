@@ -1,7 +1,6 @@
 const request = require('supertest');
 const expect = require('expect');
-const { getBearerToken } = require('utils/testsutil');
-// const { AUTHORIZATION, TOKEN_NAME } = require('configs/constantsconfig');
+const { getResponseToken } = require('utils/testsutil');
 const jwt = require('jsonwebtoken');
 
 const login_as_user = (email) => {
@@ -20,7 +19,7 @@ const self = module.exports = {
 	login: async () => {
 		const response = await self.login_as_admin();
 		
-		const token = getBearerToken(response).replace('Bearer ','');
+		const token = getResponseToken(response);
 		const payload = jwt.verify(token,process.env.auth_jwt_secret);
 		expect(payload.firstName).toBe('Maxi');
 		expect(payload.lastName).toBe('Admin');
