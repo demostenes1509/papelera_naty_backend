@@ -37,7 +37,6 @@ module.exports = async (app) => {
 	const productsformats = require('../app/models/productsformatsmodel.js')(sequelize);
 	const productspictures = require('../app/models/productspicturesmodel.js')(sequelize);
 	const users = require('../app/models/usersmodel.js')(sequelize);
-	const userssessions = require('../app/models/userssessionsmodel.js')(sequelize);
 	const roles = require('../app/models/rolesmodel.js')(sequelize);
 
 	logger.debug('Definig mappings');
@@ -47,7 +46,6 @@ module.exports = async (app) => {
 	products.hasMany(productsformats,{ foreignKey: 'product_id', as: 'productsformats', required: true });
 	products.hasMany(productspictures,{ foreignKey: 'product_id', as: 'productspictures', required: true });
 
-	userssessions.belongsTo(users, {foreignKey: 'user_id', as: 'user', required: true});
 	users.belongsTo(roles, {foreignKey: 'role_id', as: 'role', required: true});
 
 	// Add sequelize on request

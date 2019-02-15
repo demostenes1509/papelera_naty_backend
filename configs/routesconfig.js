@@ -18,6 +18,11 @@ const googleAuth = (req, res, next) => {
 	authenticator(req, res, next);
 };
 
+const twitterAuth = (req, res, next) => {
+	const authenticator = passport.authenticate('login-twitter', { session: false, state: req.query.socketId });
+	authenticator(req, res, next);
+};
+
 const testWorkflow = (fn,req,res,next) => {
     fn(req,res,next)
     .catch(err=> {
@@ -56,9 +61,11 @@ module.exports = (app) => {
 	app.post('/auth/local', localAuth, wrap(auth.login));
 	app.get(`/auth/google`, googleAuth);
 	app.get(`/auth/facebook`,facebookAuth);
+	app.get(`/auth/twitter`,twitterAuth);
 
 	app.get('/auth/facebook/callback', facebookAuth, wrap(auth.social));
 	app.get('/auth/google/callback', googleAuth, wrap(auth.social));
+	app.get('/auth/twitter/callback', twitterAuth, wrap(auth.social));
 
 	app.get('/categories', wrap(categories.list));
 	app.post('/admin/categories', jwtAuth, wrap(categories.create));

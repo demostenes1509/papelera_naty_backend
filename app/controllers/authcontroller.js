@@ -1,15 +1,10 @@
 const logger = require("configs/loggerconfig")(module);
-const modelsutil = require("utils/modelsutil");
 const jwt = require('jsonwebtoken');
 const { TOKEN_NAME } = require('configs/constantsconfig');
 
 const getResponse = async(req) => {
 
-	logger.info('Authentication finished. Checking results');
-	if (!req.user) {
-		throw new Error('Invalid username/password');
-	}
-
+	logger.info('Authentication finished. Creating token');
 	logger.debug(JSON.stringify(req.user,null,'   '));
 	const response = {
 		id: req.user.id,
@@ -39,18 +34,6 @@ module.exports = {
 
 		const response = await getResponse(req);
 		return res.status(200).send(response);
-	},
-	
-	logout: async (req,res) => {
-
-		logger.info('Logout');
-		const { userSession } = req;
-		
-		logger.debug('Removing user from session');
-		await modelsutil.save(req,userSession,{user_id: null});
-
-		logger.info('Responding to user');
-		return res.status(200).send({ isLoggedIn: false});
 	}
 		
 }

@@ -120,5 +120,6 @@ CREATE TABLE users (
     state numeric(2,0),
 		provider varchar(255) NOT NULL,
 		facebook_id varchar(255),
-		google_id varchar(255)
+		google_id varchar(255),
+		twitter_id varchar(255)
 );

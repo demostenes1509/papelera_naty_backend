@@ -3,10 +3,10 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const TwitterStrategy = require('passport-twitter-oauth2');
 const JWTStrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const cypherutil = require("utils/cypherutil");
-const modelsutil = require("utils/modelsutil");
 
 const createOrFindUser = async (req, profile, provider, filter, done) => {
 	try {
@@ -35,7 +35,10 @@ const createOrFindUser = async (req, profile, provider, filter, done) => {
 
 module.exports = (app) => {
 
-	passport.use('login-local', new LocalStrategy({ passReqToCallback: true, usernameField: 'email' }, async (req, email, password, done) => {
+	passport.use('login-local', new LocalStrategy({ 
+		passReqToCallback: true, 
+		usernameField: 'email' 
+	}, async (req, email, password, done) => {
 		let user;
 		try {
 			logger.info('Looking for user');
@@ -55,6 +58,21 @@ module.exports = (app) => {
 		}
 		return done(null, user);
 	}));
+
+	passport.use(new JWTStrategy({
+		jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+		secretOrKey: process.env.auth_jwt_secret,
+		passReqToCallback: true
+	}, async (req, payload, done) => {
+
+		logger.debug(JSON.stringify(payload, null, '    '));
+		if(req.path.startsWith('/admin')) {
+			if(payload.isAdmin) return done(null, payload);
+			else return done('You have no permissions to access this page');
+		}
+		return done(null, payload);
+	}));
+
 
 	passport.use('login-facebook', new FacebookStrategy(
 		{
@@ -81,23 +99,17 @@ module.exports = (app) => {
 		}
 	));
 
-	passport.use(new JWTStrategy({
-		jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-		secretOrKey: process.env.auth_jwt_secret,
-		passReqToCallback: true
-	}, async (req, payload, done) => {
-
-		logger.debug(JSON.stringify(payload, null, '    '));
-		// const user = await modelsutil.findById(req, 'users', jwt_payload.id);
-		// if (user) {
-			if(req.path.startsWith('/admin')) {
-				if(payload.isAdmin) return done(null, payload);
-				else return done('You have no permissions to access this page');
-			}
-			return done(null, payload);
-		// }
-		// else return done('Invalid jwt token');
-	}));
+	passport.use('login-twitter', new TwitterStrategy(
+		{
+			clientID: process.env.auth_twitter_consumer_key,
+			clientSecret: process.env.auth_twitter_consumer_secret,
+			passReqToCallback: true,
+			callbackURL: '/auth/twitter/callback'
+		},
+		async (req, accessToken, refreshToken, profile, done) => {
+			await createOrFindUser(req, profile, 'twitter', { twitter_id: profile.id }, done);
+		}
+	));
 
 	app.use(passport.initialize());
 }
