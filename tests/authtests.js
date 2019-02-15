@@ -1,32 +1,29 @@
 const request = require('supertest');
 const expect = require('expect');
-const { getToken } = require('./tokentests');
-const { getBearerToken } = require('utils/testsutil');
-const { AUTHORIZATION } = require('configs/constantsconfig');
+const { getResponseToken } = require('utils/testsutil');
+const jwt = require('jsonwebtoken');
 
-const login_as_user = (email,token) => {
+const login_as_user = (email) => {
 	return request("http://localhost:" + process.env.app_http_port)
 		.post('/auth/local')
-		.set(AUTHORIZATION, getBearerToken(token))
 		.send({ email: email, password: 'maxi' })
 		.expect(200);
 };
 
 const self = module.exports = {
 
-	login_as_admin: (token) => {
-		return login_as_user('mcarrizo@papeleranaty.com',token);
+	login_as_admin: () => {
+		return login_as_user('mcarrizo@papeleranaty.com');
 	},
 
 	login: async () => {
-		const token = await getToken();
-		const response = await self.login_as_admin(token);
+		const response = await self.login_as_admin();
 		
-		const session = JSON.parse(response.text);
-		expect(session.isLoggedIn).toBe(true);
-		expect(session.isAdmin).toBe(true);
-		expect(session.firstName).toBe('Maxi');
-		expect(session.lastName).toBe('Admin');
+		const token = getResponseToken(response);
+		const payload = jwt.verify(token,process.env.auth_jwt_secret);
+		expect(payload.firstName).toBe('Maxi');
+		expect(payload.lastName).toBe('Admin');
+		expect(payload.isAdmin).toBe(true);
 	},
 
 	login_invalid_email: async () => {
@@ -47,24 +44,11 @@ const self = module.exports = {
 		const response = await request("http://localhost:" + process.env.app_http_port)
 			.post('/admin/categories')
 			.send({ username: 'Maxi Categoria', url: 'maxi-categoria' })
-			.expect(500);
+			.expect(401);
 
-		const error = JSON.parse(response.text);
-		expect(error.server_error).toBe('You have no permissions to access this page');
-	},
-
-	logout: async () => {
-		const token = await getToken();
-		await self.login_as_admin(token);
-
-		const response = await request("http://localhost:" + process.env.app_http_port)
-			.post('/logout')
-			.set(AUTHORIZATION, getBearerToken(token))
-			.expect(200);
-
-		const session = JSON.parse(response.text);
-		expect(session.isLoggedIn).toBe(false);
-
+			console.log(response.text);
+		// const error = JSON.parse(response.text);
+		expect(response.text).toBe('Unauthorized');
 	}
 }
 

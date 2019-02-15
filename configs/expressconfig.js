@@ -21,16 +21,6 @@ module.exports = (app) => {
     logger.debug("Adding Bearer");
 		app.use(bearerToken());
 		
-		/* Arreglar lo de req.query.state por aca y sacar de sessionsconfig
-		app.use(bearerToken({
-			bodyKey: 'access_token',
-			queryKey: 'access_token',
-			headerKey: 'Bearer',
-			reqKey: 'token'
-		}));
-		*/
-		
-    
     logger.debug("Add finally() implementation to promises");
     pf.shim();
     

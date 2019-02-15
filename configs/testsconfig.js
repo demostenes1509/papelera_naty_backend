@@ -13,7 +13,6 @@ const { category,
 				sidebar, 
 				footer, 
 				home, 
-				token,
 				auth } = require('tests');
 
 const runTest = (id,label,func) => {
@@ -89,11 +88,6 @@ describe('Test Suite', function () {
 		runTest('logininvaliduser','Login with invalid username', auth.login_invalid_email);
 		runTest('logininvalidpassword','Login with invalid password', auth.login_invalid_password);
 		runTest('permissionerror','Permission Error', auth.permission_error);
-		runTest('logout','Logout', auth.logout);
-	});
-
-	describe('Token Tests', () => {
-		runTest('tokencreate','Creates a new token', token.get_token);
 	});
 
 	after( () => {

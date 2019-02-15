@@ -3,14 +3,16 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const JWTStrategy = require('passport-jwt').Strategy;
+const ExtractJWT = require('passport-jwt').ExtractJwt;
 const cypherutil = require("utils/cypherutil");
 const modelsutil = require("utils/modelsutil");
 
 const createOrFindUser = async (req, profile, provider, filter, done) => {
 	try {
 		logger.debug(JSON.stringify(profile, null, '    '));
-
-		const role = await modelsutil.findOne(req, 'roles', { where: { name: 'client' } });
+		const { models } = req.db;
+		const role = await models.roles.findOne({ where: { name: 'client' } });
 		const data = {
 			where: filter, defaults: {
 				first_name: profile.name.givenName,
@@ -22,9 +24,8 @@ const createOrFindUser = async (req, profile, provider, filter, done) => {
 			}
 		};
 
-		const user = await modelsutil.findOrCreate(req, 'users', data);
+		const user = await models.users.findOrCreate(data);
 		user[0].role = role;
-
 		done(null, user[0]);
 	}
 	catch (err) {
@@ -38,8 +39,8 @@ module.exports = (app) => {
 		let user;
 		try {
 			logger.info('Looking for user');
-			const params = { where: { email_address: email, provider: 'local' }, include: [{ model: req.db.models.roles, as: 'role' }] };
-			user = await modelsutil.findOne(req, 'users', params);
+			const filter = { where: { email_address: email, provider: 'local' }, include: [{ model: req.db.models.roles, as: 'role' }] };
+			user = await req.db.models.users.findOne(filter);
 			if (!user) {
 				return done(null, false, { message: 'No user by that email' });
 			}
@@ -80,6 +81,23 @@ module.exports = (app) => {
 		}
 	));
 
+	passport.use(new JWTStrategy({
+		jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+		secretOrKey: process.env.auth_jwt_secret,
+		passReqToCallback: true
+	}, async (req, payload, done) => {
+
+		logger.debug(JSON.stringify(payload, null, '    '));
+		// const user = await modelsutil.findById(req, 'users', jwt_payload.id);
+		// if (user) {
+			if(req.path.startsWith('/admin')) {
+				if(payload.isAdmin) return done(null, payload);
+				else return done('You have no permissions to access this page');
+			}
+			return done(null, payload);
+		// }
+		// else return done('Invalid jwt token');
+	}));
 
 	app.use(passport.initialize());
 }
