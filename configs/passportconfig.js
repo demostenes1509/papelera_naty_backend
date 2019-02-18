@@ -18,26 +18,27 @@ const createOrFindUser = async (req, profile, provider, done) => {
 
 		let first_name='', 
 				last_name='';
-		if(profile.name) {
+		if(profile.name.givenName) {
 			first_name=profile.name.givenName;
 			last_name=profile.name.familyName;
 		}
 		else {
 			const nameParts = profile.displayName.split(' ');
 			first_name = nameParts[0];
-			last_name = R.slice(1,Infinity, nameParts);
+			last_name = R.slice(1,Infinity, nameParts).join(' ');
 		}
 
 		let email_address;
 		if(profile.emails) email_address=profile.emails[0].value;
+		const provider_id = profile.id;
 
-		const filter = { provider_id: provider.id, provider};
+		const filter = { provider_id, provider};
 		const data = {
 			where: filter, defaults: {
 				first_name,
 				last_name,
 				provider,
-				provider_id: profile.id,
+				provider_id,
 				email_address,
 				role_id: role.id
 			}
