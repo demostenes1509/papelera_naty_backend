@@ -4,22 +4,41 @@ const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const TwitterStrategy = require('passport-twitter-oauth2');
+const InstagramStrategy = require('passport-instagram');
 const JWTStrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const cypherutil = require("utils/cypherutil");
+const R = require('ramda');
 
-const createOrFindUser = async (req, profile, provider, filter, done) => {
+const createOrFindUser = async (req, profile, provider, done) => {
 	try {
 		logger.debug(JSON.stringify(profile, null, '    '));
 		const { models } = req.db;
 		const role = await models.roles.findOne({ where: { name: 'client' } });
+
+		let first_name='', 
+				last_name='';
+		if(profile.name) {
+			first_name=profile.name.givenName;
+			last_name=profile.name.familyName;
+		}
+		else {
+			const nameParts = profile.displayName.split(' ');
+			first_name = nameParts[0];
+			last_name = R.slice(1,Infinity, nameParts);
+		}
+
+		let email_address;
+		if(profile.emails) email_address=profile.emails[0].value;
+
+		const filter = { provider_id: provider.id, provider};
 		const data = {
 			where: filter, defaults: {
-				first_name: profile.name.givenName,
-				last_name: profile.name.familyName,
+				first_name,
+				last_name,
 				provider,
-				google_id: profile.id,
-				email_address: profile.emails[0].value,
+				provider_id: profile.id,
+				email_address,
 				role_id: role.id
 			}
 		};
@@ -83,7 +102,7 @@ module.exports = (app) => {
 			passReqToCallback: true,
 		},
 		async (req, accessToken, refreshToken, profile, done) => {
-			await createOrFindUser(req, profile, 'facebook', { facebook_id: profile.id }, done);
+			await createOrFindUser(req, profile, 'facebook', done);
 		}
 	));
 
@@ -95,7 +114,7 @@ module.exports = (app) => {
 			callbackURL: '/auth/google/callback'
 		},
 		async (req, accessToken, refreshToken, profile, done) => {
-			await createOrFindUser(req, profile, 'google', { google_id: profile.id }, done);
+			await createOrFindUser(req, profile, 'google', done);
 		}
 	));
 
@@ -107,9 +126,25 @@ module.exports = (app) => {
 			callbackURL: '/auth/twitter/callback'
 		},
 		async (req, accessToken, refreshToken, profile, done) => {
-			await createOrFindUser(req, profile, 'twitter', { twitter_id: profile.id }, done);
+			await createOrFindUser(req, profile, 'twitter', done);
 		}
 	));
+
+	passport.use('login-instagram', new InstagramStrategy(
+		{
+			clientID: process.env.auth_instagram_client_id,
+			clientSecret: process.env.auth_instagram_client_secret,
+			passReqToCallback: true,
+			callbackURL: '/auth/instagram/callback'
+		},
+		async (req, accessToken, refreshToken, profile, done) => {
+			console.log('============');
+			console.log(profile);
+			console.log('============');
+			await createOrFindUser(req, profile, 'instagram', done);
+		}
+	));
+
 
 	app.use(passport.initialize());
 }

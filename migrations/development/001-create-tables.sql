@@ -107,7 +107,7 @@ CREATE TABLE transactions_detail (
 
 CREATE TABLE users (
     id bigint DEFAULT nextval('users_sequence') NOT NULL,
-    email_address varchar(256) NOT NULL,
+    email_address varchar(256),
     password varchar(255),
     first_name varchar(256),
     last_name varchar(256),
@@ -119,7 +119,5 @@ CREATE TABLE users (
     zipcode numeric(4,0),
     state numeric(2,0),
 		provider varchar(255) NOT NULL,
-		facebook_id varchar(255),
-		google_id varchar(255),
-		twitter_id varchar(255)
+		provider_id varchar(255)
 );

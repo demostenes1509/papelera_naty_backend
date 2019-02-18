@@ -17,9 +17,12 @@ const googleAuth = (req, res, next) => {
 	const authenticator = passport.authenticate('login-google', { session: false, scope: ['profile', 'email'], state: req.query.socketId });
 	authenticator(req, res, next);
 };
-
 const twitterAuth = (req, res, next) => {
 	const authenticator = passport.authenticate('login-twitter', { session: false, state: req.query.socketId });
+	authenticator(req, res, next);
+};
+const instagramAuth = (req, res, next) => {
+	const authenticator = passport.authenticate('login-instagram', { session: false, scope: ['basic','public_content'], state: req.query.socketId });
 	authenticator(req, res, next);
 };
 
@@ -62,10 +65,12 @@ module.exports = (app) => {
 	app.get(`/auth/google`, googleAuth);
 	app.get(`/auth/facebook`,facebookAuth);
 	app.get(`/auth/twitter`,twitterAuth);
+	app.get(`/auth/instagram`,instagramAuth);
 
 	app.get('/auth/facebook/callback', facebookAuth, wrap(auth.social));
 	app.get('/auth/google/callback', googleAuth, wrap(auth.social));
 	app.get('/auth/twitter/callback', twitterAuth, wrap(auth.social));
+	app.get('/auth/instagram/callback', instagramAuth, wrap(auth.social));
 
 	app.get('/categories', wrap(categories.list));
 	app.post('/admin/categories', jwtAuth, wrap(categories.create));
@@ -79,9 +84,6 @@ module.exports = (app) => {
 	app.get('/', wrap(home.get_offers));
 	app.get('/search/:search', wrap(home.get_search));
 	app.get('/:category', wrap(home.get_category));
-
-
-
 };
 
 
