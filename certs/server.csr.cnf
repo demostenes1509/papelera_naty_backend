@@ -5,10 +5,10 @@ default_md = sha256
 distinguished_name = dn
 
 [dn]
-C=US
-ST=RandomState
-L=RandomCity
-O=RandomOrganization
-OU=RandomOrganizationUnit
-emailAddress=hello@example.com
+C=AR
+ST=CABA
+L=CABA
+O=Papelera Naty
+OU=IT
+emailAddress=mcarrizo@papeleranaty.com
 CN = localhost
