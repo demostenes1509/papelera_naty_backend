@@ -1,4 +1,5 @@
 const { categories,
+				packaging,
         sidebar,
         home,
         footer,
@@ -73,6 +74,7 @@ module.exports = (app) => {
 	app.get('/auth/instagram/callback', instagramAuth, wrap(auth.social));
 
 	app.get('/categories', wrap(categories.list));
+	app.get('/packaging', wrap(packaging.list));
 	app.post('/admin/categories', jwtAuth, wrap(categories.create));
 
 	app.get('/productspictures/:picture_id', wrap(productspictures.get));

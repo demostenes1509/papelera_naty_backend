@@ -10,6 +10,7 @@ const { describe,
 	beforeEach, 
 	afterEach } = require('mocha');
 const { category, 
+				packaging,
 				sidebar, 
 				footer, 
 				home, 
@@ -62,6 +63,10 @@ describe('Test Suite', function () {
 		runTest('catlist','List categories', category.list);
 		runTest('catcreate','Create new Category', category.create);
 		runTest('catcreatewithoutname','Create without name', category.create_without_name);
+	});
+
+	describe('Packaging Tests', () => {
+		runTest('packlist','List packaging', packaging.list);
 	});
 
 	// describe('Products Pictures Tests', () => {
